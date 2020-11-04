@@ -12,18 +12,7 @@ code {
     monospace;
 }
 
-a:link{
-  color:white;
-}
-a.visited{
-  color:gray;
-}
-a.hover{
-  color: whitesmoke;
-}
-a.active{
-  color: white;
-}
+
 .orgDiv{
   padding: 0px;
   margin: 0px;

@@ -2,8 +2,9 @@ import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./Store";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import LandingPage from "./views/LandingPage"
 import LoginPage from "./views/LoginPage";
+import LandingPage from "./views/LandingPage/LandingPage"
+
 function App() {
   return (
     <div className = " GreyBackground">
