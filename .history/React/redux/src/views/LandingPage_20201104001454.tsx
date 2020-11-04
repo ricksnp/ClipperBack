@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css';
+import './index.css';
 import { LandingPane } from '../components/LandingPane/LandingPane'
 import { Feed } from '../components/Feed/Feed'
 

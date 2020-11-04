@@ -12,38 +12,34 @@ code {
     monospace;
 }
 
-a:link {
-  color: white;
+a:link{
+  color:white;
 }
-
-a.visited {
-  color: gray;
+a.visited{
+  color:gray;
 }
-
-a.hover {
+a.hover{
   color: whitesmoke;
 }
-
-a.active {
+a.active{
   color: white;
 }
-
-.orgDiv {
+.orgDiv{
   padding: 0px;
   margin: 0px;
 }
-
-.whiteText {
+.whiteText{
   color: #FFFFFf;
 }
 
-.GreyBackground {
+.GreyBackground{
   background-color: #202430;
 }
-
-.BlueBackground {
+.BlueBackground{
   background-color: #2a76b2;
   color: #FFFFFf;
   padding: 0px;
   margin: 0px;
+
+  
 }
