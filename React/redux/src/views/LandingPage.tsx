@@ -4,13 +4,9 @@ import { Feed } from '../components/Feed/Feed'
 
 export default function LandingPage() {
     return (
-        <div>
-            <div className="landing">
-                <LandingPane />
-            </div>
-            <div className="feed">
-                <Feed />
-            </div>
+        <div className = "row">
+            <LandingPane/>
+            <Feed/>
         </div>
     )
 };
