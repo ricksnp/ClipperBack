@@ -2,7 +2,6 @@ import React from 'react';
 import dark from './../../Assets/Clipper-Logo-Dark-Theme.png'
 //import {Carousel} from './Carousel'
 
-
 export function Post(prop:any){
     return(
         <div className = "Post row">

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import dark_theme_logo from './../../Assets/Clipper-Logo-Dark-Theme.png'
 import {Post} from '../Post/Post'
 
@@ -22,8 +23,6 @@ export function Feed(props:any){
                 <Post/>
 
             </div>
-            
-
         </div>
     )
 }
