@@ -1,0 +1,70 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0/EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"
+	>
+<hibernate-mapping package="com.example.model">
+	<class name="Image">
+		<!-- Primary Key -->
+		<id name="image_id" type="int" column= "image_id" >
+			<generator class="native"></generator>
+		</id>
+
+		<!-- Properties -->
+		<property name="image_link" type="string" not-null="true" column= "image_link"/>
+
+		<property name="user_id" type="double" not-null="true" column="user_id" />
+
+		<property name="post_id" type="boolean" not-null="true" column= "post_id"/>
+	</class>
+	
+	<class name="Like">
+		<!-- Primary Key -->
+		<id name="like_id" type="int" column= "like_id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- Properties -->
+		<property name="post_id" type="int" not-null="true" column= "post_id"/>
+
+		<property name="user_id" type="int" not-null="true" column="user_id" />
+
+	</class>
+	
+	<class name="Post">
+		<!-- Primary Key -->
+		<id name="post_id" type="int" column= "post_id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- Properties -->
+		<property name="user_id" type="int" not-null="true" column="user_id" />
+		
+		<property name="content" type="String" not-null="true" column="content" />
+		
+		<property name="image_link" type="String" not-null="true" column="image_link" />
+		
+		<property name="like_count" type="int" not-null="true" column="like_count" />
+
+	</class>
+	
+	<class name="User">
+		<!-- Primary Key -->
+		<id name="user_id" type="int" column= "user_id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- Properties -->
+		<property name="username" type="String" not-null="true" column="username" />
+		
+		<property name="password" type="String" not-null="true" column="password" />
+		
+		<property name="first_name" type="String" not-null="true" column="first_name" />
+		
+		<property name="last_name" type="String" not-null="true" column="last_name" />
+		
+		<property name="email" type="String" not-null="true" column="email" />
+		
+		<property name="pfp_link" type="String" not-null="true" column="pfp_link" />
+
+	</class>
+</hibernate-mapping>
