@@ -9,18 +9,14 @@ import ResetPassword from "./views/ResetPassword"
 
 function App() {
   return (
-    <div className=" GreyBackground">
-      <div className="col-8 mx-auto ">
-        <BrowserRouter>
-          <Switch>
-            <Route path="/landing-page" component={LandingPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/signup" component={SignupPage} />
-            <Route path="/reset-password" component={ResetPassword} />
-          </Switch>
-        </BrowserRouter>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/landing-page" component={LandingPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
+        <Route path="/reset-password" component={ResetPassword} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

@@ -1,7 +1,18 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import light from '../../Assets/Clipper Logo Light-Theme.png'
+import { login } from '../../actions/index'
+import { store } from '../../Store'
+
+
 
 export function LoginComponent() {
+
+    useEffect(() => {
+        store.dispatch(login())
+    });
+
     return (
         <form style={{ textAlign: 'left' }}>
             <div className="logoarea pt-5 pb-5 row" >
@@ -34,6 +45,16 @@ export function LoginComponent() {
             </p>
         </form>
     );
-
-
 }
+
+const mapStateToProps = (state: any) => {
+    return state.users;
+}
+
+const mapDispatchToProps = {
+    login
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginComponent);
