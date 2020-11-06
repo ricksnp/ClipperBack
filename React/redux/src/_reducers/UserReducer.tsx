@@ -1,15 +1,14 @@
-import { LoginTypes } from '../actions/index';
+import * as t from '../_action.types/actionTypes';
 
 const initialState: any = {
-    users: []
+    users: [{}]
 };
-
 
 export const UserReducer = (state = initialState, action: any): any => {
     switch (action.type) {
-        case LoginTypes.SUCCESS:
+        case t.SUCCESS:
             return {
-                ...state, ...action.payload
+                users: state.users, ...action.payload
             };
         default:
             return state;

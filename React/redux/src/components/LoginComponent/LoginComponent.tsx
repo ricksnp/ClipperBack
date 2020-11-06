@@ -1,20 +1,37 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import light from '../../Assets/Clipper Logo Light-Theme.png'
-import { login } from '../../actions/index'
+import { login } from '../../_actions/index'
 import { store } from '../../Store'
+import { Form } from 'reactstrap';
+import { FormControl } from 'react-bootstrap';
+import { getPosts } from '../../_util/APIUtility';
+import { axiosInstance } from '../../_util/axiosConfig';
+import * as t from '../../_action.types/actionTypes'
 
 
+function LoginComponent(props: any) {
 
-export function LoginComponent() {
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event: any) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        setValidated(true);
+    };
 
     useEffect(() => {
-        store.dispatch(login())
+        console.log("in the use effect")
+        props.loginUsers();
     });
 
     return (
-        <form style={{ textAlign: 'left' }}>
+        <Form validated={validated ? 1 : 0} onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
             <div className="logoarea pt-5 pb-5 row" >
                 <a href="/login"><img src={light} height={"48px"} width={"48px"} alt="Logo" /></a><div style={{ color: "#202430", fontSize: "30px", fontWeight: "bold" }}>Clipper</div>
             </div>
@@ -23,19 +40,12 @@ export function LoginComponent() {
 
             <div className="form-group" >
                 <label style={{ color: "#202430" }}>Username</label>
-                <input type="text" className="form-control" placeholder="Enter username" />
+                <input type="text" required className="form-control" placeholder="Enter username" />
             </div>
 
             <div className="form-group">
                 <label style={{ color: "#202430" }}>Password</label>
-                <input type="password" className="form-control" placeholder="Enter password" />
-            </div>
-
-            <div className="form-group">
-                <div className="custom-control custom-checkbox">
-                    <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                    <label className="custom-control-label" htmlFor="customCheck1" style={{ color: "#202430" }}>Remember me</label>
-                </div>
+                <FormControl type="password" required className="form-control" placeholder="Enter password" />
             </div>
 
             <button type="submit" className="btn btn-primary btn-block" style={{ background: "#202430" }}>Submit</button>
@@ -43,18 +53,15 @@ export function LoginComponent() {
                 <span>Forgot  <a href="/reset-password">password? </a></span>
                 Need an <a href="/signup">account?</a>
             </p>
-        </form>
+        </Form>
     );
 }
 
 const mapStateToProps = (state: any) => {
-    return state.users;
+    return { users: state.users };
 }
 
 const mapDispatchToProps = {
     login
 }
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

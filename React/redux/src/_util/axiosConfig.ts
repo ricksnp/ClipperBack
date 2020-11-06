@@ -7,5 +7,5 @@ import Axios from "axios";
  * these properties can be overridden.
  */
 export const axiosInstance = Axios.create({
-    baseURL: "https://jsonplaceholder.typicode.com/users",
+    baseURL: "https://jsonplaceholder.typicode.com",
 });
