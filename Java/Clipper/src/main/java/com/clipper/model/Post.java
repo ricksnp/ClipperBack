@@ -3,9 +3,12 @@ package com.clipper.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 /**
  * The Post class holds all content associated with a Clipper post.
  */
+@Entity
 public class Post 
 {
 	private int id;
@@ -79,8 +82,8 @@ public class Post
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", user=" + user + ", textContent=" + textContent + ", images=" + images
-				+ ", likes=" + likes + "]";
+		return "Post [id=" + id + ", user=" + "[a user]" + ", textContent=" + textContent + ", images=" + "[images]"
+				+ ", likes=" + "[lots of likes]" + "]";
 	}
 	
 }

@@ -59,7 +59,7 @@ public class Like
 
 	@Override
 	public String toString() {
-		return "Like [likeId=" + likeId + ", post=" + post + ", user=" + user + "]";
+		return "Like [likeId=" + likeId + ", post=" + "[a post]" + ", user=" + "[a user]" + "]";
 	}
 
 	@Override
