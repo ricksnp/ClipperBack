@@ -11,6 +11,7 @@ import com.clipper.model.Post;
 import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
 
+@Repository
 public class PostDao implements Dao<Post, Integer> {
 
 	private SessionFactory sessionFactory;

@@ -5,10 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.clipper.model.PostImage;
-import com.clipper.util.HibernateUtil;
 
+@Repository
 public class PostImageDao implements Dao<PostImage, Integer> {
 
 	private SessionFactory sessionFactory;

@@ -11,6 +11,7 @@ import com.clipper.model.Like;
 import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
 
+@Repository
 public class LikeDao implements Dao<Like, Integer> {
 
 	private SessionFactory sessionFactory;

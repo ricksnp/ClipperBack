@@ -9,7 +9,7 @@
 		<property name="hibernate.connection.username">clipper_user</property>
 		<property name="hibernate.connection.password">biggShip</property>
 		<property name="hibernate.connection.url">
-			jdbc:postgresql://imperial-archives.cs1cruzjtwei.us-east-2.rds.amazonaws.com:5432/clipper
+			jdbc:postgresql://imperial-archives.cs1cruzjtwei.us-east-2.rds.amazonaws.com:5432/postgres
 		</property>
 		<property name="hibernate.connection.driver.class">org.postgresql.Driver</property>
 		<property name="hibernate.default_schema">dev_production</property>

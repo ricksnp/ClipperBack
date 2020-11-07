@@ -3,9 +3,13 @@ package com.clipper.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 /**
  * The User class holds all information tied to a particular Clipper user.
  */
+
+@Entity
 public class User 
 {
 	private int id;
@@ -112,6 +116,6 @@ public class User
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", bio=" + bio + ", pfpLink=" + pfpLink + ", posts="
-				+ posts + ", likes=" + likes + "]";
+				+ "[lots of posts]" + ", likes=" + "[lots of likes]" + "]";
 	}
 }

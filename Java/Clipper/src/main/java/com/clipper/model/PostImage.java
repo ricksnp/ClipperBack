@@ -44,6 +44,6 @@ public class PostImage
 	
 	@Override
 	public String toString() {
-		return "PostImage [id=" + id + ", imageLink=" + imageLink + ", post=" + post + "]";
+		return "PostImage [id=" + id + ", imageLink=" + imageLink + ", post=" + "[a post]" + "]";
 	}
 }
