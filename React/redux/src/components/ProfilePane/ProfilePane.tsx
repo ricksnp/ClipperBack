@@ -8,7 +8,7 @@ export default function LandingPane(){
             <br/>
             <br/>
             <div>
-                <a href="#" style={{textAlign:"right", paddingRight:"20%"}}>Edit</a>
+                <p style={{textAlign:"right", paddingRight:"20%"}}><a>Edit</a></p>
                 <img src={userPic} style={{height:'150px', width:'150px', display:"block", marginLeft:'auto', marginRight:'auto', borderRadius:'50%', border:'2px solid white'}} className = "Logo-Large"/>
                 <h2 style={{textAlign:'center'}}>Clipper User</h2>
             </div>
