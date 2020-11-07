@@ -59,6 +59,8 @@ public class UserDao implements Dao<User, Integer> {
 		return t;
 	}
 
+
+	
 	@Override
 	public User delete(Integer i) {
 		Session sess = factory.openSession();

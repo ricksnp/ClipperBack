@@ -5,40 +5,42 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.hibernate.query.Query;
 
 import com.clipper.model.Post;
+import com.clipper.model.User;
+import com.clipper.util.HibernateUtil;
 
 @Repository
 public class PostDao implements Dao<Post, Integer> {
 
-	private SessionFactory factory;
+	private SessionFactory sessionFactory;
 	
-	@Autowired
-	public PostDao(SessionFactory factory) {
-		super();
-		this.factory = factory;
+	public PostDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
-	public PostDao() {}
 	
+	public PostDao() {
+		this.sessionFactory = HibernateUtil.getSessionFactory();
+	}
+
 	@Override
 	public List<Post> findAll() {
-		List<Post> list = factory.openSession()
+		List<Post> list = sessionFactory.openSession()
 				.createNativeQuery("select * from posts", Post.class).list();
 		return list;
 	}
 
 	@Override
 	public Post findById(Integer i) {
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("from Post where id = " + i, Post.class).list().get(0);
 	}
 
 	@Override
 	public Post update(Post t) {
-		SessionFactory sesfact = factory;
-		Session sess = sesfact.openSession();
+		
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
@@ -47,8 +49,8 @@ public class PostDao implements Dao<Post, Integer> {
 
 	@Override
 	public Post save(Post t) {
-		SessionFactory sesfact = factory;
-		Session sess = sesfact.openSession();
+	
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
@@ -56,9 +58,17 @@ public class PostDao implements Dao<Post, Integer> {
 	}
 
 	@Override
-	public Post delete(Integer i) {
-		Session sess = factory.openSession();
-		return sess.createQuery("delete from Post where id = " + i, Post.class).list().get(0);
-	}
-
+	 public Post delete(Integer i) {
+	        Session sess = sessionFactory.openSession();
+	        Query q = sess.createQuery("delete from Post where id = :i");
+	        
+	        Transaction tx = sess.beginTransaction();
+	        q.setParameter("i", i);
+	        
+	        int result = q.executeUpdate();
+	        //sess.query("delete from User where user_id = " + i, User.class).list().get(0);
+	        tx.commit();
+	        
+	        return new Post();
+	    }
 }
