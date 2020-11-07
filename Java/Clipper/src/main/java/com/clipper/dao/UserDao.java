@@ -5,28 +5,43 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.clipper.model.User;
-import com.clipper.util.HibernateUtil;
 
+@Repository
 public class UserDao implements Dao<User, Integer> {
 
+	private SessionFactory factory;
+	
+	@Autowired
+	public UserDao(SessionFactory factory) {
+		super();
+		this.factory = factory;
+	}
+	public UserDao() {}
+	
 	@Override
 	public List<User> findAll() {
-		List<User> list = HibernateUtil.getSessionFactory().openSession()
+		List<User> list = factory.openSession()
 				.createNativeQuery("select * from users", User.class).list();
 		return list;
 	}
 
 	@Override
 	public User findById(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
-		return sess.createQuery("from User where id = " + i, User.class).list().get(0);
+		Session sess = factory.openSession();
+		
+		Query<User> q = sess.createQuery("from User where id = " + i, User.class);
+		
+		return q.list().get(0);
 	}
 
 	@Override
 	public User update(User t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
+		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
@@ -36,7 +51,7 @@ public class UserDao implements Dao<User, Integer> {
 
 	@Override
 	public User save(User t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
+		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
@@ -46,7 +61,16 @@ public class UserDao implements Dao<User, Integer> {
 
 	@Override
 	public User delete(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
-		return sess.createQuery("delete from User where id = " + i, User.class).list().get(0);
+		Session sess = factory.openSession();
+		Query q = sess.createQuery("delete from User where id = :i");
+		
+		Transaction tx = sess.beginTransaction();
+		q.setParameter("i", i);
+		
+		int result = q.executeUpdate();
+		//sess.query("delete from User where user_id = " + i, User.class).list().get(0);
+		tx.commit();
+		
+		return new User();
 	}
 }
