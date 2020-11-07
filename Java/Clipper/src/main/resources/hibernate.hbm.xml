@@ -1,70 +1,107 @@
+<!--  -->
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD 3.0/EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"
 	>
-<hibernate-mapping package="com.example.model">
-	<class name="Image">
+
+<hibernate-mapping package="com.clipper.model">
+	<class name="User" table="users">
 		<!-- Primary Key -->
-		<id name="image_id" type="int" column= "image_id" >
+		<id name="id" type="int" column= "user_id">
 			<generator class="native"></generator>
 		</id>
 
 		<!-- Properties -->
-		<property name="image_link" type="string" not-null="true" column= "image_link"/>
-
-		<property name="user_id" type="double" not-null="true" column="user_id" />
-
-		<property name="post_id" type="boolean" not-null="true" column= "post_id"/>
-	</class>
-	
-	<class name="Like">
-		<!-- Primary Key -->
-		<id name="like_id" type="int" column= "like_id">
-			<generator class="native"></generator>
-		</id>
-
-		<!-- Properties -->
-		<property name="post_id" type="int" not-null="true" column= "post_id"/>
-
-		<property name="user_id" type="int" not-null="true" column="user_id" />
-
-	</class>
-	
-	<class name="Post">
-		<!-- Primary Key -->
-		<id name="post_id" type="int" column= "post_id">
-			<generator class="native"></generator>
-		</id>
-
-		<!-- Properties -->
-		<property name="user_id" type="int" not-null="true" column="user_id" />
+		<property name="username" type="string" not-null="true" column="username" />
 		
-		<property name="content" type="String" not-null="true" column="content" />
+		<property name="password" type="string" not-null="true" column="password" />
 		
-		<property name="image_link" type="String" not-null="true" column="image_link" />
+		<property name="firstName" type="string" not-null="true" column="first_name" />
 		
-		<property name="like_count" type="int" not-null="true" column="like_count" />
+		<property name="lastName" type="string" not-null="true" column="last_name" />
+		
+		<property name="email" type="string" not-null="true" column="email" />
+		
+		<property name="bio" type="string" column="biography" />
+		
+		<property name="pfpLink" type="string" not-null="true" column="pfp_link" />
+		
+		<!-- Relationships -->
+		<set name="posts" inverse="true" order-by="post_id desc">
+			<key column="user_id" />
+			<one-to-many class="Post" />
+		</set>
+		
+		<set name="likes" inverse="true">
+			<key column="user_id" />
+			<one-to-many class="Like" />
+		</set>
 
 	</class>
 	
-	<class name="User">
+	<class name="Post" table="posts">
 		<!-- Primary Key -->
-		<id name="user_id" type="int" column= "user_id">
+		<id name="id" type="int" column="post_id">
 			<generator class="native"></generator>
 		</id>
 
 		<!-- Properties -->
-		<property name="username" type="String" not-null="true" column="username" />
 		
-		<property name="password" type="String" not-null="true" column="password" />
+		<property name="textContent" type="string" not-null="true" column="content" />
 		
-		<property name="first_name" type="String" not-null="true" column="first_name" />
+		<!-- Relationships -->
 		
-		<property name="last_name" type="String" not-null="true" column="last_name" />
+		<many-to-one name="user" class="User"
+			column="user_id" not-null="true" />
 		
-		<property name="email" type="String" not-null="true" column="email" />
+		<set name="images" inverse="true">
+			<key column="post_id" />
+			<one-to-many class="PostImage" />
+		</set>
 		
-		<property name="pfp_link" type="String" not-null="true" column="pfp_link" />
-
+		<set name="likes" inverse="true">
+			<key column="post_id" />
+			<one-to-many class="Like" />
+		</set>
+		
 	</class>
+	
+	<class name="PostImage" table="post_images">
+		<!-- Primary Key -->
+		<id name="id" type="int" column= "image_id" >
+			<generator class="native"></generator>
+		</id>
+
+		<!-- Properties -->
+		<property name="imageLink" type="string" not-null="true" column= "image_link"/>
+
+		<!-- Relationships -->
+		<many-to-one name="post" class="Post"
+			column="post_id" not-null="true" />
+	</class>
+	
+	<class name="Like" table="likes">
+		<!-- Primary Key -->
+		<id name="likeId" type="int" column= "like_id">
+			<generator class="native"></generator>
+		</id>
+
+		<!-- Relationships -->
+		<many-to-one name="user" class="User"
+			column="user_id" not-null="true"
+			unique-key="like_unique_constraint" />
+		
+		<many-to-one name="post" class="Post"
+			column="post_id" not-null="true"
+			unique-key="like_unique_constraint" />
+		
+		<!-- Uniqueness Constraint
+				NOW HANDLED BY the "unique-key" attribute in the Relationships above
+		<properties name="like_unique_constraint" unique="true">
+			<property name="postId" type="int" not-null="true" column="post_id" />
+			<property name="userId" type="int" not-null="true" column="user_id" />
+		</properties>
+		-->
+	</class>
+	
 </hibernate-mapping>
