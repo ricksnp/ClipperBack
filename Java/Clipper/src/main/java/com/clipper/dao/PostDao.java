@@ -5,8 +5,10 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.clipper.model.Post;
+import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
 
 public class PostDao implements Dao<Post, Integer> {
@@ -17,6 +19,10 @@ public class PostDao implements Dao<Post, Integer> {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	public PostDao() {
+		this.sessionFactory = HibernateUtil.getSessionFactory();
+	}
+
 	@Override
 	public List<Post> findAll() {
 		List<Post> list = sessionFactory.openSession()
@@ -51,9 +57,17 @@ public class PostDao implements Dao<Post, Integer> {
 	}
 
 	@Override
-	public Post delete(Integer i) {
-		Session sess = sessionFactory.openSession();
-		return sess.createQuery("delete from Post where id = " + i, Post.class).list().get(0);
-	}
-
+	 public Post delete(Integer i) {
+	        Session sess = sessionFactory.openSession();
+	        Query q = sess.createQuery("delete from Post where id = :i");
+	        
+	        Transaction tx = sess.beginTransaction();
+	        q.setParameter("i", i);
+	        
+	        int result = q.executeUpdate();
+	        //sess.query("delete from User where user_id = " + i, User.class).list().get(0);
+	        tx.commit();
+	        
+	        return new Post();
+	    }
 }
