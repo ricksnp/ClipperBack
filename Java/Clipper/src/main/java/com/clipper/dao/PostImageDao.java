@@ -11,23 +11,29 @@ import com.clipper.util.HibernateUtil;
 
 public class PostImageDao implements Dao<PostImage, Integer> {
 
+	private SessionFactory sessionFactory;
+
+	public PostImageDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	@Override
 	public List<PostImage> findAll() {
-		List<PostImage> list = HibernateUtil.getSessionFactory().openSession()
+		List<PostImage> list = sessionFactory.openSession()
 				.createNativeQuery("select * from post_images", PostImage.class).list();
 		return list;
 	}
 
 	@Override
 	public PostImage findById(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
 	}
 
 	@Override
 	public PostImage update(PostImage t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
-		Session sess = sesfact.openSession();
+		
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
@@ -36,8 +42,8 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage save(PostImage t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
-		Session sess = sesfact.openSession();
+		
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
@@ -46,7 +52,7 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage delete(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("delete from PostImage where id = " + i, PostImage.class).list().get(0);
 	}
 }

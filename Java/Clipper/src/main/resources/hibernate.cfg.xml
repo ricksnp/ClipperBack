@@ -12,7 +12,7 @@
 			jdbc:postgresql://imperial-archives.cs1cruzjtwei.us-east-2.rds.amazonaws.com:5432/clipper
 		</property>
 		<property name="hibernate.connection.driver.class">org.postgresql.Driver</property>
-		<property name="hibernate.default_schema">dev</property>
+		<property name="hibernate.default_schema">dev_production</property>
 
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 

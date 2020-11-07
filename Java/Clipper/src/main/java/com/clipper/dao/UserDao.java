@@ -11,23 +11,28 @@ import com.clipper.util.HibernateUtil;
 
 public class UserDao implements Dao<User, Integer> {
 
+	private SessionFactory sessionFactory;
+
+	public UserDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	@Override
 	public List<User> findAll() {
-		List<User> list = HibernateUtil.getSessionFactory().openSession()
+		List<User> list = sessionFactory.openSession()
 				.createNativeQuery("select * from users", User.class).list();
 		return list;
 	}
 
 	@Override
 	public User findById(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("from User where id = " + i, User.class).list().get(0);
 	}
 
 	@Override
 	public User update(User t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
-		Session sess = sesfact.openSession();
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
@@ -36,8 +41,8 @@ public class UserDao implements Dao<User, Integer> {
 
 	@Override
 	public User save(User t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
-		Session sess = sesfact.openSession();
+		
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
@@ -46,7 +51,7 @@ public class UserDao implements Dao<User, Integer> {
 
 	@Override
 	public User delete(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("delete from User where id = " + i, User.class).list().get(0);
 	}
 }

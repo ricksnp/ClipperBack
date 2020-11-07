@@ -11,23 +11,33 @@ import com.clipper.util.HibernateUtil;
 
 public class LikeDao implements Dao<Like, Integer> {
 
+	private SessionFactory sessionFactory;
+	
+	public LikeDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	public LikeDao() {
+		this.sessionFactory = HibernateUtil.getSessionFactory();
+
+	}
+
 	@Override
 	public List<Like> findAll() {
-		List<Like> list = HibernateUtil.getSessionFactory().openSession()
+		List<Like> list = sessionFactory.openSession()
 				.createNativeQuery("select * from likes", Like.class).list();
 		return list;
 	}
 
 	@Override
 	public Like findById(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("from Like where id = " + i, Like.class).list().get(0);
 	}
 
 	@Override
 	public Like update(Like t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
-		Session sess = sesfact.openSession();
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
@@ -36,8 +46,8 @@ public class LikeDao implements Dao<Like, Integer> {
 
 	@Override
 	public Like save(Like t) {
-		SessionFactory sesfact = HibernateUtil.getSessionFactory();
-		Session sess = sesfact.openSession();
+		
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
@@ -46,7 +56,7 @@ public class LikeDao implements Dao<Like, Integer> {
 
 	@Override
 	public Like delete(Integer i) {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
+		Session sess = sessionFactory.openSession();
 		return sess.createQuery("delete from Like where id = " + i, Like.class).list().get(0);
 	}
 	
