@@ -17,11 +17,11 @@ public class Driver {
 		dao.save(new User(0, "nathan1", "AAA", "Nathan", "Ricks", "ricks@gmail.com", "lol bio", "pfp link", null, null));
 		dao.save(new User(0, "user2", "password", "User", "Name", "user@nothing.net", "biography", "profile pic", null, null));
 		
-		dao.delete(1);
+		User u = dao.delete(1);
+		
+		System.out.println(u);
 		
 		System.out.println(dao.findAll());
-		
-		System.out.println("Success!");
 		
 		
 	}

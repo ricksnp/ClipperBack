@@ -32,7 +32,9 @@ public class PostDao implements Dao<Post, Integer> {
 	@Override
 	public Post findById(Integer i) {
 		Session sess = factory.openSession();
-		return sess.createQuery("from Post where id = " + i, Post.class).list().get(0);
+		Post result = sess.createQuery("from Post where id = " + i, Post.class).list().get(0);
+		sess.close();
+		return result;
 	}
 
 	@Override
@@ -57,8 +59,13 @@ public class PostDao implements Dao<Post, Integer> {
 
 	@Override
 	public Post delete(Integer i) {
+		Post p = findById(i);
+		
 		Session sess = factory.openSession();
-		return sess.createQuery("delete from Post where id = " + i, Post.class).list().get(0);
+		Transaction tx = sess.beginTransaction();
+		sess.delete(p);
+		tx.commit();
+		return p;
 	}
 
 }
