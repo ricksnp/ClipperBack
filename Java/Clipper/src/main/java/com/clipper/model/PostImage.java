@@ -1,19 +1,39 @@
 package com.clipper.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  * The PostImage class holds a reference to the image link associated with a post.
  * 
  * This originally referenced more tables;
  * 		it's still its own type due to the legacy build.
  */
+@Entity(name="PostImage")
+@Table(name="images")
+@SequenceGenerator(name="post_image_ids_sequence", initialValue=1)
 public class PostImage
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_image_ids_sequence")
+	@Column(name="image_id")
 	private int id;
+	
+	@Column(name = "image_link", nullable=false)
 	private String imageLink;
 	
 	/**
 	 * Post that the image is associated with
 	 */
+	@ManyToOne
+	@JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable=false)
 	private Post post;
 	
 	public PostImage() { }

@@ -16,10 +16,12 @@ import com.clipper.util.HibernateUtil;
 @Repository
 public class PostImageDao implements Dao<PostImage, Integer> {
 
-	private SessionFactory sessionFactory;
-
-	public PostImageDao(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	private SessionFactory factory;
+	
+	@Autowired
+	public PostImageDao(SessionFactory factory) {
+		super();
+		this.factory = factory;
 	}
 	public PostImageDao() {
 		this.sessionFactory = HibernateUtil.getSessionFactory();
@@ -34,14 +36,16 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage findById(Integer i) {
-		Session sess = sessionFactory.openSession();
-		return sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
+		Session sess = factory.openSession();
+		PostImage result = sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
+		sess.close();
+		return result;
 	}
 
 	@Override
 	public PostImage update(PostImage t) {
-		
-		Session sess = sessionFactory.openSession();
+		SessionFactory sesfact = factory;
+		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
@@ -50,8 +54,8 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage save(PostImage t) {
-		
-		Session sess = sessionFactory.openSession();
+		SessionFactory sesfact = factory;
+		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();

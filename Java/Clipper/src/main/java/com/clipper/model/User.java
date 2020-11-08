@@ -3,26 +3,52 @@ package com.clipper.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The User class holds all information tied to a particular Clipper user.
  */
 
-@Entity
+@Entity(name="User")
+@Table(name="users")
+@SequenceGenerator(name="user_ids_sequence", initialValue=1)
 public class User 
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_ids_sequence")
+	@Column(name="user_id")
 	private int id;
+	
+	@Column(name="username", nullable=false, unique=true)
 	private String username;
+	
+	@Column(name="password", nullable=false)
 	private String password;
+	
+	@Column(name="first_name", nullable=false)
 	private String firstName;
+	
+	@Column(name="last_name", nullable=false)
 	private String lastName;
+	
+//	@Email // javax.validation.constraints.Email
+	@Column(name="email", nullable=false, unique=true)
 	private String email;
+	
+	@Column(name="biography")
 	private String bio;
 	
 	/**
 	 * The pfpLink is a link to the user's profile picture.
 	 */
+	@Column(name="pfp_link", nullable=false, columnDefinition="varchar default 'https://i.pinimg.com/474x/50/5f/ae/505fae07cccb7098f7e82c82f857b13a.jpg'")
 	private String pfpLink;
 	
 	/**
@@ -33,6 +59,7 @@ public class User
 	/**
 	 * All likes made by the User will be tracked here.
 	 */
+	@OneToMany(mappedBy="user")
 	private Set<Like> likes;
 	
 	public User() {}
