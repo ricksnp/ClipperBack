@@ -28,8 +28,10 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage findById(Integer i) {
-		Session sess = sessionFactory.openSession();
-		return sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
+		Session sess = factory.openSession();
+		PostImage result = sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
+		sess.close();
+		return result;
 	}
 
 	@Override
@@ -54,7 +56,12 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage delete(Integer i) {
-		Session sess = sessionFactory.openSession();
-		return sess.createQuery("delete from PostImage where id = " + i, PostImage.class).list().get(0);
+		PostImage pi = findById(i);
+		
+		Session sess = factory.openSession();
+		Transaction tx = sess.beginTransaction();
+		sess.delete(pi);
+		tx.commit();
+		return pi;
 	}
 }
