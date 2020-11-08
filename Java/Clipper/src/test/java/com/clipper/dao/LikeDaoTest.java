@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -50,8 +49,8 @@ public class LikeDaoTest {
 	@Test
 	public void Z_DeleteAll() {
 		for(int i = 0; i<20; i++) {
-			ud.deleteforrealzies(i);
-			pd.deleteforrealsies(i);;
+			ud.delete(i);
+			pd.delete(i);;
 		}
 		assertTrue(true);
 	}
