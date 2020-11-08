@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -33,9 +33,9 @@ public class Post
 	/**
 	 * The parent User
 	 */
-	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable=false)
-	private User user;
+//	@ManyToOne
+//	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable=false)
+//	private User user;
 	
 	/**
 	 * All images associated with a post.
@@ -51,10 +51,10 @@ public class Post
 	
 	public Post() {}
 
-	public Post(int id, String textContent, User user, List<PostImage> images, Set<Like> likes) {
+	public Post(int id, String textContent, /*User user,*/ List<PostImage> images, Set<Like> likes) {
 		super();
 		this.id = id;
-		this.user = user;
+		//this.user = user;
 		this.textContent = textContent;
 		this.images = images;
 		this.likes = likes;
@@ -68,13 +68,13 @@ public class Post
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	public String getTextContent() {
 		return textContent;

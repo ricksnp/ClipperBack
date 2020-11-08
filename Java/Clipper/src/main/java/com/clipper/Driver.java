@@ -18,10 +18,10 @@ public class Driver {
 		PostDao pdao = ac.getBean(PostDao.class);
 		
 		
-		dao.save(new User(0, "nathan1", "AAA", "Nathan", "Ricks", "ricks@gmail.com", "lol bio", "pfp link", null, null));
-		dao.save(new User(0, "user2", "password", "User", "Name", "user@nothing.net", "biography", "profile pic", null, null));
+		dao.save(new User(0, "nathan1", "AAA", "Nathan", "Ricks", "ricks@gmail.com", "lol bio", "pfp link", null));
+		dao.save(new User(0, "user2", "password", "User", "Name", "user@nothing.net", "biography", "profile pic", null));
 		
-		pdao.save(new Post(0, "Hello World", dao.findById(2), null, null));
+		pdao.save(new Post(0, "Hello World", null, null));
 		
 		System.out.println(dao.delete(1));
 		

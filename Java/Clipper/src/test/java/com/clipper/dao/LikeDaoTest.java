@@ -22,8 +22,8 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LikeDaoTest {
 	
-	private User user = new User(0,"Jmann","wasspord","James","James","james@james.net","My name Jeff", "#", null, null);
-	private Post post = new Post(0, "James is great", user, null, null);
+	private User user = new User(0,"Jmann","wasspord","James","James","james@james.net","My name Jeff", "#", /*null,*/ null);
+	private Post post = new Post(0, "James is great", /*user,*/ null, null);
 	private static UserDao ud = new UserDao();
 	private static PostDao pd = new PostDao();
 	private Like l = new Like(0,post,user);

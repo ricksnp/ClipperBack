@@ -27,7 +27,7 @@ function LoginComponent(props: any) {
 
     useEffect(() => {
         console.log("in the use effect")
-        props.loginUsers();
+        //props.loginUsers();
     });
 
     return (
