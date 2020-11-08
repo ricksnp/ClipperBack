@@ -22,13 +22,13 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 	@Override
 	public List<PostImage> findAll() {
 		List<PostImage> list = sessionFactory.openSession()
-				.createNativeQuery("select * from post_images", PostImage.class).list();
+				.createNativeQuery("select * from dev.post_images", PostImage.class).list();
 		return list;
 	}
 
 	@Override
 	public PostImage findById(Integer i) {
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		PostImage result = sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
 		sess.close();
 		return result;
@@ -58,7 +58,7 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 	public PostImage delete(Integer i) {
 		PostImage pi = findById(i);
 		
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.delete(pi);
 		tx.commit();
