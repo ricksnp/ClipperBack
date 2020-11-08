@@ -33,10 +33,9 @@ public class UserDao implements Dao<User, Integer> {
 	@Override
 	public User findById(Integer i) {
 		Session sess = factory.openSession();
-		
-		Query<User> q = sess.createQuery("from User where id = " + i, User.class);
-		
-		return q.list().get(0);
+		User result = sess.createQuery("from User where id = " + i, User.class).list().get(0);
+		sess.close();
+		return result;
 	}
 
 	@Override
@@ -63,16 +62,12 @@ public class UserDao implements Dao<User, Integer> {
 	
 	@Override
 	public User delete(Integer i) {
+		User u = findById(i);
+		
 		Session sess = factory.openSession();
-		Query q = sess.createQuery("delete from User where id = :i");
-		
 		Transaction tx = sess.beginTransaction();
-		q.setParameter("i", i);
-		
-		int result = q.executeUpdate();
-		//sess.query("delete from User where user_id = " + i, User.class).list().get(0);
+		sess.delete(u);
 		tx.commit();
-		
-		return new User();
+		return u;
 	}
 }
