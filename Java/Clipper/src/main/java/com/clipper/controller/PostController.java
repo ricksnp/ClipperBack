@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clipper.model.Post;
 import com.clipper.service.PostService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @CrossOrigin
@@ -31,7 +30,6 @@ public class PostController {
 
 	@GetMapping
 	public @ResponseBody List<Post> getAll() {
-		//ObjectMapper om = new ObjectMapper();
 		return ps.findAll();
 	}
 
