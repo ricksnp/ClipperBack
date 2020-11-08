@@ -66,7 +66,7 @@ public class LikeDao implements Dao<Like, Integer> {
 
 	@Override
 	 public Like delete(Integer i) {
-		  Session sess = sessionFactory.openSession();
+		  Session sess = factory.openSession();
 	        Query q = sess.createQuery("delete from Like where id = :i");
 	        
 	        Transaction tx = sess.beginTransaction();

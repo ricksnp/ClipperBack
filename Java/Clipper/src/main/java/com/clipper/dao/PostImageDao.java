@@ -24,12 +24,12 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		this.factory = factory;
 	}
 	public PostImageDao() {
-		this.sessionFactory = HibernateUtil.getSessionFactory();
+		this.factory = HibernateUtil.getSessionFactory();
 	}
 	
 	@Override
 	public List<PostImage> findAll() {
-		List<PostImage> list = sessionFactory.openSession()
+		List<PostImage> list = factory.openSession()
 				.createQuery("from PostImage", PostImage.class).list();
 		return list;
 	}
@@ -64,7 +64,7 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage delete(Integer i) {
-		Session sess = sessionFactory.openSession();
+		Session sess = factory.openSession();
 		Query q = sess.createQuery("delete from PostImage where id = :i");
 		
 		Transaction tx = sess.beginTransaction();

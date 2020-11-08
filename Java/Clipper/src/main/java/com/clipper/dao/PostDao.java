@@ -25,7 +25,7 @@ public class PostDao implements Dao<Post, Integer> {
 	
 	@Override
 	public List<Post> findAll() {
-		List<Post> list = sessionFactory.openSession()
+		List<Post> list = factory.openSession()
 				.createQuery("from Post", Post.class).list();
 		return list;
 	}
