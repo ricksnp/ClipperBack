@@ -27,13 +27,13 @@ public class PostDao implements Dao<Post, Integer> {
 	@Override
 	public List<Post> findAll() {
 		List<Post> list = sessionFactory.openSession()
-				.createNativeQuery("select * from posts", Post.class).list();
+				.createNativeQuery("select * from devposts", Post.class).list();
 		return list;
 	}
 
 	@Override
 	public Post findById(Integer i) {
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		Post result = sess.createQuery("from Post where id = " + i, Post.class).list().get(0);
 		sess.close();
 		return result;
@@ -63,7 +63,7 @@ public class PostDao implements Dao<Post, Integer> {
 	 public Post delete(Integer i) {
 	        Post p = findById(i);
 		
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.delete(p);
 		tx.commit();
