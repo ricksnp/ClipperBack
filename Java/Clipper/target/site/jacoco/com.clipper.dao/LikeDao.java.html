@@ -5,50 +5,75 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.clipper.model.Like;
+import com.clipper.model.Post;
+import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
 
-<span class="nc" id="L12">public class LikeDao implements Dao&lt;Like, Integer&gt; {</span>
+@Repository
+public class LikeDao implements Dao&lt;Like, Integer&gt; {
+
+	private SessionFactory sessionFactory;
+	
+<span class="nc" id="L21">	public LikeDao(SessionFactory sessionFactory) {</span>
+<span class="nc" id="L22">		this.sessionFactory = sessionFactory;</span>
+<span class="nc" id="L23">	}</span>
+	
+<span class="fc" id="L25">	public LikeDao() {</span>
+<span class="fc" id="L26">		this.sessionFactory = HibernateUtil.getSessionFactory();</span>
+
+<span class="fc" id="L28">	}</span>
 
 	@Override
 	public List&lt;Like&gt; findAll() {
-<span class="nc" id="L16">		List&lt;Like&gt; list = HibernateUtil.getSessionFactory().openSession()</span>
-<span class="nc" id="L17">				.createNativeQuery(&quot;select * from likes&quot;, Like.class).list();</span>
-<span class="nc" id="L18">		return list;</span>
+<span class="fc" id="L32">		List&lt;Like&gt; list = sessionFactory.openSession()</span>
+<span class="fc" id="L33">				.createNativeQuery(&quot;select * from dev.likes&quot;, Like.class).list();</span>
+<span class="fc" id="L34">		return list;</span>
 	}
 
 	@Override
 	public Like findById(Integer i) {
-<span class="nc" id="L23">		Session sess = HibernateUtil.getSessionFactory().openSession();</span>
-<span class="nc" id="L24">		return sess.createQuery(&quot;from Like where id = &quot; + i, Like.class).list().get(0);</span>
+<span class="fc" id="L39">		Session sess = sessionFactory.openSession();</span>
+<span class="fc" id="L40">		return sess.createQuery(&quot;from Like where id = &quot; + i, Like.class).list().get(0);</span>
 	}
 
 	@Override
 	public Like update(Like t) {
-<span class="nc" id="L29">		SessionFactory sesfact = HibernateUtil.getSessionFactory();</span>
-<span class="nc" id="L30">		Session sess = sesfact.openSession();</span>
-<span class="nc" id="L31">		Transaction tx = sess.beginTransaction();</span>
-<span class="nc" id="L32">		sess.merge(t);</span>
-<span class="nc" id="L33">		tx.commit();</span>
-<span class="nc" id="L34">		return t;</span>
+<span class="fc" id="L45">		Session sess = sessionFactory.openSession();</span>
+<span class="fc" id="L46">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L47">		sess.merge(t);</span>
+<span class="fc" id="L48">		tx.commit();</span>
+<span class="fc" id="L49">		return t;</span>
 	}
 
 	@Override
 	public Like save(Like t) {
-<span class="nc" id="L39">		SessionFactory sesfact = HibernateUtil.getSessionFactory();</span>
-<span class="nc" id="L40">		Session sess = sesfact.openSession();</span>
-<span class="nc" id="L41">		Transaction tx = sess.beginTransaction();</span>
-<span class="nc" id="L42">		sess.save(t);</span>
-<span class="nc" id="L43">		tx.commit();</span>
-<span class="nc" id="L44">		return t;</span>
+		
+<span class="fc" id="L55">		Session sess = sessionFactory.openSession();</span>
+<span class="fc" id="L56">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L57">		sess.save(t);</span>
+<span class="fc" id="L58">		tx.commit();</span>
+<span class="fc" id="L59">		return t;</span>
 	}
 
+	
 	@Override
-	public Like delete(Integer i) {
-<span class="nc" id="L49">		Session sess = HibernateUtil.getSessionFactory().openSession();</span>
-<span class="nc" id="L50">		return sess.createQuery(&quot;delete from Like where id = &quot; + i, Like.class).list().get(0);</span>
-	}
+	 public Like delete(Integer i) {
+<span class="fc" id="L65">		  Session sess = sessionFactory.openSession();</span>
+<span class="fc" id="L66">	        Query q = sess.createQuery(&quot;delete from Like where id = :i&quot;);</span>
+	        
+<span class="fc" id="L68">	        Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L69">	        q.setParameter(&quot;i&quot;, i);</span>
+	        
+<span class="fc" id="L71">	        int result = q.executeUpdate();</span>
+	        //sess.query(&quot;delete from User where user_id = &quot; + i, User.class).list().get(0);
+<span class="fc" id="L73">	        tx.commit();</span>
+	        
+<span class="fc" id="L75">	        return new Like();</span>
+	    }
 	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

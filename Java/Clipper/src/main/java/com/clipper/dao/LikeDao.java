@@ -6,8 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.clipper.model.Like;
+import com.clipper.model.Post;
 import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
 
@@ -35,7 +37,7 @@ public class LikeDao implements Dao<Like, Integer> {
 	@Override
 	public Like findById(Integer i) {
 		Session sess = sessionFactory.openSession();
-		return sess.createQuery("from dev.likes where id = " + i, Like.class).list().get(0);
+		return sess.createQuery("from Like where id = " + i, Like.class).list().get(0);
 	}
 
 	@Override
@@ -60,8 +62,8 @@ public class LikeDao implements Dao<Like, Integer> {
 	
 	@Override
 	 public Like delete(Integer i) {
-	        Session sess = sessionFactory.openSession();
-	        Query q = sess.createQuery("delete from likes where id = :i");
+		  Session sess = sessionFactory.openSession();
+	        Query q = sess.createQuery("delete from Like where id = :i");
 	        
 	        Transaction tx = sess.beginTransaction();
 	        q.setParameter("i", i);

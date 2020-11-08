@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.clipper.model.Post;
 import com.clipper.model.User;
@@ -27,7 +28,7 @@ public class PostDao implements Dao<Post, Integer> {
 	@Override
 	public List<Post> findAll() {
 		List<Post> list = sessionFactory.openSession()
-				.createNativeQuery("select * from posts", Post.class).list();
+				.createQuery("from Post", Post.class).list();
 		return list;
 	}
 

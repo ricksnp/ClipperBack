@@ -3,9 +3,12 @@
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 /**
  * The Post class holds all content associated with a Clipper post.
  */
+@Entity
 public class Post 
 {
 	private int id;
@@ -19,68 +22,68 @@ public class Post
 	/**
 	 * All images associated with a post.
 	 */
-	private List&lt;PostImage&gt; images;
+	private Set&lt;PostImage&gt; images;
 	
 	/**
 	 * All likes associated with a post.
 	 */
 	private Set&lt;Like&gt; likes;
 	
-<span class="nc" id="L29">	public Post() {}</span>
+<span class="fc" id="L32">	public Post() {}</span>
 
-	public Post(int id, String textContent, User user, List&lt;PostImage&gt; images, Set&lt;Like&gt; likes) {
-<span class="nc" id="L32">		super();</span>
-<span class="nc" id="L33">		this.id = id;</span>
-<span class="nc" id="L34">		this.user = user;</span>
-<span class="nc" id="L35">		this.textContent = textContent;</span>
-<span class="nc" id="L36">		this.images = images;</span>
-<span class="nc" id="L37">		this.likes = likes;</span>
-<span class="nc" id="L38">	}</span>
+	public Post(int id, String textContent, User user, Set&lt;PostImage&gt; images, Set&lt;Like&gt; likes) {
+<span class="fc" id="L35">		super();</span>
+<span class="fc" id="L36">		this.id = id;</span>
+<span class="fc" id="L37">		this.user = user;</span>
+<span class="fc" id="L38">		this.textContent = textContent;</span>
+<span class="fc" id="L39">		this.images = images;</span>
+<span class="fc" id="L40">		this.likes = likes;</span>
+<span class="fc" id="L41">	}</span>
 
 	public int getId() {
-<span class="nc" id="L41">		return id;</span>
+<span class="fc" id="L44">		return id;</span>
 	}
 
 	public void setId(int id) {
-<span class="nc" id="L45">		this.id = id;</span>
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L48">		this.id = id;</span>
+<span class="fc" id="L49">	}</span>
 
 	public User getUser() {
-<span class="nc" id="L49">		return user;</span>
+<span class="fc" id="L52">		return user;</span>
 	}
 
 	public void setUser(User user) {
-<span class="nc" id="L53">		this.user = user;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L56">		this.user = user;</span>
+<span class="fc" id="L57">	}</span>
 
 	public String getTextContent() {
-<span class="nc" id="L57">		return textContent;</span>
+<span class="fc" id="L60">		return textContent;</span>
 	}
 
 	public void setTextContent(String textContent) {
-<span class="nc" id="L61">		this.textContent = textContent;</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L64">		this.textContent = textContent;</span>
+<span class="fc" id="L65">	}</span>
 
-	public List&lt;PostImage&gt; getImages() {
-<span class="nc" id="L65">		return images;</span>
+	public Set&lt;PostImage&gt; getImages() {
+<span class="fc" id="L68">		return images;</span>
 	}
 
-	public void setImages(List&lt;PostImage&gt; images) {
-<span class="nc" id="L69">		this.images = images;</span>
-<span class="nc" id="L70">	}</span>
+	public void setImages(Set&lt;PostImage&gt; images) {
+<span class="fc" id="L72">		this.images = images;</span>
+<span class="fc" id="L73">	}</span>
 
 	public Set&lt;Like&gt; getLikes() {
-<span class="nc" id="L73">		return likes;</span>
+<span class="fc" id="L76">		return likes;</span>
 	}
 
 	public void setLikes(Set&lt;Like&gt; likes) {
-<span class="nc" id="L77">		this.likes = likes;</span>
-<span class="nc" id="L78">	}</span>
+<span class="fc" id="L80">		this.likes = likes;</span>
+<span class="fc" id="L81">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L82">		return &quot;Post [id=&quot; + id + &quot;, user=&quot; + user + &quot;, textContent=&quot; + textContent + &quot;, images=&quot; + images</span>
-<span class="nc" id="L83">				+ &quot;, likes=&quot; + likes + &quot;]&quot;;</span>
+<span class="nc" id="L85">		return &quot;Post [id=&quot; + id + &quot;, user=&quot; + &quot;[a user]&quot; + &quot;, textContent=&quot; + textContent + &quot;, images=&quot; + &quot;[images]&quot;</span>
+<span class="nc" id="L86">				+ &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;</span>
 	}
 	
 }
