@@ -3,30 +3,50 @@ package com.clipper.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The Post class holds all content associated with a Clipper post.
  */
-@Entity
+@Entity(name="Post")
+@Table(name="posts")
+@SequenceGenerator(name="user_ids_sequence", initialValue=1)
 public class Post 
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_ids_sequence")
+	@Column(name="post_id")
 	private int id;
+	
+	@Column(name="content")
 	private String textContent;
 	
 	/**
 	 * The parent User
 	 */
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable=false)
 	private User user;
 	
 	/**
 	 * All images associated with a post.
 	 */
+	@OneToMany(mappedBy="id")
 	private List<PostImage> images;
 	
 	/**
 	 * All likes associated with a post.
 	 */
+	@OneToMany(mappedBy="likeId")
 	private Set<Like> likes;
 	
 	public Post() {}

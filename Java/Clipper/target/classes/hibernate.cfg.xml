@@ -23,7 +23,10 @@
 		<property name="hibernate.connection.pool_size">10</property>
 
 		<property name="hibernate.hbm2ddl.auto">create</property>
+		
+		<!-- 
 		<mapping resource="hibernate.hbm.xml"/>
+		 -->
 
 	</session-factory>
 

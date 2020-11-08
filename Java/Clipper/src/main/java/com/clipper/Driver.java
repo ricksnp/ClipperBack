@@ -11,8 +11,11 @@ public class Driver {
 	public static void main(String[] args) {
 		ApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
 		
+		System.out.println("Made the ApplicationContext!");
 		
 		UserDao dao = ac.getBean(UserDao.class);
+		
+		System.out.println("Made the UserDao!");
 		
 		dao.save(new User(0, "nathan1", "AAA", "Nathan", "Ricks", "ricks@gmail.com", "lol bio", "pfp link", null, null));
 		dao.save(new User(0, "user2", "password", "User", "Name", "user@nothing.net", "biography", "profile pic", null, null));
