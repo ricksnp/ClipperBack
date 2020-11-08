@@ -35,7 +35,7 @@ public class LikeDao implements Dao<Like, Integer> {
 
 	@Override
 	public Like findById(Integer i) {
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		Like result = sess.createQuery("from Like where id = " + i, Like.class).list().get(0);
 		sess.close();
 		return result;
@@ -65,7 +65,7 @@ public class LikeDao implements Dao<Like, Integer> {
 	 public Like delete(Integer i) {
 	        Like l = findById(i);
 		
-		Session sess = factory.openSession();
+		Session sess = sessionFactory.openSession();
 		Transaction tx = sess.beginTransaction();
 		sess.delete(l);
 		tx.commit();
