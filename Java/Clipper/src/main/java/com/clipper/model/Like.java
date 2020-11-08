@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * The Like class holds which Users have liked which Posts.
  * 
@@ -33,6 +35,7 @@ public class Like
 	/**
 	 * The Post being liked
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable=false)
 	private Post post;
@@ -40,6 +43,7 @@ public class Like
 	/**
 	 * The User liking the Post
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable=false)
 	private User user;

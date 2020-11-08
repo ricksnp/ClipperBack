@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The Post class holds all content associated with a Clipper post.
  */
@@ -33,6 +36,7 @@ public class Post
 	/**
 	 * The parent User
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable=false)
 	private User user;
@@ -40,12 +44,14 @@ public class Post
 	/**
 	 * All images associated with a post.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy="id")
 	private List<PostImage> images;
 	
 	/**
 	 * All likes associated with a post.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy="likeId")
 	private Set<Like> likes;
 	

@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The User class holds all information tied to a particular Clipper user.
  */
@@ -54,12 +56,14 @@ public class User
 	/**
 	 * All posts associated made by the User will be tracked here.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy="user")
 	private List<Post> posts;
 	
 	/**
 	 * All likes made by the User will be tracked here.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy="user")
 	private Set<Like> likes;
 	
