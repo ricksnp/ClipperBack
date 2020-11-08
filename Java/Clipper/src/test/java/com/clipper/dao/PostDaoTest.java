@@ -38,26 +38,26 @@ public class PostDaoTest {
 	}
 	@Test
 	public void B_FindAllPosts() {
-		assertEquals(12, pd.findAll().get(0).getId());
+		assertEquals(2, pd.findAll().get(0).getId());
 	}
 	@Test
 	public void C_FindPostByID() {
-		assertEquals(12,pd.findById(12).getId());
+		assertEquals(2,pd.findById(2).getId());
 	}
 	@Test
 	public void D_Update() {
 		assertEquals(post.getId(),pd.update(post).getId());
 	}
 
+	@Test
+	public void E_Delete() {
+		assertEquals(pd.findById(2).getId(),pd.delete(2).getId());
+	}
+	
 	@AfterClass
 	public static void Z_DeleteAll() {
-		for(int i = 0; i<20; i++) {
-			pd.delete(i);
-		
-		}
-		for(int i = 0; i<20; i++) {
-			ud.delete(i);
-		}
-		assertTrue(true);
+		pd.deleteAll();
+		ud.deleteAll();
 	}
+	
 }

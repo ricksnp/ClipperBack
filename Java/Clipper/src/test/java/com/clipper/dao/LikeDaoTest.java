@@ -43,8 +43,6 @@ public class LikeDaoTest {
 	}
 	@Test
 	public void B_FindAllLikes() {
-		List<Like> ll = new ArrayList<>();
-		ll.add(l);
 		assertEquals(3, ld.findAll().get(0).getLikeId());
 	}
 	@Test
@@ -55,18 +53,15 @@ public class LikeDaoTest {
 	public void D_Update() {
 		assertEquals(l.getLikeId(),ld.update(l).getLikeId());
 	}
+	@Test
+	public void E_Delete() {
+		assertEquals(ld.findById(3),ld.delete(3));
+	}
 	@AfterClass
 	public static void Z_DeleteAll() {
-		for(int i = 0; i<20; i++) {
-			ld.delete(i);
-		}
-		for(int i = 0; i<20; i++) {
-			pd.delete(i);
-		
-		}
-		for(int i = 0; i<20; i++) {
-			ud.delete(i);
-		}
+		ld.deleteAll();
+		pd.deleteAll();
+		ud.deleteAll();
 		assertTrue(true);
 	}
 	

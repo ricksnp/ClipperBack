@@ -34,29 +34,25 @@ public class PostImageDaoTest {
 	}
 	@Test
 	public void B_FindAllPostImage() {
-		assertEquals(19, pid.findAll().get(0).getId());
+		assertEquals(22, pid.findAll().get(0).getId());
 	}
 	@Test
 	public void C_FindPostImageById() {
-		assertEquals(19,pid.findById(19).getId());
+		assertEquals(22,pid.findById(22).getId());
 	}
 	@Test
 	public void D_UpdatePostImage() {
 		assertEquals(postImage, pid.update(postImage));
 	}
+	@Test
+	public void E_DeletePostImage() {
+		assertEquals(pid.findById(22).getId(),pid.delete(22).getId());
+	}
 	@AfterClass
 	public static void Z_DeleteAll() {
-		for(int i = 0; i<20; i++) {
-			pid.delete(i);
-		}
-		for(int i = 0; i<20; i++) {
-			pd.delete(i);
-		
-		}
-		for(int i = 0; i<20; i++) {
-			ud.delete(i);
-		}
-		
+		pid.deleteAll();
+		pd.deleteAll();
+		ud.deleteAll();
 	}
 
 }

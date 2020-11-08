@@ -23,21 +23,23 @@ public class UserDaoTest {
 	}
 	@Test
 	public void B_FindAllUser() {
-		assertEquals(20,ud.findAll().get(0).getId());
+		assertEquals(1,ud.findAll().get(0).getId());
 	}
 	@Test
 	public void C_FindUserById() {
-		assertEquals(20,ud.findById(20).getId());
+		assertEquals(1,ud.findById(1).getId());
 	}
 	@Test
 	public void D_UpdateUser() {
 		assertEquals(user.getId(), ud.update(user).getId());
 	}
+	@Test
+	public void E_DeleteUser() {
+		assertEquals(ud.findById(1).getId(),ud.delete(1).getId());
+	}
 	@AfterClass
 	public static void Z_DeleteAll() {
-		for(int i = 0; i<20; i++) {
-			ud.delete(i);
-		}
+		ud.deleteAll();
 	}
 
 }

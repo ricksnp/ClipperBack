@@ -12,68 +12,74 @@ import com.clipper.model.Like;
 import com.clipper.model.Post;
 import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.clipper.model.Like;
 
 @Repository
 public class LikeDao implements Dao&lt;Like, Integer&gt; {
 
-	private SessionFactory sessionFactory;
+	private SessionFactory factory;
 	
-<span class="nc" id="L21">	public LikeDao(SessionFactory sessionFactory) {</span>
-<span class="nc" id="L22">		this.sessionFactory = sessionFactory;</span>
-<span class="nc" id="L23">	}</span>
+	@Autowired
+	public LikeDao(SessionFactory factory) {
+<span class="nc" id="L27">		super();</span>
+<span class="nc" id="L28">		this.factory = factory;</span>
+<span class="nc" id="L29">	}</span>
+<span class="fc" id="L30">	public LikeDao() {</span>
+<span class="fc" id="L31">		this.factory = HibernateUtil.getSessionFactory();</span>
+<span class="fc" id="L32">	}</span>
 	
-<span class="fc" id="L25">	public LikeDao() {</span>
-<span class="fc" id="L26">		this.sessionFactory = HibernateUtil.getSessionFactory();</span>
-
-<span class="fc" id="L28">	}</span>
-
 	@Override
 	public List&lt;Like&gt; findAll() {
-<span class="fc" id="L32">		List&lt;Like&gt; list = sessionFactory.openSession()</span>
-<span class="fc" id="L33">				.createNativeQuery(&quot;select * from dev.likes&quot;, Like.class).list();</span>
-<span class="fc" id="L34">		return list;</span>
+<span class="fc" id="L36">		List&lt;Like&gt; list = factory.openSession()</span>
+<span class="fc" id="L37">				.createQuery(&quot;from Like&quot;, Like.class).list();</span>
+<span class="fc" id="L38">		return list;</span>
 	}
 
 	@Override
 	public Like findById(Integer i) {
-<span class="fc" id="L39">		Session sess = sessionFactory.openSession();</span>
-<span class="fc" id="L40">		return sess.createQuery(&quot;from Like where id = &quot; + i, Like.class).list().get(0);</span>
+<span class="fc" id="L43">		Session sess = factory.openSession();</span>
+<span class="fc" id="L44">		Like result = sess.createQuery(&quot;from Like where id = &quot; + i, Like.class).list().get(0);</span>
+<span class="fc" id="L45">		sess.close();</span>
+<span class="fc" id="L46">		return result;</span>
 	}
 
 	@Override
 	public Like update(Like t) {
-<span class="fc" id="L45">		Session sess = sessionFactory.openSession();</span>
-<span class="fc" id="L46">		Transaction tx = sess.beginTransaction();</span>
-<span class="fc" id="L47">		sess.merge(t);</span>
-<span class="fc" id="L48">		tx.commit();</span>
-<span class="fc" id="L49">		return t;</span>
+<span class="fc" id="L51">		SessionFactory sesfact = factory;</span>
+<span class="fc" id="L52">		Session sess = sesfact.openSession();</span>
+<span class="fc" id="L53">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L54">		sess.merge(t);</span>
+<span class="fc" id="L55">		tx.commit();</span>
+<span class="fc" id="L56">		return t;</span>
 	}
 
 	@Override
 	public Like save(Like t) {
-		
-<span class="fc" id="L55">		Session sess = sessionFactory.openSession();</span>
-<span class="fc" id="L56">		Transaction tx = sess.beginTransaction();</span>
-<span class="fc" id="L57">		sess.save(t);</span>
-<span class="fc" id="L58">		tx.commit();</span>
-<span class="fc" id="L59">		return t;</span>
+<span class="fc" id="L61">		SessionFactory sesfact = factory;</span>
+<span class="fc" id="L62">		Session sess = sesfact.openSession();</span>
+<span class="fc" id="L63">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L64">		sess.save(t);</span>
+<span class="fc" id="L65">		tx.commit();</span>
+<span class="fc" id="L66">		return t;</span>
 	}
 
-	
 	@Override
 	 public Like delete(Integer i) {
-<span class="fc" id="L65">		  Session sess = sessionFactory.openSession();</span>
-<span class="fc" id="L66">	        Query q = sess.createQuery(&quot;delete from Like where id = :i&quot;);</span>
-	        
-<span class="fc" id="L68">	        Transaction tx = sess.beginTransaction();</span>
-<span class="fc" id="L69">	        q.setParameter(&quot;i&quot;, i);</span>
-	        
-<span class="fc" id="L71">	        int result = q.executeUpdate();</span>
-	        //sess.query(&quot;delete from User where user_id = &quot; + i, User.class).list().get(0);
-<span class="fc" id="L73">	        tx.commit();</span>
-	        
-<span class="fc" id="L75">	        return new Like();</span>
+<span class="fc" id="L71">		Like p = findById(i);</span>
+		
+<span class="fc" id="L73">		Session sess = factory.openSession();</span>
+<span class="fc" id="L74">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L75">		sess.delete(p);</span>
+<span class="fc" id="L76">		tx.commit();</span>
+<span class="fc" id="L77">		return p;</span>
 	    }
+	public void deleteAll() {
+<span class="fc" id="L80">		Session sess = factory.openSession();</span>
+<span class="fc" id="L81">		sess.createQuery(&quot;delete from Like&quot;);</span>
+<span class="fc" id="L82">	}</span>
 	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

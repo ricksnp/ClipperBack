@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.clipper.model.Post;
 import com.clipper.model.PostImage;
 import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
@@ -64,16 +65,17 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage delete(Integer i) {
+		PostImage p = findById(i);
+		
 		Session sess = factory.openSession();
-		Query q = sess.createQuery("delete from PostImage where id = :i");
-		
 		Transaction tx = sess.beginTransaction();
-		q.setParameter("i", i);
-		
-		int result = q.executeUpdate();
-		//sess.query("delete from User where user_id = " + i, User.class).list().get(0);
+		sess.delete(p);
 		tx.commit();
-		
-		return new PostImage();
+		return p;
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from PostImage");
+	}
+	
 }

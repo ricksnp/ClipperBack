@@ -70,4 +70,9 @@ public class UserDao implements Dao<User, Integer> {
 		tx.commit();
 		return u;
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from User");
+	}
+	
 }
