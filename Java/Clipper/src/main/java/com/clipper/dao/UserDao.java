@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +25,7 @@ public class UserDao implements Dao<User, Integer> {
 	@Override
 	public List<User> findAll() {
 		List<User> list = factory.openSession()
-				.createNativeQuery("select * from dev.users", User.class).list();
+				.createNativeQuery("select * from users", User.class).list();
 		return list;
 	}
 
@@ -58,8 +57,6 @@ public class UserDao implements Dao<User, Integer> {
 		return t;
 	}
 
-
-	
 	@Override
 	public User delete(Integer i) {
 		User u = findById(i);
