@@ -5,10 +5,14 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.clipper.model.Post;
 import com.clipper.model.PostImage;
+import com.clipper.model.User;
+import com.clipper.util.HibernateUtil;
 
 @Repository
 public class PostImageDao implements Dao<PostImage, Integer> {
@@ -20,12 +24,14 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		super();
 		this.factory = factory;
 	}
-	public PostImageDao() {}
+	public PostImageDao() {
+		this.factory = HibernateUtil.getSessionFactory();
+	}
 	
 	@Override
 	public List<PostImage> findAll() {
 		List<PostImage> list = factory.openSession()
-				.createNativeQuery("select * from post_images", PostImage.class).list();
+				.createQuery("from PostImage", PostImage.class).list();
 		return list;
 	}
 
@@ -59,12 +65,17 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 
 	@Override
 	public PostImage delete(Integer i) {
-		PostImage pi = findById(i);
+		PostImage p = findById(i);
 		
 		Session sess = factory.openSession();
 		Transaction tx = sess.beginTransaction();
-		sess.delete(pi);
+		sess.delete(p);
 		tx.commit();
-		return pi;
+		return p;
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from PostImage");
+	}
+	
 }

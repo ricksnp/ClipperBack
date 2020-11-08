@@ -9,16 +9,16 @@ import org.hibernate.cfg.Configuration;
 	private static SessionFactory sesfact;
 	
 	private static SessionFactory buildSessionFactory() {
-<span class="nc" id="L12">		Configuration config = new Configuration();</span>
-<span class="nc" id="L13">		config.configure(&quot;hibernate.cfg.xml&quot;);</span>
-<span class="nc" id="L14">		return config.buildSessionFactory();</span>
+<span class="fc" id="L12">		Configuration config = new Configuration();</span>
+<span class="fc" id="L13">		config.configure(&quot;hibernate.cfg.xml&quot;);</span>
+<span class="fc" id="L14">		return config.buildSessionFactory();</span>
 	}
 	
 	public static SessionFactory getSessionFactory() {
-<span class="nc bnc" id="L18" title="All 2 branches missed.">		if(sesfact==null) {</span>
-<span class="nc" id="L19">			sesfact = buildSessionFactory();</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		if(sesfact==null) {</span>
+<span class="fc" id="L19">			sesfact = buildSessionFactory();</span>
 		}
-<span class="nc" id="L21">		return sesfact;</span>
+<span class="fc" id="L21">		return sesfact;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

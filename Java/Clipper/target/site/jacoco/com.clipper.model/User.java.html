@@ -3,116 +3,147 @@
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  * The User class holds all information tied to a particular Clipper user.
  */
+
+@Entity(name=&quot;User&quot;)
+@Table(name=&quot;users&quot;)
+@SequenceGenerator(name=&quot;user_ids_sequence&quot;, initialValue=1)
 public class User 
 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = &quot;user_ids_sequence&quot;)
+	@Column(name=&quot;user_id&quot;)
 	private int id;
+	
+	@Column(name=&quot;username&quot;, nullable=false, unique=true)
 	private String username;
+	
+	@Column(name=&quot;password&quot;, nullable=false)
 	private String password;
+	
+	@Column(name=&quot;first_name&quot;, nullable=false)
 	private String firstName;
+	
+	@Column(name=&quot;last_name&quot;, nullable=false)
 	private String lastName;
+	
+//	@Email // javax.validation.constraints.Email
+	@Column(name=&quot;email&quot;, nullable=false, unique=true)
 	private String email;
+	
+	@Column(name=&quot;biography&quot;)
 	private String bio;
 	
 	/**
 	 * The pfpLink is a link to the user's profile picture.
 	 */
+	@Column(name=&quot;pfp_link&quot;, nullable=false, columnDefinition=&quot;varchar default 'https://i.pinimg.com/474x/50/5f/ae/505fae07cccb7098f7e82c82f857b13a.jpg'&quot;)
 	private String pfpLink;
 	
 	/**
 	 * All posts associated made by the User will be tracked here.
 	 */
-	private List&lt;Post&gt; posts;
+	private Set&lt;Post&gt; posts;
 	
 	/**
 	 * All likes made by the User will be tracked here.
 	 */
+	@OneToMany(mappedBy=&quot;user&quot;)
 	private Set&lt;Like&gt; likes;
 	
-<span class="nc" id="L34">	public User() {}</span>
+<span class="fc" id="L65">	public User() {}</span>
 	public User(int id, String username, String password, String firstName, String lastName, String email, String bio,
-			String pfpLink, List&lt;Post&gt; posts, Set&lt;Like&gt; likes) {
-<span class="nc" id="L37">		super();</span>
-<span class="nc" id="L38">		this.id = id;</span>
-<span class="nc" id="L39">		this.username = username;</span>
-<span class="nc" id="L40">		this.password = password;</span>
-<span class="nc" id="L41">		this.firstName = firstName;</span>
-<span class="nc" id="L42">		this.lastName = lastName;</span>
-<span class="nc" id="L43">		this.email = email;</span>
-<span class="nc" id="L44">		this.bio = bio;</span>
-<span class="nc" id="L45">		this.pfpLink = pfpLink;</span>
-<span class="nc" id="L46">		this.posts = posts;</span>
-<span class="nc" id="L47">		this.likes = likes;</span>
-<span class="nc" id="L48">	}</span>
+			String pfpLink, Set&lt;Post&gt; posts, Set&lt;Like&gt; likes) {
+<span class="fc" id="L68">		super();</span>
+<span class="fc" id="L69">		this.id = id;</span>
+<span class="fc" id="L70">		this.username = username;</span>
+<span class="fc" id="L71">		this.password = password;</span>
+<span class="fc" id="L72">		this.firstName = firstName;</span>
+<span class="fc" id="L73">		this.lastName = lastName;</span>
+<span class="fc" id="L74">		this.email = email;</span>
+<span class="fc" id="L75">		this.bio = bio;</span>
+<span class="fc" id="L76">		this.pfpLink = pfpLink;</span>
+<span class="fc" id="L77">		this.posts = posts;</span>
+<span class="fc" id="L78">		this.likes = likes;</span>
+<span class="fc" id="L79">	}</span>
 
 
 	public int getId() {
-<span class="nc" id="L52">		return id;</span>
+<span class="fc" id="L83">		return id;</span>
 	}
 	public void setId(int id) {
-<span class="nc" id="L55">		this.id = id;</span>
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L86">		this.id = id;</span>
+<span class="fc" id="L87">	}</span>
 	public String getUsername() {
-<span class="nc" id="L58">		return username;</span>
+<span class="fc" id="L89">		return username;</span>
 	}
 	public void setUsername(String username) {
-<span class="nc" id="L61">		this.username = username;</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L92">		this.username = username;</span>
+<span class="fc" id="L93">	}</span>
 	public String getPassword() {
-<span class="nc" id="L64">		return password;</span>
+<span class="fc" id="L95">		return password;</span>
 	}
 	public void setPassword(String password) {
-<span class="nc" id="L67">		this.password = password;</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L98">		this.password = password;</span>
+<span class="fc" id="L99">	}</span>
 	public String getFirstName() {
-<span class="nc" id="L70">		return firstName;</span>
+<span class="fc" id="L101">		return firstName;</span>
 	}
 	public void setFirstName(String firstName) {
-<span class="nc" id="L73">		this.firstName = firstName;</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L104">		this.firstName = firstName;</span>
+<span class="fc" id="L105">	}</span>
 	public String getLastName() {
-<span class="nc" id="L76">		return lastName;</span>
+<span class="fc" id="L107">		return lastName;</span>
 	}
 	public void setLastName(String lastName) {
-<span class="nc" id="L79">		this.lastName = lastName;</span>
-<span class="nc" id="L80">	}</span>
+<span class="fc" id="L110">		this.lastName = lastName;</span>
+<span class="fc" id="L111">	}</span>
 	public String getEmail() {
-<span class="nc" id="L82">		return email;</span>
+<span class="fc" id="L113">		return email;</span>
 	}
 	public void setEmail(String email) {
-<span class="nc" id="L85">		this.email = email;</span>
-<span class="nc" id="L86">	}</span>
+<span class="fc" id="L116">		this.email = email;</span>
+<span class="fc" id="L117">	}</span>
 	public String getBio() {
-<span class="nc" id="L88">		return bio;</span>
+<span class="fc" id="L119">		return bio;</span>
 	}
 	public void setBio(String bio) {
-<span class="nc" id="L91">		this.bio = bio;</span>
-<span class="nc" id="L92">	}</span>
+<span class="fc" id="L122">		this.bio = bio;</span>
+<span class="fc" id="L123">	}</span>
 	public String getPfpLink() {
-<span class="nc" id="L94">		return pfpLink;</span>
+<span class="fc" id="L125">		return pfpLink;</span>
 	}
 	public void setPfpLink(String pfpLink) {
-<span class="nc" id="L97">		this.pfpLink = pfpLink;</span>
-<span class="nc" id="L98">	}</span>
-	public List&lt;Post&gt; getPosts() {
-<span class="nc" id="L100">		return posts;</span>
+<span class="fc" id="L128">		this.pfpLink = pfpLink;</span>
+<span class="fc" id="L129">	}</span>
+	public Set&lt;Post&gt; getPosts() {
+<span class="fc" id="L131">		return posts;</span>
 	}
-	public void setPosts(List&lt;Post&gt; posts) {
-<span class="nc" id="L103">		this.posts = posts;</span>
-<span class="nc" id="L104">	}</span>
+	public void setPosts(Set&lt;Post&gt; posts) {
+<span class="fc" id="L134">		this.posts = posts;</span>
+<span class="fc" id="L135">	}</span>
 	public Set&lt;Like&gt; getLikes() {
-<span class="nc" id="L106">		return likes;</span>
+<span class="fc" id="L137">		return likes;</span>
 	}
 	public void setLikes(Set&lt;Like&gt; likes) {
-<span class="nc" id="L109">		this.likes = likes;</span>
-<span class="nc" id="L110">	}</span>
+<span class="fc" id="L140">		this.likes = likes;</span>
+<span class="fc" id="L141">	}</span>
 	@Override
 	public String toString() {
-<span class="nc" id="L113">		return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, password=&quot; + password + &quot;, firstName=&quot; + firstName</span>
-<span class="nc" id="L114">				+ &quot;, lastName=&quot; + lastName + &quot;, email=&quot; + email + &quot;, bio=&quot; + bio + &quot;, pfpLink=&quot; + pfpLink + &quot;, posts=&quot;</span>
-<span class="nc" id="L115">				+ posts + &quot;, likes=&quot; + likes + &quot;]&quot;;</span>
+<span class="nc" id="L144">		return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, password=&quot; + password + &quot;, firstName=&quot; + firstName</span>
+				+ &quot;, lastName=&quot; + lastName + &quot;, email=&quot; + email + &quot;, bio=&quot; + bio + &quot;, pfpLink=&quot; + pfpLink + &quot;, posts=&quot;
+				+ &quot;[lots of posts]&quot; + &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

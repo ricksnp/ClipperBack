@@ -40,8 +40,7 @@ public class Post
 	/**
 	 * All images associated with a post.
 	 */
-	@OneToMany(mappedBy="id")
-	private List<PostImage> images;
+	private Set<PostImage> images;
 	
 	/**
 	 * All likes associated with a post.
@@ -51,7 +50,7 @@ public class Post
 	
 	public Post() {}
 
-	public Post(int id, String textContent, User user, List<PostImage> images, Set<Like> likes) {
+	public Post(int id, String textContent, User user, Set<PostImage> images, Set<Like> likes) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -84,11 +83,11 @@ public class Post
 		this.textContent = textContent;
 	}
 
-	public List<PostImage> getImages() {
+	public Set<PostImage> getImages() {
 		return images;
 	}
 
-	public void setImages(List<PostImage> images) {
+	public void setImages(Set<PostImage> images) {
 		this.images = images;
 	}
 

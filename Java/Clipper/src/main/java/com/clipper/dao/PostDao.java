@@ -5,10 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.clipper.model.Post;
+import com.clipper.util.HibernateUtil;
 
 @Repository
 public class PostDao implements Dao<Post, Integer> {
@@ -20,12 +22,14 @@ public class PostDao implements Dao<Post, Integer> {
 		super();
 		this.factory = factory;
 	}
-	public PostDao() {}
+	public PostDao() {
+		this.factory = HibernateUtil.getSessionFactory();
+	}
 	
 	@Override
 	public List<Post> findAll() {
 		List<Post> list = factory.openSession()
-				.createNativeQuery("select * from posts", Post.class).list();
+				.createQuery("from Post", Post.class).list();
 		return list;
 	}
 
@@ -67,5 +71,10 @@ public class PostDao implements Dao<Post, Integer> {
 		tx.commit();
 		return p;
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from Post");
+	}
+	
 
 }

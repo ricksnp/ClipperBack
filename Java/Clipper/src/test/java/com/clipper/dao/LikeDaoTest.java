@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,13 +28,13 @@ public class LikeDaoTest {
 	private static UserDao ud = new UserDao();
 	private static PostDao pd = new PostDao();
 	private Like l = new Like(0,post,user);
-	private LikeDao ld;
+	private static LikeDao ld = new LikeDao();
 	
 	@Before
 	public void prepare() throws Exception {
 		ud.save(user);
 		pd.save(post);
-		ld =  new LikeDao();
+		
 	}
 	
 	@Test
@@ -42,16 +43,25 @@ public class LikeDaoTest {
 	}
 	@Test
 	public void B_FindAllLikes() {
-		List<Like> ll = new ArrayList<>();
-		ll.add(l);
-		assertEquals(ll.get(0).getLikeId(), ld.findAll().get(0).getLikeId());
+		assertEquals(3, ld.findAll().get(0).getLikeId());
 	}
 	@Test
-	public void Z_DeleteAll() {
-		for(int i = 0; i<20; i++) {
-			ud.delete(i);
-			pd.delete(i);;
-		}
+	public void C_FindById() {
+		assertEquals(3, ld.findById(3).getLikeId());
+	}
+	@Test
+	public void D_Update() {
+		assertEquals(l.getLikeId(),ld.update(l).getLikeId());
+	}
+	@Test
+	public void E_Delete() {
+		assertEquals(ld.findById(3),ld.delete(3));
+	}
+	@AfterClass
+	public static void Z_DeleteAll() {
+		ld.deleteAll();
+		pd.deleteAll();
+		ud.deleteAll();
 		assertTrue(true);
 	}
 	

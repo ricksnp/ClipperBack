@@ -5,49 +5,75 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.clipper.model.User;
 import com.clipper.util.HibernateUtil;
 
-<span class="nc" id="L12">public class UserDao implements Dao&lt;User, Integer&gt; {</span>
+@Repository
+public class UserDao implements Dao&lt;User, Integer&gt; {
 
+	private SessionFactory factory;
+	
+	@Autowired
+	public UserDao(SessionFactory factory) {
+<span class="nc" id="L21">		super();</span>
+<span class="nc" id="L22">		this.factory = factory;</span>
+<span class="nc" id="L23">	}</span>
+<span class="fc" id="L24">	public UserDao() {</span>
+<span class="fc" id="L25">		this.factory = HibernateUtil.getSessionFactory();</span>
+<span class="fc" id="L26">	}</span>
+	
 	@Override
 	public List&lt;User&gt; findAll() {
-<span class="nc" id="L16">		List&lt;User&gt; list = HibernateUtil.getSessionFactory().openSession()</span>
-<span class="nc" id="L17">				.createNativeQuery(&quot;select * from users&quot;, User.class).list();</span>
-<span class="nc" id="L18">		return list;</span>
+<span class="fc" id="L30">		List&lt;User&gt; list = factory.openSession()</span>
+<span class="fc" id="L31">				.createQuery(&quot;from User&quot;, User.class).list();</span>
+<span class="fc" id="L32">		return list;</span>
 	}
 
 	@Override
 	public User findById(Integer i) {
-<span class="nc" id="L23">		Session sess = HibernateUtil.getSessionFactory().openSession();</span>
-<span class="nc" id="L24">		return sess.createQuery(&quot;from User where id = &quot; + i, User.class).list().get(0);</span>
+<span class="fc" id="L37">		Session sess = factory.openSession();</span>
+<span class="fc" id="L38">		User result = sess.createQuery(&quot;from User where id = &quot; + i, User.class).list().get(0);</span>
+<span class="fc" id="L39">		sess.close();</span>
+<span class="fc" id="L40">		return result;</span>
 	}
 
 	@Override
 	public User update(User t) {
-<span class="nc" id="L29">		SessionFactory sesfact = HibernateUtil.getSessionFactory();</span>
-<span class="nc" id="L30">		Session sess = sesfact.openSession();</span>
-<span class="nc" id="L31">		Transaction tx = sess.beginTransaction();</span>
-<span class="nc" id="L32">		sess.merge(t);</span>
-<span class="nc" id="L33">		tx.commit();</span>
-<span class="nc" id="L34">		return t;</span>
+<span class="fc" id="L45">		SessionFactory sesfact = factory;</span>
+<span class="fc" id="L46">		Session sess = sesfact.openSession();</span>
+<span class="fc" id="L47">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L48">		sess.merge(t);</span>
+<span class="fc" id="L49">		tx.commit();</span>
+<span class="fc" id="L50">		return t;</span>
 	}
 
 	@Override
 	public User save(User t) {
-<span class="nc" id="L39">		SessionFactory sesfact = HibernateUtil.getSessionFactory();</span>
-<span class="nc" id="L40">		Session sess = sesfact.openSession();</span>
-<span class="nc" id="L41">		Transaction tx = sess.beginTransaction();</span>
-<span class="nc" id="L42">		sess.save(t);</span>
-<span class="nc" id="L43">		tx.commit();</span>
-<span class="nc" id="L44">		return t;</span>
+<span class="fc" id="L55">		SessionFactory sesfact = factory;</span>
+<span class="fc" id="L56">		Session sess = sesfact.openSession();</span>
+<span class="fc" id="L57">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L58">		sess.save(t);</span>
+<span class="fc" id="L59">		tx.commit();</span>
+<span class="fc" id="L60">		return t;</span>
 	}
 
 	@Override
 	public User delete(Integer i) {
-<span class="nc" id="L49">		Session sess = HibernateUtil.getSessionFactory().openSession();</span>
-<span class="nc" id="L50">		return sess.createQuery(&quot;delete from User where id = &quot; + i, User.class).list().get(0);</span>
+<span class="fc" id="L65">		User u = findById(i);</span>
+		
+<span class="fc" id="L67">		Session sess = factory.openSession();</span>
+<span class="fc" id="L68">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L69">		sess.delete(u);</span>
+<span class="fc" id="L70">		tx.commit();</span>
+<span class="fc" id="L71">		return u;</span>
 	}
+	public void deleteAll() {
+<span class="fc" id="L74">		Session sess = factory.openSession();</span>
+<span class="fc" id="L75">		sess.createQuery(&quot;delete from User&quot;);</span>
+<span class="fc" id="L76">	}</span>
+	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
