@@ -18,17 +18,15 @@ export function SignupComponent() {
 
         const user = {
             id: 0,
-            username: "ricksnp",
-            password: "AAA",
-            firstName: "John",
-            lastName: "Leet",
-            email: "clown@gmail.com",
+            username: event.currentTarget["username"].value,
+            password: event.currentTarget["username"].value,
+            firstName: event.currentTarget["firstname"].value,
+            lastName: event.currentTarget["lastname"].value,
+            email: event.currentTarget["email"].value,
             bio: null,
             pfpLink: "None Yet",
             posts: null,
             likes: null
-
-
         }
 
         Axios.post("http://localhost:8080/Clipper/registerUser.json", user).then((response) => {

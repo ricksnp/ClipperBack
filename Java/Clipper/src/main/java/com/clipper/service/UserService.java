@@ -25,4 +25,8 @@ public class UserService {
 		return ud.save(u);
 	}
 	
+	public User loginUser(String username) {
+		return ud.findUserByUsername(username);
+	}
+	
 }

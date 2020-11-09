@@ -1,6 +1,5 @@
 package com.clipper.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -78,7 +77,12 @@ public class User
 		//this.posts = posts;
 		this.likes = likes;
 	}
-
+	
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
 
 	public int getId() {
 		return id;

@@ -67,4 +67,13 @@ public class UserDao implements Dao<User, Integer> {
 		tx.commit();
 		return u;
 	}
+	
+	public User findUserByUsername(String username) {
+		Session sess = factory.openSession();
+		User result = sess.createQuery("from User where username = " + username, User.class).list().get(0);
+		sess.close();
+		return result;
+		
+		
+	}
 }
