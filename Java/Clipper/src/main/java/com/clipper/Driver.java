@@ -12,7 +12,7 @@ import com.clipper.model.User;
 public class Driver {
 
 	public static void main(String[] args) throws ClassNotFoundException {
-				ApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
+		ApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
 
 		UserDao dao = ac.getBean(UserDao.class);
 		PostDao pdao = ac.getBean(PostDao.class);

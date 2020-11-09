@@ -5,31 +5,27 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.clipper.model.Post;
-import com.clipper.util.HibernateUtil;
 
 @Repository
 public class PostDao implements Dao<Post, Integer> {
 
-	private SessionFactory factory;
+private SessionFactory factory;
 	
 	@Autowired
 	public PostDao(SessionFactory factory) {
 		super();
 		this.factory = factory;
 	}
-	public PostDao() {
-		this.factory = HibernateUtil.getSessionFactory();
-	}
+	public PostDao() {}
 	
 	@Override
 	public List<Post> findAll() {
 		List<Post> list = factory.openSession()
-				.createQuery("from Post", Post.class).list();
+				.createNativeQuery("select * from posts", Post.class).list();
 		return list;
 	}
 

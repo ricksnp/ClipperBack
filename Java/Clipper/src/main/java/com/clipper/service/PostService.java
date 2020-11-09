@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.clipper.model.Post;
 import com.clipper.dao.PostDao;
+import com.clipper.model.Post;
 
 @Service
 public class PostService {
@@ -23,6 +23,8 @@ public class PostService {
 	}
 	
 	public List<Post> findAll(){
+		
+		
 		return pd.findAll();
 	}
 	

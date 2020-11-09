@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * The PostImage class holds a reference to the image link associated with a post.
  * 
@@ -32,6 +34,7 @@ public class PostImage
 	/**
 	 * Post that the image is associated with
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable=false)
 	private Post post;
