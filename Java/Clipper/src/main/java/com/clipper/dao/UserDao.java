@@ -69,7 +69,10 @@ public class UserDao implements Dao<User, Integer> {
 	}
 	public void deleteAll() {
 		Session sess = factory.openSession();
+
+	
 		sess.createQuery("delete from User");
+	
 	}
 	
 }

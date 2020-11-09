@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The User class holds all information tied to a particular Clipper user.
  */
@@ -54,96 +56,99 @@ public class User
 	/**
 	 * All posts associated made by the User will be tracked here.
 	 */
-	private Set&lt;Post&gt; posts;
+	@JsonManagedReference
+	@OneToMany(mappedBy=&quot;user&quot;)
+	private List&lt;Post&gt; posts;
 	
 	/**
 	 * All likes made by the User will be tracked here.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy=&quot;user&quot;)
 	private Set&lt;Like&gt; likes;
 	
-<span class="fc" id="L65">	public User() {}</span>
+<span class="fc" id="L70">	public User() {}</span>
 	public User(int id, String username, String password, String firstName, String lastName, String email, String bio,
-			String pfpLink, Set&lt;Post&gt; posts, Set&lt;Like&gt; likes) {
-<span class="fc" id="L68">		super();</span>
-<span class="fc" id="L69">		this.id = id;</span>
-<span class="fc" id="L70">		this.username = username;</span>
-<span class="fc" id="L71">		this.password = password;</span>
-<span class="fc" id="L72">		this.firstName = firstName;</span>
-<span class="fc" id="L73">		this.lastName = lastName;</span>
-<span class="fc" id="L74">		this.email = email;</span>
-<span class="fc" id="L75">		this.bio = bio;</span>
-<span class="fc" id="L76">		this.pfpLink = pfpLink;</span>
-<span class="fc" id="L77">		this.posts = posts;</span>
-<span class="fc" id="L78">		this.likes = likes;</span>
-<span class="fc" id="L79">	}</span>
+			String pfpLink, List&lt;Post&gt; posts, Set&lt;Like&gt; likes) {
+<span class="fc" id="L73">		super();</span>
+<span class="fc" id="L74">		this.id = id;</span>
+<span class="fc" id="L75">		this.username = username;</span>
+<span class="fc" id="L76">		this.password = password;</span>
+<span class="fc" id="L77">		this.firstName = firstName;</span>
+<span class="fc" id="L78">		this.lastName = lastName;</span>
+<span class="fc" id="L79">		this.email = email;</span>
+<span class="fc" id="L80">		this.bio = bio;</span>
+<span class="fc" id="L81">		this.pfpLink = pfpLink;</span>
+<span class="fc" id="L82">		this.posts = posts;</span>
+<span class="fc" id="L83">		this.likes = likes;</span>
+<span class="fc" id="L84">	}</span>
 
 
 	public int getId() {
-<span class="fc" id="L83">		return id;</span>
+<span class="fc" id="L88">		return id;</span>
 	}
 	public void setId(int id) {
-<span class="fc" id="L86">		this.id = id;</span>
-<span class="fc" id="L87">	}</span>
+<span class="nc" id="L91">		this.id = id;</span>
+<span class="nc" id="L92">	}</span>
 	public String getUsername() {
-<span class="fc" id="L89">		return username;</span>
+<span class="nc" id="L94">		return username;</span>
 	}
 	public void setUsername(String username) {
-<span class="fc" id="L92">		this.username = username;</span>
-<span class="fc" id="L93">	}</span>
+<span class="nc" id="L97">		this.username = username;</span>
+<span class="nc" id="L98">	}</span>
 	public String getPassword() {
-<span class="fc" id="L95">		return password;</span>
+<span class="nc" id="L100">		return password;</span>
 	}
 	public void setPassword(String password) {
-<span class="fc" id="L98">		this.password = password;</span>
-<span class="fc" id="L99">	}</span>
+<span class="nc" id="L103">		this.password = password;</span>
+<span class="nc" id="L104">	}</span>
 	public String getFirstName() {
-<span class="fc" id="L101">		return firstName;</span>
+<span class="nc" id="L106">		return firstName;</span>
 	}
 	public void setFirstName(String firstName) {
-<span class="fc" id="L104">		this.firstName = firstName;</span>
-<span class="fc" id="L105">	}</span>
+<span class="nc" id="L109">		this.firstName = firstName;</span>
+<span class="nc" id="L110">	}</span>
 	public String getLastName() {
-<span class="fc" id="L107">		return lastName;</span>
+<span class="nc" id="L112">		return lastName;</span>
 	}
 	public void setLastName(String lastName) {
-<span class="fc" id="L110">		this.lastName = lastName;</span>
-<span class="fc" id="L111">	}</span>
+<span class="nc" id="L115">		this.lastName = lastName;</span>
+<span class="nc" id="L116">	}</span>
 	public String getEmail() {
-<span class="fc" id="L113">		return email;</span>
+<span class="nc" id="L118">		return email;</span>
 	}
 	public void setEmail(String email) {
-<span class="fc" id="L116">		this.email = email;</span>
-<span class="fc" id="L117">	}</span>
+<span class="nc" id="L121">		this.email = email;</span>
+<span class="nc" id="L122">	}</span>
 	public String getBio() {
-<span class="fc" id="L119">		return bio;</span>
+<span class="nc" id="L124">		return bio;</span>
 	}
 	public void setBio(String bio) {
-<span class="fc" id="L122">		this.bio = bio;</span>
-<span class="fc" id="L123">	}</span>
+<span class="nc" id="L127">		this.bio = bio;</span>
+<span class="nc" id="L128">	}</span>
 	public String getPfpLink() {
-<span class="fc" id="L125">		return pfpLink;</span>
+<span class="nc" id="L130">		return pfpLink;</span>
 	}
 	public void setPfpLink(String pfpLink) {
-<span class="fc" id="L128">		this.pfpLink = pfpLink;</span>
-<span class="fc" id="L129">	}</span>
-	public Set&lt;Post&gt; getPosts() {
-<span class="fc" id="L131">		return posts;</span>
+<span class="nc" id="L133">		this.pfpLink = pfpLink;</span>
+<span class="nc" id="L134">	}</span>
+	public List&lt;Post&gt; getPosts() {
+<span class="nc" id="L136">		return posts;</span>
 	}
-	public void setPosts(Set&lt;Post&gt; posts) {
-<span class="fc" id="L134">		this.posts = posts;</span>
-<span class="fc" id="L135">	}</span>
+	public void setPosts(List&lt;Post&gt; posts) {
+<span class="nc" id="L139">		this.posts = posts;</span>
+<span class="nc" id="L140">	}</span>
 	public Set&lt;Like&gt; getLikes() {
-<span class="fc" id="L137">		return likes;</span>
+<span class="nc" id="L142">		return likes;</span>
 	}
 	public void setLikes(Set&lt;Like&gt; likes) {
-<span class="fc" id="L140">		this.likes = likes;</span>
-<span class="fc" id="L141">	}</span>
+<span class="nc" id="L145">		this.likes = likes;</span>
+<span class="nc" id="L146">	}</span>
 	@Override
 	public String toString() {
-<span class="nc" id="L144">		return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, password=&quot; + password + &quot;, firstName=&quot; + firstName</span>
-				+ &quot;, lastName=&quot; + lastName + &quot;, email=&quot; + email + &quot;, bio=&quot; + bio + &quot;, pfpLink=&quot; + pfpLink + &quot;, posts=&quot;
-				+ &quot;[lots of posts]&quot; + &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;
+<span class="nc" id="L149">		return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, password=&quot; + password + &quot;, firstName=&quot; + firstName</span>
+<span class="nc" id="L150">				+ &quot;, lastName=&quot; + lastName + &quot;, email=&quot; + email + &quot;, bio=&quot; + bio + &quot;, pfpLink=&quot; + pfpLink + &quot;, posts=&quot;</span>
+<span class="nc" id="L151">				+ &quot;[lots of posts]&quot; + &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

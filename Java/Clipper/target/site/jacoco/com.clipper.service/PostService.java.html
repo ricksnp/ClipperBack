@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.clipper.model.Post;
 import com.clipper.dao.PostDao;
+import com.clipper.model.Post;
 
 @Service
-<span class="nc" id="L12">public class PostService {</span>
+<span class="fc" id="L12">public class PostService {</span>
 
 	private PostDao pd;
 
@@ -19,11 +19,13 @@ import com.clipper.dao.PostDao;
 
 	@Autowired
 	public void setPd(PostDao pd) {
-<span class="nc" id="L22">		this.pd = pd;</span>
-<span class="nc" id="L23">	}</span>
+<span class="fc" id="L22">		this.pd = pd;</span>
+<span class="fc" id="L23">	}</span>
 	
 	public List&lt;Post&gt; findAll(){
-<span class="nc" id="L26">		return pd.findAll();</span>
+		
+		
+<span class="nc" id="L28">		return pd.findAll();</span>
 	}
 	
 }

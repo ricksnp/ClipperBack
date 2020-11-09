@@ -3,36 +3,57 @@
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clipper.dao.PostDao;
+import com.clipper.dao.UserDao;
 import com.clipper.model.Post;
+import com.clipper.model.User;
 import com.clipper.service.PostService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping(&quot;/posts.json&quot;)
-<span class="nc" id="L19">public class PostController {</span>
+<span class="fc" id="L23">public class PostController {</span>
 
 	private PostService ps;
 
 	public PostService getPps() {
-<span class="nc" id="L24">		return ps;</span>
+<span class="nc" id="L28">		return ps;</span>
 	}
 
 	@Autowired
 	public void setPps(PostService ps) {
-<span class="nc" id="L29">		this.ps = ps;</span>
-<span class="nc" id="L30">	}</span>
+<span class="fc" id="L33">		this.ps = ps;</span>
+<span class="fc" id="L34">	}</span>
 
 	@GetMapping
-	public @ResponseBody List&lt;Post&gt; getAll() {
-		//ObjectMapper om = new ObjectMapper();
-<span class="nc" id="L35">		return ps.findAll();</span>
+	public @ResponseBody List&lt;User&gt; getAll() {
+<span class="nc" id="L38">		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;config.xml&quot;);</span>
+
+<span class="nc" id="L40">		UserDao dao = ac.getBean(UserDao.class);</span>
+<span class="nc" id="L41">		PostDao pdao = ac.getBean(PostDao.class);</span>
+		
+		
+<span class="nc" id="L44">		dao.save(new User(0, &quot;nathan1&quot;, &quot;AAA&quot;, &quot;Nathan&quot;, &quot;Ricks&quot;, &quot;ricks@gmail.com&quot;, &quot;lol bio&quot;, &quot;pfp link&quot;, null, null));</span>
+<span class="nc" id="L45">		dao.save(new User(0, &quot;user2&quot;, &quot;password&quot;, &quot;User&quot;, &quot;Name&quot;, &quot;user@nothing.net&quot;, &quot;biography&quot;, &quot;profile pic&quot;, null, null));</span>
+		
+<span class="nc" id="L47">		pdao.save(new Post(0, &quot;Hello World&quot;, dao.findById(2), null, null));</span>
+		
+<span class="nc" id="L49">		System.out.println(dao.delete(1));</span>
+		
+<span class="nc" id="L51">		System.out.println(dao.findAll());</span>
+		
+<span class="nc" id="L53">		System.out.println(pdao.findAll());</span>
+<span class="nc" id="L54">		System.out.println(&quot;Success!&quot;);</span>
+		
+<span class="nc" id="L56">		return dao.findAll();</span>
 	}
 
 }

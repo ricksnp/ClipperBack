@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.AfterClass;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -24,17 +24,20 @@ public class LikeDaoTest {
 	
 	private static ApplicationContext ac = new ClassPathXmlApplicationContext("config2.xml");
 	
-	private User user = new User(0,"Jmann","wasspord","James","James","james@james.net","My name Jeff", "#", null, null);
-	private Post post = new Post(0, "James is great", user, null, null);
+	private static User user = new User(0,"Jmann","wasspord","James","James","james@james.net","My name Jeff", "#", null, null);
+	private static Post post = new Post(0, "James is great", user, null, null);
 	private static UserDao ud = ac.getBean(UserDao.class);
 	private static PostDao pd = ac.getBean(PostDao.class);
-	private Like l = new Like(0,post,user);
+	private static Like l ;
 	private static LikeDao ld = ac.getBean(LikeDao.class);
 	
-	@Before
-	public void prepare() throws Exception {
+	@BeforeClass
+	public static  void prepare() throws Exception {
 		ud.save(user);
 		pd.save(post);
+		User u = ud.findAll().get(0);
+		Post p = pd.findAll().get(0);
+		l = new Like(0, p,u);
 		
 	}
 	
@@ -44,11 +47,11 @@ public class LikeDaoTest {
 	}
 	@Test
 	public void B_FindAllLikes() {
-		assertEquals(3, ld.findAll().get(0).getLikeId());
+		assertEquals(1, ld.findAll().get(0).getLikeId());
 	}
 	@Test
 	public void C_FindById() {
-		assertEquals(3, ld.findById(3).getLikeId());
+		assertEquals(1, ld.findById(1).getLikeId());
 	}
 	@Test
 	public void D_Update() {
@@ -56,7 +59,7 @@ public class LikeDaoTest {
 	}
 	@Test
 	public void E_Delete() {
-		assertEquals(ld.findById(3),ld.delete(3));
+		assertEquals(ld.findById(1),ld.delete(1));
 	}
 	@AfterClass
 	public static void Z_DeleteAll() {

@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The Post class holds all content associated with a Clipper post.
  */
@@ -33,6 +36,7 @@ public class Post
 	/**
 	 * The parent User
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = &quot;user_id&quot;, referencedColumnName = &quot;user_id&quot;, nullable=false)
 	private User user;
@@ -40,69 +44,72 @@ public class Post
 	/**
 	 * All images associated with a post.
 	 */
-	private Set&lt;PostImage&gt; images;
+	@JsonManagedReference
+	@OneToMany(mappedBy=&quot;id&quot;)
+	private List&lt;PostImage&gt; images;
 	
 	/**
 	 * All likes associated with a post.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy=&quot;likeId&quot;)
 	private Set&lt;Like&gt; likes;
 	
-<span class="fc" id="L51">	public Post() {}</span>
+<span class="fc" id="L58">	public Post() {}</span>
 
-	public Post(int id, String textContent, User user, Set&lt;PostImage&gt; images, Set&lt;Like&gt; likes) {
-<span class="fc" id="L54">		super();</span>
-<span class="fc" id="L55">		this.id = id;</span>
-<span class="fc" id="L56">		this.user = user;</span>
-<span class="fc" id="L57">		this.textContent = textContent;</span>
-<span class="fc" id="L58">		this.images = images;</span>
-<span class="fc" id="L59">		this.likes = likes;</span>
-<span class="fc" id="L60">	}</span>
+	public Post(int id, String textContent, User user, List&lt;PostImage&gt; images, Set&lt;Like&gt; likes) {
+<span class="fc" id="L61">		super();</span>
+<span class="fc" id="L62">		this.id = id;</span>
+<span class="fc" id="L63">		this.user = user;</span>
+<span class="fc" id="L64">		this.textContent = textContent;</span>
+<span class="fc" id="L65">		this.images = images;</span>
+<span class="fc" id="L66">		this.likes = likes;</span>
+<span class="fc" id="L67">	}</span>
 
 	public int getId() {
-<span class="fc" id="L63">		return id;</span>
+<span class="fc" id="L70">		return id;</span>
 	}
 
 	public void setId(int id) {
-<span class="fc" id="L67">		this.id = id;</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L74">		this.id = id;</span>
+<span class="nc" id="L75">	}</span>
 
 	public User getUser() {
-<span class="fc" id="L71">		return user;</span>
+<span class="nc" id="L78">		return user;</span>
 	}
 
 	public void setUser(User user) {
-<span class="fc" id="L75">		this.user = user;</span>
-<span class="fc" id="L76">	}</span>
+<span class="nc" id="L82">		this.user = user;</span>
+<span class="nc" id="L83">	}</span>
 
 	public String getTextContent() {
-<span class="fc" id="L79">		return textContent;</span>
+<span class="nc" id="L86">		return textContent;</span>
 	}
 
 	public void setTextContent(String textContent) {
-<span class="fc" id="L83">		this.textContent = textContent;</span>
-<span class="fc" id="L84">	}</span>
+<span class="nc" id="L90">		this.textContent = textContent;</span>
+<span class="nc" id="L91">	}</span>
 
-	public Set&lt;PostImage&gt; getImages() {
-<span class="fc" id="L87">		return images;</span>
+	public List&lt;PostImage&gt; getImages() {
+<span class="nc" id="L94">		return images;</span>
 	}
 
-	public void setImages(Set&lt;PostImage&gt; images) {
-<span class="fc" id="L91">		this.images = images;</span>
-<span class="fc" id="L92">	}</span>
+	public void setImages(List&lt;PostImage&gt; images) {
+<span class="nc" id="L98">		this.images = images;</span>
+<span class="nc" id="L99">	}</span>
 
 	public Set&lt;Like&gt; getLikes() {
-<span class="fc" id="L95">		return likes;</span>
+<span class="nc" id="L102">		return likes;</span>
 	}
 
 	public void setLikes(Set&lt;Like&gt; likes) {
-<span class="fc" id="L99">		this.likes = likes;</span>
-<span class="fc" id="L100">	}</span>
+<span class="nc" id="L106">		this.likes = likes;</span>
+<span class="nc" id="L107">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L104">		return &quot;Post [id=&quot; + id + &quot;, user=&quot; + &quot;[a user]&quot; + &quot;, textContent=&quot; + textContent + &quot;, images=&quot; + &quot;[images]&quot;</span>
-				+ &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;
+<span class="nc" id="L111">		return &quot;Post [id=&quot; + id + &quot;, user=&quot; + &quot;[a user]&quot; + &quot;, textContent=&quot; + textContent + &quot;, images=&quot; + &quot;[images]&quot;</span>
+<span class="nc" id="L112">				+ &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;</span>
 	}
 	
 }
