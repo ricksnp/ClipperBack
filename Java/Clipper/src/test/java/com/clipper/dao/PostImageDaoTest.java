@@ -2,13 +2,13 @@ package com.clipper.dao;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashSet;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.clipper.model.Post;
 import com.clipper.model.PostImage;
@@ -17,12 +17,15 @@ import com.clipper.model.User;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PostImageDaoTest {
+	
+	private static ApplicationContext ac = new ClassPathXmlApplicationContext("config2.xml");
+	
 	private User user = new User(0,"Jmann","wasspord","James","James","james@james.net","My name Jeff", "#", null, null);
-	private Post post = new Post(0, "James is great",user, new HashSet<>(), new HashSet<>());
+	private Post post = new Post(0, "James is great",user, null, null);
 	private PostImage postImage = new PostImage(0,"img.link",post);
-	private static UserDao ud = new UserDao();
-	private static PostDao pd = new PostDao();
-	private static PostImageDao pid = new PostImageDao();
+	private static UserDao ud = ac.getBean(UserDao.class);
+	private static PostDao pd = ac.getBean(PostDao.class);
+	private static PostImageDao pid = ac.getBean(PostImageDao.class);
 	@Before
 	public void prepare() throws Exception {
 		ud.save(user);

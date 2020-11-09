@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.clipper.model.User;
-import com.clipper.util.HibernateUtil;
 
 @Repository
 public class UserDao implements Dao<User, Integer> {
@@ -21,14 +20,12 @@ public class UserDao implements Dao<User, Integer> {
 		super();
 		this.factory = factory;
 	}
-	public UserDao() {
-		this.factory = HibernateUtil.getSessionFactory();
-	}
+	public UserDao() { }
 	
 	@Override
 	public List<User> findAll() {
 		List<User> list = factory.openSession()
-				.createQuery("from User", User.class).list();
+				.createNativeQuery("select * from users", User.class).list();
 		return list;
 	}
 

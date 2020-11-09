@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The User class holds all information tied to a particular Clipper user.
  */
@@ -54,17 +56,20 @@ public class User
 	/**
 	 * All posts associated made by the User will be tracked here.
 	 */
-	private Set<Post> posts;
+	@JsonManagedReference
+	@OneToMany(mappedBy="user")
+	private List<Post> posts;
 	
 	/**
 	 * All likes made by the User will be tracked here.
 	 */
+	@JsonManagedReference
 	@OneToMany(mappedBy="user")
 	private Set<Like> likes;
 	
 	public User() {}
 	public User(int id, String username, String password, String firstName, String lastName, String email, String bio,
-			String pfpLink, Set<Post> posts, Set<Like> likes) {
+			String pfpLink, List<Post> posts, Set<Like> likes) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -127,10 +132,10 @@ public class User
 	public void setPfpLink(String pfpLink) {
 		this.pfpLink = pfpLink;
 	}
-	public Set<Post> getPosts() {
+	public List<Post> getPosts() {
 		return posts;
 	}
-	public void setPosts(Set<Post> posts) {
+	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
 	public Set<Like> getLikes() {

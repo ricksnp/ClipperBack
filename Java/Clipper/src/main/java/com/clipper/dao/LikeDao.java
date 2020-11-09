@@ -5,13 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.springframework.stereotype.Repository;
-
-import com.clipper.model.Like;
-import com.clipper.model.Post;
-import com.clipper.model.User;
-import com.clipper.util.HibernateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,14 +20,12 @@ public class LikeDao implements Dao<Like, Integer> {
 		super();
 		this.factory = factory;
 	}
-	public LikeDao() {
-		this.factory = HibernateUtil.getSessionFactory();
-	}
+	public LikeDao() {}
 	
 	@Override
 	public List<Like> findAll() {
 		List<Like> list = factory.openSession()
-				.createQuery("from Like", Like.class).list();
+				.createNativeQuery("select * from likes", Like.class).list();
 		return list;
 	}
 
@@ -67,15 +58,16 @@ public class LikeDao implements Dao<Like, Integer> {
 	}
 
 	@Override
-	 public Like delete(Integer i) {
-		Like p = findById(i);
+	public Like delete(Integer i) {
+		Like l = findById(i);
 		
 		Session sess = factory.openSession();
 		Transaction tx = sess.beginTransaction();
-		sess.delete(p);
+		sess.delete(l);
 		tx.commit();
-		return p;
-	    }
+		return l;
+	}
+	
 	public void deleteAll() {
 		Session sess = factory.openSession();
 		sess.createQuery("delete from Like");

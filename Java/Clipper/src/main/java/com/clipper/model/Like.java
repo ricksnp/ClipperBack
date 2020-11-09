@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * The Like class holds which Users have liked which Posts.
@@ -21,7 +24,7 @@ import javax.persistence.Table;
  * when Likes are stored in a Set.
  */
 @Entity(name="Like")
-@Table(name="likes")
+@Table(name="likes", uniqueConstraints= {@UniqueConstraint(columnNames= {"post_id", "user_id"})})
 @SequenceGenerator(name="like_ids_sequence", initialValue=1)
 public class Like 
 {
@@ -33,6 +36,7 @@ public class Like
 	/**
 	 * The Post being liked
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable=false)
 	private Post post;
@@ -40,6 +44,7 @@ public class Like
 	/**
 	 * The User liking the Post
 	 */
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable=false)
 	private User user;
