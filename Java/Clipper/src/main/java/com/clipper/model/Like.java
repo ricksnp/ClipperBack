@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  * when Likes are stored in a Set.
  */
 @Entity(name="Like")
-@Table(name="likes")
+@Table(name="likes", uniqueConstraints=@UniqueConstraint(columnNames= {"post_id", "user_id"}))
 @SequenceGenerator(name="like_ids_sequence", initialValue=1, allocationSize=1)
 public class Like 
 {
