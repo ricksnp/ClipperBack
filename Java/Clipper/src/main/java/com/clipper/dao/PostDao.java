@@ -13,7 +13,7 @@ import com.clipper.model.Post;
 @Repository
 public class PostDao implements Dao<Post, Integer> {
 
-	private SessionFactory factory;
+private SessionFactory factory;
 	
 	@Autowired
 	public PostDao(SessionFactory factory) {
@@ -67,5 +67,10 @@ public class PostDao implements Dao<Post, Integer> {
 		tx.commit();
 		return p;
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from Post");
+	}
+	
 
 }

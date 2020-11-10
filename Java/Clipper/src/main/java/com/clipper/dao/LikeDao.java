@@ -68,4 +68,9 @@ public class LikeDao implements Dao<Like, Integer> {
 		return l;
 	}
 	
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from Like");
+	}
+	
 }

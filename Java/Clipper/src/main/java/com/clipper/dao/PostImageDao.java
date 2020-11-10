@@ -67,4 +67,9 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		tx.commit();
 		return pi;
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from PostImage");
+	}
+	
 }

@@ -20,7 +20,7 @@ public class UserDao implements Dao<User, Integer> {
 		super();
 		this.factory = factory;
 	}
-	public UserDao() {}
+	public UserDao() { }
 	
 	@Override
 	public List<User> findAll() {
@@ -76,4 +76,9 @@ public class UserDao implements Dao<User, Integer> {
 		
 		
 	}
+	public void deleteAll() {
+		Session sess = factory.openSession();
+		sess.createQuery("delete from User");
+	}
+	
 }
