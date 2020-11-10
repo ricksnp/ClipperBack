@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clipper.model.User;
 import com.clipper.service.UserService;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 @Controller
 @CrossOrigin
