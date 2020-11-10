@@ -35,25 +35,7 @@ public class PostController {
 
 	@GetMapping
 	public @ResponseBody List<User> getAll() {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
-
-		UserDao dao = ac.getBean(UserDao.class);
-		PostDao pdao = ac.getBean(PostDao.class);
-		
-		
-		dao.save(new User(0, "nathan1", "AAA", "Nathan", "Ricks", "ricks@gmail.com", "lol bio", "pfp link", null, null));
-		dao.save(new User(0, "user2", "password", "User", "Name", "user@nothing.net", "biography", "profile pic", null, null));
-		
-		pdao.save(new Post(0, "Hello World", dao.findById(2), null, null));
-		
-		System.out.println(dao.delete(1));
-		
-		System.out.println(dao.findAll());
-		
-		System.out.println(pdao.findAll());
-		System.out.println("Success!");
-		
-		return dao.findAll();
+		return null;
 	}
 
 }

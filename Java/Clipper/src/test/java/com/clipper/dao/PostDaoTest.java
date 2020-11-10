@@ -3,7 +3,7 @@ package com.clipper.dao;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.AfterClass;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -19,16 +19,16 @@ public class PostDaoTest {
 
 	private static ApplicationContext ac = new ClassPathXmlApplicationContext("config2.xml");
 	
-	private User user = new User(0,"Jmann","wasspord","James","James","james@james.net","My name Jeff", "#", null, null);
-	private Post post = new Post(0, "James is great",user, null, null);
+	static private User user = new User(0,"Jmann","wasspord","James","James","Goddamnitworkyoubitch@james.net","My name Jeff", "#", null, null);
+	static private Post post;
 	private static UserDao ud = ac.getBean(UserDao.class);
 	private static PostDao pd = ac.getBean(PostDao.class);
 	
-	@Before
-	public void prepare() throws Exception {
+	@BeforeClass
+	public static void prepare() throws Exception {
 		ud.save(user);
-
-		
+		User u = ud.findAll().get(0);
+		post = new Post(0, "James is great",u, null, null);
 	}
 	
 	@Test
@@ -37,11 +37,11 @@ public class PostDaoTest {
 	}
 	@Test
 	public void B_FindAllPosts() {
-		assertEquals(2, pd.findAll().get(0).getId());
+		assertEquals(1, pd.findAll().get(0).getId());
 	}
 	@Test
 	public void C_FindPostByID() {
-		assertEquals(2,pd.findById(2).getId());
+		assertEquals(1,pd.findById(1).getId());
 	}
 	@Test
 	public void D_Update() {
@@ -50,7 +50,7 @@ public class PostDaoTest {
 
 	@Test
 	public void E_Delete() {
-		assertEquals(pd.findById(2).getId(),pd.delete(2).getId());
+		assertEquals(pd.findById(1).getId(),pd.delete(1).getId());
 	}
 	
 	@AfterClass
