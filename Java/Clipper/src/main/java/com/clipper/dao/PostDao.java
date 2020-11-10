@@ -22,10 +22,14 @@ private SessionFactory factory;
 	}
 	public PostDao() {}
 	
+	/**
+	 * Make sure to list all of the posts in descending order, as you would expect to see 
+	 * on a social media platform.
+	 */
 	@Override
 	public List<Post> findAll() {
 		List<Post> list = factory.openSession()
-				.createNativeQuery("select * from posts", Post.class).list();
+				.createNativeQuery("select * from posts order by post_id desc", Post.class).list();
 		return list;
 	}
 
@@ -70,6 +74,13 @@ private SessionFactory factory;
 	public void deleteAll() {
 		Session sess = factory.openSession();
 		sess.createQuery("delete from Post");
+	}
+	
+	public List<Post> findAllByUserId(Integer i) {
+		Session sess = factory.openSession();
+		List<Post> list = sess.createQuery("from Post where user_id = " + i, Post.class).list();
+		sess.close();
+		return list;
 	}
 	
 

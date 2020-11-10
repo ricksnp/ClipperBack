@@ -1,10 +1,10 @@
 package com.clipper.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,14 +57,14 @@ public class User
 	 * All posts associated made by the User will be tracked here.
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
 	private Set<Post> posts;
 	
 	/**
 	 * All likes made by the User will be tracked here.
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
 	private Set<Like> likes;
 	
 	public User() {}

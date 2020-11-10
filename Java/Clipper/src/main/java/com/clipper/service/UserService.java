@@ -1,6 +1,8 @@
 package com.clipper.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,22 @@ public class UserService {
 	
 	public User loginUser(String username) {
 		return ud.findUserByUsername(username);
+	}
+	
+	public List<User> getAllUsers(){
+		return ud.findAll();
+	}
+	
+	public User updateUser(User u){
+		return ud.update(u);
+	}
+	
+	public User getUserByEmail(String email) {
+		return ud.findUserByEmail(email);
+	}
+	
+	public User getUserById(int id) {
+		return ud.findById(id);
 	}
 	
 }
