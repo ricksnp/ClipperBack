@@ -28,7 +28,15 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="datasource" />
 		<property name="packagesToScan" value="com.clipper.model" />
-		<property name="configLocation" value="hibernate.cfg.xml" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.default_schema">dev</prop>
+			</props>
+		</property>
 	</bean>
 	
 	<!-- spring orm configuration for the transaction manager -->

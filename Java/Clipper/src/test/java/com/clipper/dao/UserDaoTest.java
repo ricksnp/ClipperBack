@@ -32,8 +32,10 @@ public class UserDaoTest {
 		assertEquals(1,ud.findById(1).getId());
 	}
 	@Test
+	//TODO Fix
 	public void D_UpdateUser() {
-		assertEquals(user.getId(), ud.update(user).getId());
+		User u = ud.findById(1);
+		assertEquals(u.getId(), ud.update(u).getId());
 	}
 	@Test
 	public void E_DeleteUser() {
