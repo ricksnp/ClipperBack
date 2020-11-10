@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @Entity(name="PostImage")
 @Table(name="images")
-@SequenceGenerator(name="post_image_ids_sequence", initialValue=1)
+@SequenceGenerator(name="post_image_ids_sequence", initialValue=1, allocationSize=1)
 public class PostImage
 {
 	@Id

@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  */
 @Entity(name="Like")
 @Table(name="likes")
-@SequenceGenerator(name="like_ids_sequence", initialValue=1)
+@SequenceGenerator(name="like_ids_sequence", initialValue=1, allocationSize=1)
 public class Like 
 {
 	@Id
