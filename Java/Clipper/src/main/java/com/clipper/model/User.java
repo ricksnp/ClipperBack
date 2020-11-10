@@ -1,6 +1,5 @@
 package com.clipper.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -69,7 +68,7 @@ public class User
 	
 	public User() {}
 	public User(int id, String username, String password, String firstName, String lastName, String email, String bio,
-			String pfpLink, List<Post> posts, Set<Like> likes) {
+			String pfpLink, /*List<Post> posts,*/ Set<Like> likes) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -79,10 +78,15 @@ public class User
 		this.email = email;
 		this.bio = bio;
 		this.pfpLink = pfpLink;
-		this.posts = posts;
+		//this.posts = posts;
 		this.likes = likes;
 	}
-
+	
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
 
 	public int getId() {
 		return id;
@@ -132,12 +136,12 @@ public class User
 	public void setPfpLink(String pfpLink) {
 		this.pfpLink = pfpLink;
 	}
-	public List<Post> getPosts() {
-		return posts;
-	}
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
-	}
+//	public List<Post> getPosts() {
+//		return posts;
+//	}
+//	public void setPosts(List<Post> posts) {
+//		this.posts = posts;
+//	}
 	public Set<Like> getLikes() {
 		return likes;
 	}

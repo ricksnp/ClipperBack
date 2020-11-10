@@ -9,6 +9,8 @@ import { FormControl } from 'react-bootstrap';
 import { getPosts } from '../../_util/APIUtility';
 import { axiosInstance } from '../../_util/axiosConfig';
 import * as t from '../../_action.types/actionTypes'
+import Axios from 'axios';
+import { queries } from '@testing-library/react';
 
 
 function LoginComponent(props: any) {
@@ -16,18 +18,32 @@ function LoginComponent(props: any) {
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (event: any) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
-
         setValidated(true);
+
+        const user = {
+            username: event.currentTarget["username"].value,
+            password: event.currentTarget["password"].value
+        }
+
+        const headers = {
+            "Access-Control-Allow-Origin": "*"
+        }
+
+        Axios.post("http://localhost:8080/Clipper/login.json", user).then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
     };
 
     useEffect(() => {
         console.log("in the use effect")
-        props.loginUsers();
+        //props.loginUsers();
     });
 
     return (
@@ -40,12 +56,12 @@ function LoginComponent(props: any) {
 
             <div className="form-group" >
                 <label style={{ color: "#202430" }}>Username</label>
-                <input type="text" required className="form-control" placeholder="Enter username" />
+                <input type="text" required className="form-control" placeholder="Enter username" name="username" />
             </div>
 
             <div className="form-group">
                 <label style={{ color: "#202430" }}>Password</label>
-                <FormControl type="password" required className="form-control" placeholder="Enter password" />
+                <FormControl type="password" required className="form-control" placeholder="Enter password" name="password" />
             </div>
 
             <button type="submit" className="btn btn-primary btn-block" style={{ background: "#202430" }}>Submit</button>
