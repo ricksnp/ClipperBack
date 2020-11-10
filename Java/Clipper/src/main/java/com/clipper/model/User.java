@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="User")
 @Table(name="users")
-@SequenceGenerator(name="user_ids_sequence", initialValue=1)
+@SequenceGenerator(name="user_ids_sequence", initialValue=1, allocationSize=1)
 public class User 
 {
 	@Id
