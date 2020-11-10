@@ -1,10 +1,9 @@
 package com.clipper.model;
 
-import java.util.List;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,14 +44,14 @@ public class Post
 	 * All images associated with a post.
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy="id")
+	@OneToMany(mappedBy="id", fetch = FetchType.EAGER)
 	private Set<PostImage> images;
 	
 	/**
 	 * All likes associated with a post.
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy="likeId")
+	@OneToMany(mappedBy="likeId", fetch = FetchType.EAGER)
 	private Set<Like> likes;
 	
 	public Post() {}

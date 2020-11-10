@@ -23,9 +23,26 @@ public class PostService {
 	}
 	
 	public List<Post> findAll(){
-		
-		
 		return pd.findAll();
 	}
 	
+	public Post findById(int id) {
+		return pd.findById(id);
+	}
+	
+	public Post updatePost(Post t) {
+		return pd.update(t);
+	}
+	
+	public Post createPost(Post t) {
+		return pd.save(t);
+	}
+	
+	public Post deletePost(int id) {
+		return pd.delete(id);
+	}
+	
+	public List<Post> findAllPostByUserId(int id){
+		return pd.findAllByUserId(id);
+	}
 }
