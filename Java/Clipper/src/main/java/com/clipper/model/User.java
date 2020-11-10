@@ -79,7 +79,7 @@ public class User
 		this.email = email;
 		this.bio = bio;
 		this.pfpLink = pfpLink;
-		//this.posts = posts;
+		this.posts = posts;
 		this.likes = likes;
 	}
 	

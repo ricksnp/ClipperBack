@@ -57,7 +57,7 @@ public class Post
 	
 	public Post() {}
 
-	public Post(int id, String textContent, /*User user,*/ Set<PostImage> images, Set<Like> likes) {
+	public Post(int id, String textContent, User user, Set<PostImage> images, Set<Like> likes) {
 		super();
 		this.id = id;
 		//this.user = user;
@@ -74,13 +74,13 @@ public class Post
 		this.id = id;
 	}
 
-//	public User getUser() {
-//		return user;
-//	}
+	public User getUser() {
+		return user;
+	}
 
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getTextContent() {
 		return textContent;
