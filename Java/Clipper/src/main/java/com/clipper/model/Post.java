@@ -60,7 +60,7 @@ public class Post
 	public Post(int id, String textContent, User user, Set<PostImage> images, Set<Like> likes) {
 		super();
 		this.id = id;
-		//this.user = user;
+		this.user = user;
 		this.textContent = textContent;
 		this.images = images;
 		this.likes = likes;
