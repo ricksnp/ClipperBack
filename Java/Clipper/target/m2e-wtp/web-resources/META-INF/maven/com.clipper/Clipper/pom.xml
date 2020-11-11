@@ -21,6 +21,8 @@
 					<url>http://localhost:6969/manager/text</url>
 					<server>TomcatServer</server>
 					<path>/myapp</path>
+					<username>admin</username>
+					<passwrod>admin</passwrod>
 				</configuration>
 			</plugin>
 			<plugin>
