@@ -138,19 +138,20 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.11.2</version>
 		</dependency>
-		<!--  I have no idea what these do, but stack overflow told me I need them -->
+		<!-- I have no idea what these do but stackoverflow told me I need them-->
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
+			<version>1.7.21</version> <!-- or use LATEST -->
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.21</version> <!-- or use LATEST -->
 		</dependency>
-
 	</dependencies>
+
 
 
 
