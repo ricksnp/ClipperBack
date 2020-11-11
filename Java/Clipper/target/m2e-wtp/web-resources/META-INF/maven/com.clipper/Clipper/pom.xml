@@ -22,7 +22,7 @@
 					<server>TomcatServer</server>
 					<path>/Clipper</path>
 					<username>admin</username>
-					<passwrod>admin</passwrod>
+					<password>admin</password>
 				</configuration>
 			</plugin>
 			<plugin>
