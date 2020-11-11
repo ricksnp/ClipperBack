@@ -45,7 +45,7 @@ public class Driver {
 //			houseId = String.valueOf(obj[0]);
 //			System.out.println(houseId);
 //			}
-//		System.out.println(ldao.findById(Integer.parseInt(houseId)));
+		//System.out.println(ldao.findById(Integer.parseInt(1)));
 		((AbstractApplicationContext) ac).close();
 		
 		

@@ -42,16 +42,16 @@ public class UserController {
 	 */
 	@PostMapping("/registerUser.json")
 	public @ResponseBody User registerUser(@RequestBody UserDTOProfile u) {
-		System.out.println("In there");
+		User user = null;
 		u.setPassword(Utilities.hashPassword(u.getPassword()));
 		try {
-			User user = us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
+			user = us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
 			return user;
 		}
 		catch (Exception e) {
 			System.out.println("User already exists.");
 		}
-		return null;
+		return user;
 	}
 	
 	/**
@@ -63,15 +63,19 @@ public class UserController {
 	public @ResponseBody User userLogin(@RequestBody UserDTO dt) {
 		String username = dt.getUsername();
 		String password = Utilities.hashPassword(dt.getPassword());
-		
-		User temp = us.loginUser(username);
-		
-		if (temp != null) {
-			if (temp.getPassword().equals(password)) {
-				return temp;
+		User u = null;
+		try {
+			u = us.loginUser(username);
+			if (u != null) {
+				if (u.getPassword().equals(password)) {
+					return u;
+				}
 			}
 		}
-		return null;
+		catch(IndexOutOfBoundsException e) {
+			System.out.println("Failed to login.");
+		}
+		return u;
 	}
 	
 	/**

@@ -52,14 +52,15 @@ public class PostController {
 	 */
 	@GetMapping("/post/{id}.json")
 	public @ResponseBody Post getPost(@PathVariable Integer id) {
+		Post p = null;
 		try {
-			Post p = ps.findById(id);
+			p = ps.findById(id);
 			return p;
 		}
 		catch(Exception e) {
 			System.out.println("Could not find post.");
 		}
-		return null;
+		return p;
 	}
 	
 	/**
@@ -69,14 +70,15 @@ public class PostController {
 	 */
 	@DeleteMapping("/post/{id}.json")
 	public @ResponseBody Post deletePost(@PathVariable Integer id) {
+		Post p = null;
 		try {
-			Post p = ps.deletePost(id);
+			p = ps.deletePost(id);
 			return p;
 		}
 		catch(Exception e) {
 			System.out.println("Could not find post.");
 		}
-		return null;
+		return p;
 	}
 	
 	/**
@@ -86,14 +88,15 @@ public class PostController {
 	 */
 	@GetMapping("/user/{id}/posts.json")
 	public @ResponseBody List<Post> getPostsByUser(@PathVariable Integer id) {
+		List<Post> list = null;
 		try {
-			List<Post> list = ps.findAllPostByUserId(id);
+			list = ps.findAllPostByUserId(id);
 			return list;
 		}
 		catch(Exception e) {
 			System.out.println("Could not find specific post.");
 		}
-		return null;
+		return list;
 	}
 	/**
 	 * Update a user's specific post.
@@ -122,14 +125,15 @@ public class PostController {
 	 */
 	@PostMapping("/addPost.json")
 	public @ResponseBody Post addPost(@RequestBody PostDTO pd){
+		Post p = null;
 		try {
-			Post p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
+			p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
 			return p;
 		}
 		catch(Exception e) {
 			System.out.println("Could not add post.");
 		}
-		return null;
+		return p;
 	}
 	
 	
