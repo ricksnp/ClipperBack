@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.clipper.dao.LikeDaoTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.637 sec
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.967 sec

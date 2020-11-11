@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Utilities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.util</a> &gt; <span class="el_source">Utilities.java</span></div><h1>Utilities.java</h1><pre class="source lang-java linenums">package com.clipper.util;
+
+import java.security.MessageDigest;
+import java.util.Random;
+
+<span class="nc" id="L6">public class Utilities {</span>
+	/**
+	 * Hashes a password by using a basic MD5 algorithm.
+	 * 
+	 * @param password the password String to be hashed.
+	 * @return a String object representing the hashed password.
+	 */
+	public static String hashPassword(String password) {
+<span class="nc" id="L14">		StringBuilder result = new StringBuilder(32);</span>
+		
+		try {
+<span class="nc" id="L17">			MessageDigest hasher = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+			
+			// Hashes the string, then builds a new string out of the resulting
+			// byte array
+<span class="nc" id="L21">			byte[]hashBytes = hasher.digest(password.getBytes());</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">			for(byte b: hashBytes)</span>
+<span class="nc" id="L23">				result.append(String.format(&quot;%02x&quot;, b));</span>
+		}
+<span class="nc" id="L25">		catch(Exception e) {</span>
+<span class="nc" id="L26">			e.printStackTrace();</span>
+<span class="nc" id="L27">		}</span>
+		
+<span class="nc" id="L29">		return result.toString();</span>
+	}
+	
+	public static String getSaltString() {
+<span class="nc" id="L33">        String SALTCHARS = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890&quot;;</span>
+<span class="nc" id="L34">        StringBuilder salt = new StringBuilder();</span>
+<span class="nc" id="L35">        Random rnd = new Random();</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        while (salt.length() &lt; 10) { // length of the random string.</span>
+<span class="nc" id="L37">            int index = (int) (rnd.nextFloat() * SALTCHARS.length());</span>
+<span class="nc" id="L38">            salt.append(SALTCHARS.charAt(index));</span>
+<span class="nc" id="L39">        }</span>
+<span class="nc" id="L40">        String saltStr = salt.toString();</span>
+<span class="nc" id="L41">        return saltStr;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

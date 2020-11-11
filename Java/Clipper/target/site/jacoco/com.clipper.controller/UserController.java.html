@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.controller</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">package com.clipper.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.clipper.model.User;
+import com.clipper.model.UserDTO;
+import com.clipper.model.UserDTOEmail;
+import com.clipper.model.UserDTOProfile;
+import com.clipper.service.UserService;
+import com.clipper.util.Utilities;
+
+
+@Controller
+@CrossOrigin
+<span class="fc" id="L25">public class UserController {</span>
+
+	private UserService us;
+
+	public UserService getPps() {
+<span class="nc" id="L30">		return us;</span>
+	}
+
+	@Autowired
+	public void setPps(UserService us) {
+<span class="fc" id="L35">		this.us = us;</span>
+<span class="fc" id="L36">	}</span>
+	
+	/**
+	 * Add a new user into the system, but first hashing his/her password.
+	 * @param u The user to be inserted
+	 * @return The inserted user
+	 */
+	@PostMapping(&quot;/registerUser.json&quot;)
+	public @ResponseBody User registerUser(@RequestBody User u) {
+<span class="nc" id="L45">		System.out.println(&quot;In there&quot;);</span>
+<span class="nc" id="L46">		u.setPassword(Utilities.hashPassword(u.getPassword()));</span>
+<span class="nc" id="L47">		return us.registerUser(u);</span>
+	}
+	
+	/**
+	 * Login an existing user into the system.
+	 * @param u The user that will log in
+	 * @return The logged in user
+	 */
+	@PostMapping(&quot;/login.json&quot;)
+	public @ResponseBody User userLogin(@RequestBody UserDTO dt) {
+<span class="nc" id="L57">		String username = dt.getUsername();</span>
+<span class="nc" id="L58">		String password = Utilities.hashPassword(dt.getPassword());</span>
+		
+<span class="nc" id="L60">		User temp = us.loginUser(username);</span>
+		
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (temp != null) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (temp.getPassword().equals(password)) {</span>
+<span class="nc" id="L64">				return temp;</span>
+			}
+		}
+<span class="nc" id="L67">		return null;</span>
+	}
+	
+	/**
+	 * Retrieve a list of all the users in the system.
+	 * @return The list of all Users.
+	 */
+	@GetMapping(&quot;/allUsers.json&quot;)
+	public @ResponseBody List&lt;User&gt; getAllUsers(){
+<span class="nc" id="L76">		return us.getAllUsers();</span>
+	}
+	
+	/**
+	 * Retrieve a JSON representation of a single user based on the ID.
+	 * @param id The ID of the user.
+	 * @return The user object
+	 */
+	@GetMapping(&quot;/user/{id}.json&quot;)
+	public @ResponseBody User getUser(@PathVariable Integer id) {
+<span class="nc" id="L86">		return us.getUserById(id);</span>
+	}
+	
+	/**
+	 * Reset a user's password.
+	 * @param dt The user to be updated
+	 * @return The newly updated user
+	 */
+	@PostMapping(&quot;/resetPass.json&quot;)
+	public  @ResponseBody User resetPass(@RequestBody UserDTOEmail dte) {
+<span class="nc" id="L96">		String newPass = Utilities.getSaltString();</span>
+<span class="nc" id="L97">		String hashed = Utilities.hashPassword(newPass);</span>
+		
+		//TO-DO: Send Email w/ generated password
+<span class="nc" id="L100">		User temp = us.getUserByEmail(dte.getEmail());</span>
+<span class="nc" id="L101">		temp.setPassword(hashed);</span>
+<span class="nc" id="L102">		us.updateUser(temp);</span>
+<span class="nc" id="L103">		return temp;</span>
+	}
+	
+	
+	/**
+	 * Update a user's info.  If the password was changed, we need to re-encrypt it.
+	 * @param u The user to be updated
+	 * @return The updated user
+	 */
+	@PostMapping(&quot;/updateInfo.json&quot;)
+	public @ResponseBody User updateUser(@RequestBody UserDTOProfile udp){
+		
+<span class="nc" id="L115">		User temp = us.getUserById(udp.getId());</span>
+		
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (temp != null) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (!temp.getPassword().equals(Utilities.hashPassword(udp.getPassword()))) {</span>
+<span class="nc" id="L119">				temp.setPassword(Utilities.hashPassword(udp.getPassword()));</span>
+			}
+<span class="nc" id="L121">			temp.setUsername(udp.getUsername());</span>
+<span class="nc" id="L122">			temp.setEmail(udp.getEmail());</span>
+<span class="nc" id="L123">			temp.setFirstName(udp.getFirstName());</span>
+<span class="nc" id="L124">			temp.setLastName(udp.getLastName());</span>
+<span class="nc" id="L125">			temp.setBio(udp.getBio());</span>
+<span class="nc" id="L126">			temp.setPfpLink(udp.getPfpLink());</span>
+<span class="nc" id="L127">			us.updateUser(temp);</span>
+<span class="nc" id="L128">			return temp;</span>
+		}
+<span class="nc" id="L130">		return null;</span>
+	}
+	
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -3,3 +3,6 @@ Java/Clipper/target/surefire/surefirebooter1357847536204598986.jar
 *.class
 *.class
 *.class
+*.class
+*.properties
+Java/Clipper/target/Clipper-0.0.1-SNAPSHOT.war

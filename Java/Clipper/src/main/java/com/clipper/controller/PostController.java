@@ -8,25 +8,31 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clipper.model.Post;
+import com.clipper.model.PostDTO;
 import com.clipper.service.PostService;
+import com.clipper.service.UserService;
 
 @Controller
 @CrossOrigin
 public class PostController {
 
 	private PostService ps;
+	
+	@Autowired
+	private UserService us;
 
-	public PostService getPps() {
+	public PostService getPs() {
 		return ps;
 	}
 
 	@Autowired
-	public void setPps(PostService ps) {
+	public void setPs(PostService ps) {
 		this.ps = ps;
 	}
 	
@@ -79,6 +85,17 @@ public class PostController {
 	@PutMapping("/user/{id}/posts/{pId}.json")
 	public @ResponseBody Post updatePost(@RequestBody Post p, @PathVariable Integer id, @PathVariable Integer pId) {
 		return ps.updatePost(p);
+	}
+	
+	
+	/**
+	 * Create a new post, given the user id and content.
+	 * @param pd The content and user id
+	 * @return The newly created post
+	 */
+	@PostMapping("/addPost.json")
+	public @ResponseBody Post addPost(@RequestBody PostDTO pd){
+		return ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
 	}
 	
 	

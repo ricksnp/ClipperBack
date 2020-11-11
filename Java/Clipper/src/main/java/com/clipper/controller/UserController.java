@@ -41,10 +41,10 @@ public class UserController {
 	 * @return The inserted user
 	 */
 	@PostMapping("/registerUser.json")
-	public @ResponseBody User registerUser(@RequestBody User u) {
-		Utilities ut = new Utilities();
-		u.setPassword(ut.hashPassword(u.getPassword()));
-		return us.registerUser(u);
+	public @ResponseBody User registerUser(@RequestBody UserDTOProfile u) {
+		System.out.println("In there");
+		u.setPassword(Utilities.hashPassword(u.getPassword()));
+		return us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
 	}
 	
 	/**
@@ -54,9 +54,8 @@ public class UserController {
 	 */
 	@PostMapping("/login.json")
 	public @ResponseBody User userLogin(@RequestBody UserDTO dt) {
-		Utilities ut = new Utilities();
 		String username = dt.getUsername();
-		String password = ut.hashPassword(dt.getPassword());
+		String password = Utilities.hashPassword(dt.getPassword());
 		
 		User temp = us.loginUser(username);
 		
@@ -83,8 +82,17 @@ public class UserController {
 	 * @return The user object
 	 */
 	@GetMapping("/user/{id}.json")
-	public @ResponseBody User getUser(@PathVariable Integer id) {
-		return us.getUserById(id);
+	public @ResponseBody User getUser(@PathVariable Integer id)  {
+		try {
+			User u = us.getUserById(id);
+			if (u != null) {
+				return u;
+			}
+		}
+		catch(IndexOutOfBoundsException e) {
+			System.out.println("User not found.");
+		}
+		return null;
 	}
 	
 	/**
@@ -94,17 +102,16 @@ public class UserController {
 	 */
 	@PostMapping("/resetPass.json")
 	public  @ResponseBody User resetPass(@RequestBody UserDTOEmail dte) {
-		Utilities ut = new Utilities();
-		String newPass = ut.getSaltString();
-		String hashed = ut.hashPassword(newPass);
+		String newPass = Utilities.getSaltString();
+		String hashed = Utilities.hashPassword(newPass);
 		
 		//TO-DO: Send Email w/ generated password
+		Utilities.sendEmail(dte.getEmail(), newPass);
 		User temp = us.getUserByEmail(dte.getEmail());
 		temp.setPassword(hashed);
 		us.updateUser(temp);
 		return temp;
 	}
-	
 	
 	/**
 	 * Update a user's info.  If the password was changed, we need to re-encrypt it.
@@ -113,13 +120,11 @@ public class UserController {
 	 */
 	@PostMapping("/updateInfo.json")
 	public @ResponseBody User updateUser(@RequestBody UserDTOProfile udp){
-		Utilities ut = new Utilities();
 		
 		User temp = us.getUserById(udp.getId());
-		
 		if (temp != null) {
-			if (!temp.getPassword().equals(ut.hashPassword(udp.getPassword()))) {
-				temp.setPassword(ut.hashPassword(udp.getPassword()));
+			if (!temp.getPassword().equals(Utilities.hashPassword(udp.getPassword()))) {
+				temp.setPassword(Utilities.hashPassword(udp.getPassword()));
 			}
 			temp.setUsername(udp.getUsername());
 			temp.setEmail(udp.getEmail());
