@@ -2,21 +2,25 @@
 
 
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.clipper.dao.LikeDao;
 import com.clipper.dao.PostDao;
 import com.clipper.dao.UserDao;
 //import com.clipper.model.Post;
 //import com.clipper.model.User;
-<span class="nc" id="L13">public class Driver {</span>
+<span class="nc" id="L16">public class Driver {</span>
 
 	public static void main(String[] args) throws ClassNotFoundException {
-<span class="nc" id="L16">		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;config.xml&quot;);</span>
+<span class="nc" id="L19">		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;config.xml&quot;);</span>
 
-<span class="nc" id="L18">		UserDao dao = ac.getBean(UserDao.class);</span>
-<span class="nc" id="L19">		PostDao pdao = ac.getBean(PostDao.class);</span>
+<span class="nc" id="L21">		UserDao dao = ac.getBean(UserDao.class);</span>
+<span class="nc" id="L22">		PostDao pdao = ac.getBean(PostDao.class);</span>
+<span class="nc" id="L23">		LikeDao ldao = ac.getBean(LikeDao.class);</span>
 		
 		//dao.save(new User(0, &quot;nathan1&quot;, &quot;AAA&quot;, &quot;Nathan&quot;, &quot;Ricks&quot;, &quot;ricks@gmail.com&quot;, &quot;lol bio&quot;, &quot;pfp link&quot;, null));
 		//User a = new User(0, &quot;user2&quot;, &quot;password&quot;, &quot;User&quot;, &quot;Name&quot;, &quot;user@nothing.net&quot;, &quot;biography&quot;, &quot;profile pic&quot;, null, null);
@@ -30,15 +34,22 @@ import com.clipper.dao.UserDao;
 		
 		//System.out.println(dao.findAll());
 		
-		//System.out.println(pdao.findAll());
+<span class="nc" id="L37">		System.out.println(pdao.findAll());</span>
 		//System.out.println(pdao.findAllByUserId(1));
 		//System.out.println(&quot;Success!&quot;);
-<span class="nc" id="L36">		System.out.println(pdao.findById(1));</span>
-<span class="nc" id="L37">		System.out.println(dao.findById(1));</span>
-<span class="nc" id="L38">		((AbstractApplicationContext) ac).close();</span>
+		//System.out.println(pdao.findById(1));
+		//System.out.println(dao.findById(1));
+//		List&lt;Object[]&gt; result = ldao.findByUserAndPost(1, 1);
+//		String houseId = null;
+//		for(Object[] obj : result){
+//			houseId = String.valueOf(obj[0]);
+//			System.out.println(houseId);
+//			}
+//		System.out.println(ldao.findById(Integer.parseInt(houseId)));
+<span class="nc" id="L49">		((AbstractApplicationContext) ac).close();</span>
 		
 		
-<span class="nc" id="L41">	}</span>
+<span class="nc" id="L52">	}</span>
 
 	
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LikeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.controller</a> &gt; <span class="el_source">LikeController.java</span></div><h1>LikeController.java</h1><pre class="source lang-java linenums">package com.clipper.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +19,7 @@ import com.clipper.service.UserService;
 
 @Controller
 @CrossOrigin
-<span class="fc" id="L20">public class LikeController {</span>
+<span class="fc" id="L22">public class LikeController {</span>
 	
 	private LikeService ls;
 	
@@ -28,27 +30,38 @@ import com.clipper.service.UserService;
 	
 
 	public LikeService getPps() {
-<span class="nc" id="L31">		return ls;</span>
+<span class="nc" id="L33">		return ls;</span>
 	}
 	
 	@Autowired
 	public void setPps(LikeService ls) {
-<span class="fc" id="L36">		this.ls = ls;</span>
-<span class="fc" id="L37">	}</span>
+<span class="fc" id="L38">		this.ls = ls;</span>
+<span class="fc" id="L39">	}</span>
 	
 	/**
-	 * Add a like to a post.
+	 * Add a like to a post.  If it's already liked, remove it.  Note, use criteria api for complicated queries, not loops.
 	 * @param dto The like 
-	 * @return
+	 * @return Either the removed like or the added like
 	 */
 	@PostMapping(&quot;/addLike.json&quot;)
 	public @ResponseBody Like addLike(@RequestBody LikeDTO dto) {
-<span class="nc" id="L46">		Post p = ps.findById(dto.getPost_id());</span>
-<span class="nc" id="L47">		User u = us.getUserById(dto.getUser_id());</span>
-<span class="nc" id="L48">		Like li = new Like(0, p, u);</span>
-		
-<span class="nc" id="L50">		return ls.addLike(li);</span>
-
+<span class="nc" id="L48">		Like li = null;</span>
+<span class="nc" id="L49">		Post p = null;</span>
+<span class="nc" id="L50">		User u = null;</span>
+		try {
+			
+<span class="nc" id="L53">			p = ps.findById(dto.getPost_id());</span>
+<span class="nc" id="L54">			u = us.getUserById(dto.getUser_id());</span>
+<span class="nc" id="L55">			li = ls.addLike(new Like(0, p, u));</span>
+<span class="nc" id="L56">			return li;</span>
+		}
+<span class="nc" id="L58">		catch(Exception e) {</span>
+<span class="nc" id="L59">			System.out.println(&quot;No more than one like per person.&quot;);</span>
+		}
+<span class="nc" id="L61">		List&lt;Object[]&gt; result = ls.findByUserAndPost(p.getId(), u.getId());</span>
+<span class="nc" id="L62">		String likeId = null;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		for(Object[] obj : result){likeId = String.valueOf(obj[0]);}</span>
+<span class="nc" id="L64">		return ls.removeLike(Integer.parseInt(likeId));</span>
 	}
 	
 }

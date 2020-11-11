@@ -41,10 +41,10 @@ import com.clipper.util.Utilities;
 	 * @return The inserted user
 	 */
 	@PostMapping(&quot;/registerUser.json&quot;)
-	public @ResponseBody User registerUser(@RequestBody User u) {
+	public @ResponseBody User registerUser(@RequestBody UserDTOProfile u) {
 <span class="nc" id="L45">		System.out.println(&quot;In there&quot;);</span>
 <span class="nc" id="L46">		u.setPassword(Utilities.hashPassword(u.getPassword()));</span>
-<span class="nc" id="L47">		return us.registerUser(u);</span>
+<span class="nc" id="L47">		return us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));</span>
 	}
 	
 	/**
@@ -82,8 +82,17 @@ import com.clipper.util.Utilities;
 	 * @return The user object
 	 */
 	@GetMapping(&quot;/user/{id}.json&quot;)
-	public @ResponseBody User getUser(@PathVariable Integer id) {
-<span class="nc" id="L86">		return us.getUserById(id);</span>
+	public @ResponseBody User getUser(@PathVariable Integer id)  {
+		try {
+<span class="nc" id="L87">			User u = us.getUserById(id);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (u != null) {</span>
+<span class="nc" id="L89">				return u;</span>
+			}
+		}
+<span class="nc" id="L92">		catch(IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L93">			System.out.println(&quot;User not found.&quot;);</span>
+<span class="nc" id="L94">		}</span>
+<span class="nc" id="L95">		return null;</span>
 	}
 	
 	/**
@@ -93,16 +102,16 @@ import com.clipper.util.Utilities;
 	 */
 	@PostMapping(&quot;/resetPass.json&quot;)
 	public  @ResponseBody User resetPass(@RequestBody UserDTOEmail dte) {
-<span class="nc" id="L96">		String newPass = Utilities.getSaltString();</span>
-<span class="nc" id="L97">		String hashed = Utilities.hashPassword(newPass);</span>
+<span class="nc" id="L105">		String newPass = Utilities.getSaltString();</span>
+<span class="nc" id="L106">		String hashed = Utilities.hashPassword(newPass);</span>
 		
 		//TO-DO: Send Email w/ generated password
-<span class="nc" id="L100">		User temp = us.getUserByEmail(dte.getEmail());</span>
-<span class="nc" id="L101">		temp.setPassword(hashed);</span>
-<span class="nc" id="L102">		us.updateUser(temp);</span>
-<span class="nc" id="L103">		return temp;</span>
+<span class="nc" id="L109">		Utilities.sendEmail(dte.getEmail(), newPass);</span>
+<span class="nc" id="L110">		User temp = us.getUserByEmail(dte.getEmail());</span>
+<span class="nc" id="L111">		temp.setPassword(hashed);</span>
+<span class="nc" id="L112">		us.updateUser(temp);</span>
+<span class="nc" id="L113">		return temp;</span>
 	}
-	
 	
 	/**
 	 * Update a user's info.  If the password was changed, we need to re-encrypt it.
@@ -112,22 +121,21 @@ import com.clipper.util.Utilities;
 	@PostMapping(&quot;/updateInfo.json&quot;)
 	public @ResponseBody User updateUser(@RequestBody UserDTOProfile udp){
 		
-<span class="nc" id="L115">		User temp = us.getUserById(udp.getId());</span>
-		
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (temp != null) {</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (!temp.getPassword().equals(Utilities.hashPassword(udp.getPassword()))) {</span>
-<span class="nc" id="L119">				temp.setPassword(Utilities.hashPassword(udp.getPassword()));</span>
+<span class="nc" id="L124">		User temp = us.getUserById(udp.getId());</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (temp != null) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (!temp.getPassword().equals(Utilities.hashPassword(udp.getPassword()))) {</span>
+<span class="nc" id="L127">				temp.setPassword(Utilities.hashPassword(udp.getPassword()));</span>
 			}
-<span class="nc" id="L121">			temp.setUsername(udp.getUsername());</span>
-<span class="nc" id="L122">			temp.setEmail(udp.getEmail());</span>
-<span class="nc" id="L123">			temp.setFirstName(udp.getFirstName());</span>
-<span class="nc" id="L124">			temp.setLastName(udp.getLastName());</span>
-<span class="nc" id="L125">			temp.setBio(udp.getBio());</span>
-<span class="nc" id="L126">			temp.setPfpLink(udp.getPfpLink());</span>
-<span class="nc" id="L127">			us.updateUser(temp);</span>
-<span class="nc" id="L128">			return temp;</span>
+<span class="nc" id="L129">			temp.setUsername(udp.getUsername());</span>
+<span class="nc" id="L130">			temp.setEmail(udp.getEmail());</span>
+<span class="nc" id="L131">			temp.setFirstName(udp.getFirstName());</span>
+<span class="nc" id="L132">			temp.setLastName(udp.getLastName());</span>
+<span class="nc" id="L133">			temp.setBio(udp.getBio());</span>
+<span class="nc" id="L134">			temp.setPfpLink(udp.getPfpLink());</span>
+<span class="nc" id="L135">			us.updateUser(temp);</span>
+<span class="nc" id="L136">			return temp;</span>
 		}
-<span class="nc" id="L130">		return null;</span>
+<span class="nc" id="L138">		return null;</span>
 	}
 	
 	

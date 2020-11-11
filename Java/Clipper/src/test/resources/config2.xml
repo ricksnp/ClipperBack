@@ -19,7 +19,7 @@
 	<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://imperial-archives.cs1cruzjtwei.us-east-2.rds.amazonaws.com:5432/clipper?defaultSchema=dev" />
-		<property name="schema" value="dev" />
+		<property name="schema" value="dev_test" />
 		<property name="username" value="clipper_user" />
 		<property name="password" value="biggShip" />
 	</bean>
@@ -34,7 +34,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">create</prop>
-				<prop key="hibernate.default_schema">dev</prop>
+				<prop key="hibernate.default_schema">dev_test</prop>
 			</props>
 		</property>
 	</bean>

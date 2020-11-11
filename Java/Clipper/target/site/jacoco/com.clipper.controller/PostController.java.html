@@ -8,27 +8,33 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clipper.model.Post;
+import com.clipper.model.PostDTO;
 import com.clipper.service.PostService;
+import com.clipper.service.UserService;
 
 @Controller
 @CrossOrigin
-<span class="fc" id="L20">public class PostController {</span>
+<span class="fc" id="L23">public class PostController {</span>
 
 	private PostService ps;
+	
+	@Autowired
+	private UserService us;
 
-	public PostService getPps() {
-<span class="nc" id="L25">		return ps;</span>
+	public PostService getPs() {
+<span class="nc" id="L31">		return ps;</span>
 	}
 
 	@Autowired
-	public void setPps(PostService ps) {
-<span class="fc" id="L30">		this.ps = ps;</span>
-<span class="fc" id="L31">	}</span>
+	public void setPs(PostService ps) {
+<span class="fc" id="L36">		this.ps = ps;</span>
+<span class="fc" id="L37">	}</span>
 	
 	/**
 	 * Retrieve a list of all posts in the system.
@@ -36,7 +42,7 @@ import com.clipper.service.PostService;
 	 */
 	@GetMapping(&quot;/allPosts.json&quot;)
 	public @ResponseBody List&lt;Post&gt; getAllPosts(){
-<span class="nc" id="L39">		return ps.findAll();</span>
+<span class="nc" id="L45">		return ps.findAll();</span>
 	}
 	
 	/**
@@ -46,7 +52,7 @@ import com.clipper.service.PostService;
 	 */
 	@GetMapping(&quot;/post/{id}.json&quot;)
 	public @ResponseBody Post getPost(@PathVariable Integer id) {
-<span class="nc" id="L49">		return ps.findById(id);</span>
+<span class="nc" id="L55">		return ps.findById(id);</span>
 	}
 	
 	/**
@@ -56,7 +62,7 @@ import com.clipper.service.PostService;
 	 */
 	@DeleteMapping(&quot;/post/{id}.json&quot;)
 	public @ResponseBody Post deletePost(@PathVariable Integer id) {
-<span class="nc" id="L59">		return ps.deletePost(id);</span>
+<span class="nc" id="L65">		return ps.deletePost(id);</span>
 	}
 	
 	/**
@@ -66,7 +72,7 @@ import com.clipper.service.PostService;
 	 */
 	@GetMapping(&quot;/user/{id}/posts.json&quot;)
 	public @ResponseBody List&lt;Post&gt; getPostsByUser(@PathVariable Integer id) {
-<span class="nc" id="L69">		return ps.findAllPostByUserId(id);</span>
+<span class="nc" id="L75">		return ps.findAllPostByUserId(id);</span>
 	}
 	
 	/**
@@ -78,7 +84,18 @@ import com.clipper.service.PostService;
 	 */
 	@PutMapping(&quot;/user/{id}/posts/{pId}.json&quot;)
 	public @ResponseBody Post updatePost(@RequestBody Post p, @PathVariable Integer id, @PathVariable Integer pId) {
-<span class="nc" id="L81">		return ps.updatePost(p);</span>
+<span class="nc" id="L87">		return ps.updatePost(p);</span>
+	}
+	
+	
+	/**
+	 * Create a new post, given the user id and content.
+	 * @param pd The content and user id
+	 * @return The newly created post
+	 */
+	@PostMapping(&quot;/addPost.json&quot;)
+	public @ResponseBody Post addPost(@RequestBody PostDTO pd){
+<span class="nc" id="L98">		return ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));</span>
 	}
 	
 	

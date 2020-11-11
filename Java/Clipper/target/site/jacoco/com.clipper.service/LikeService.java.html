@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LikeService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.service</a> &gt; <span class="el_source">LikeService.java</span></div><h1>LikeService.java</h1><pre class="source lang-java linenums">package com.clipper.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,26 +9,29 @@ import com.clipper.dao.LikeDao;
 import com.clipper.model.Like;
 
 @Service
-<span class="fc" id="L10">public class LikeService {</span>
+<span class="fc" id="L12">public class LikeService {</span>
 	
 	private LikeDao ld;
 
 	public LikeDao getLd() {
-<span class="nc" id="L15">		return ld;</span>
+<span class="nc" id="L17">		return ld;</span>
 	}
 
 	@Autowired
 	public void setLd(LikeDao ld) {
-<span class="fc" id="L20">		this.ld = ld;</span>
-<span class="fc" id="L21">	}</span>
+<span class="fc" id="L22">		this.ld = ld;</span>
+<span class="fc" id="L23">	}</span>
 	
 	public Like addLike(Like t) {
-<span class="nc" id="L24">		return ld.save(t);</span>
+<span class="nc" id="L26">		return ld.save(t);</span>
 	}
 	
 	public Like removeLike(int id) {
-<span class="nc" id="L28">		return ld.delete(id);</span>
+<span class="nc" id="L30">		return ld.delete(id);</span>
 	}
 	
+	public List&lt;Object[]&gt; findByUserAndPost(int pId, int uId) {
+<span class="nc" id="L34">		return ld.findByUserAndPost(pId, uId);</span>
+	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
