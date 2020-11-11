@@ -20,7 +20,7 @@
 				<configuration>
 					<url>http://localhost:6969/manager/text</url>
 					<server>TomcatServer</server>
-					<path>/myapp</path>
+					<path>/Clipper</path>
 					<username>admin</username>
 					<passwrod>admin</passwrod>
 				</configuration>
