@@ -52,7 +52,14 @@ public class PostController {
 	 */
 	@GetMapping("/post/{id}.json")
 	public @ResponseBody Post getPost(@PathVariable Integer id) {
-		return ps.findById(id);
+		try {
+			Post p = ps.findById(id);
+			return p;
+		}
+		catch(Exception e) {
+			System.out.println("Could not find post.");
+		}
+		return null;
 	}
 	
 	/**
@@ -62,7 +69,14 @@ public class PostController {
 	 */
 	@DeleteMapping("/post/{id}.json")
 	public @ResponseBody Post deletePost(@PathVariable Integer id) {
-		return ps.deletePost(id);
+		try {
+			Post p = ps.deletePost(id);
+			return p;
+		}
+		catch(Exception e) {
+			System.out.println("Could not find post.");
+		}
+		return null;
 	}
 	
 	/**
@@ -72,9 +86,15 @@ public class PostController {
 	 */
 	@GetMapping("/user/{id}/posts.json")
 	public @ResponseBody List<Post> getPostsByUser(@PathVariable Integer id) {
-		return ps.findAllPostByUserId(id);
+		try {
+			List<Post> list = ps.findAllPostByUserId(id);
+			return list;
+		}
+		catch(Exception e) {
+			System.out.println("Could not find specific post.");
+		}
+		return null;
 	}
-	
 	/**
 	 * Update a user's specific post.
 	 * @param p The post
@@ -84,7 +104,14 @@ public class PostController {
 	 */
 	@PutMapping("/user/{id}/posts/{pId}.json")
 	public @ResponseBody Post updatePost(@RequestBody Post p, @PathVariable Integer id, @PathVariable Integer pId) {
-		return ps.updatePost(p);
+		try {
+			 Post p1 = ps.updatePost(p);
+			 return p1;
+		}
+		catch(Exception e) {
+			System.out.println("Could not update post.");
+		}
+		return null;
 	}
 	
 	
@@ -95,7 +122,14 @@ public class PostController {
 	 */
 	@PostMapping("/addPost.json")
 	public @ResponseBody Post addPost(@RequestBody PostDTO pd){
-		return ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
+		try {
+			Post p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
+			return p;
+		}
+		catch(Exception e) {
+			System.out.println("Could not add post.");
+		}
+		return null;
 	}
 	
 	

@@ -49,7 +49,6 @@ public class LikeController {
 		Post p = null;
 		User u = null;
 		try {
-			
 			p = ps.findById(dto.getPost_id());
 			u = us.getUserById(dto.getUser_id());
 			li = ls.addLike(new Like(0, p, u));
@@ -58,6 +57,7 @@ public class LikeController {
 		catch(Exception e) {
 			System.out.println("No more than one like per person.");
 		}
+		//remove the like
 		List<Object[]> result = ls.findByUserAndPost(p.getId(), u.getId());
 		String likeId = null;
 		for(Object[] obj : result){likeId = String.valueOf(obj[0]);}
