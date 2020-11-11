@@ -44,14 +44,14 @@ public class Post
 	 * All images associated with a post.
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy="id", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="post", fetch = FetchType.EAGER)
 	private Set<PostImage> images;
 	
 	/**
 	 * All likes associated with a post.
 	 */
 	@JsonManagedReference
-	@OneToMany(mappedBy="likeId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="post", fetch = FetchType.EAGER)
 	private Set<Like> likes;
 	
 	public Post() {}
