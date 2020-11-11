@@ -5,7 +5,6 @@ import java.util.Properties;
 import java.util.Random;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 
 public class Utilities {
 	/**
@@ -45,7 +44,7 @@ public class Utilities {
         return saltStr;
     }
 	
-	 @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public static void sendEmail(String to, String password) {
 		String sendTo = to; //change accordingly  
 	      String from = "rickspnathan@gmail.com";//change accordingly  
@@ -63,9 +62,7 @@ public class Utilities {
 
 	        // Get the Session object.// and pass username and password
 	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-
 	            protected PasswordAuthentication getPasswordAuthentication() {
-
 	                return new PasswordAuthentication("w@gmail.com", "w");
 	            }
 	        });

@@ -44,7 +44,14 @@ public class UserController {
 	public @ResponseBody User registerUser(@RequestBody UserDTOProfile u) {
 		System.out.println("In there");
 		u.setPassword(Utilities.hashPassword(u.getPassword()));
-		return us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
+		try {
+			User user = us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
+			return user;
+		}
+		catch (Exception e) {
+			System.out.println("User already exists.");
+		}
+		return null;
 	}
 	
 	/**
@@ -104,13 +111,17 @@ public class UserController {
 	public  @ResponseBody User resetPass(@RequestBody UserDTOEmail dte) {
 		String newPass = Utilities.getSaltString();
 		String hashed = Utilities.hashPassword(newPass);
-		
-		//TO-DO: Send Email w/ generated password
-		Utilities.sendEmail(dte.getEmail(), newPass);
-		User temp = us.getUserByEmail(dte.getEmail());
-		temp.setPassword(hashed);
-		us.updateUser(temp);
-		return temp;
+		try {
+			User temp = us.getUserByEmail(dte.getEmail());
+			temp.setPassword(hashed);
+			Utilities.sendEmail(dte.getEmail(), newPass);
+			us.updateUser(temp);
+			return temp;
+		}
+		catch(Exception e) {
+			System.out.println("Could not find user with that email.");
+		}
+		return null;
 	}
 	
 	/**
