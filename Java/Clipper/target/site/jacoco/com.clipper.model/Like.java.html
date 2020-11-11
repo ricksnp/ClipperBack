@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Like.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.model</a> &gt; <span class="el_source">Like.java</span></div><h1>Like.java</h1><pre class="source lang-java linenums">package com.clipper.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+/**
+ * The Like class holds which Users have liked which Posts.
+ * 
+ * Exists to ensure uniqueness of Likes;
+ * One User may Like one Post once.
+ * A User cannot place multiple Likes on the same Post.
+ * 
+ * The Object.equals() method is overridden to further enforce uniqueness
+ * when Likes are stored in a Set.
+ */
+@Entity(name=&quot;Like&quot;)
+@Table(name=&quot;likes&quot;)
+@SequenceGenerator(name=&quot;like_ids_sequence&quot;, initialValue=1)
+public class Like 
+{
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = &quot;like_ids_sequence&quot;)
+	@Column(name=&quot;like_id&quot;)
+	private int likeId;
+	
+	/**
+	 * The Post being liked
+	 */
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = &quot;post_id&quot;, referencedColumnName = &quot;post_id&quot;, nullable=false)
+	private Post post;
+	
+	/**
+	 * The User liking the Post
+	 */
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = &quot;user_id&quot;, referencedColumnName = &quot;user_id&quot;, nullable=false)
+	private User user;
+	
+<span class="fc" id="L52">	public Like() {}</span>
+
+	public Like(int likeId, Post post, User user) {
+<span class="fc" id="L55">		super();</span>
+<span class="fc" id="L56">		this.likeId = likeId;</span>
+<span class="fc" id="L57">		this.post = post;</span>
+<span class="fc" id="L58">		this.user = user;</span>
+<span class="fc" id="L59">	}</span>
+
+	public int getLikeId() {
+<span class="fc" id="L62">		return likeId;</span>
+	}
+
+	public void setLikeId(int likeId) {
+<span class="nc" id="L66">		this.likeId = likeId;</span>
+<span class="nc" id="L67">	}</span>
+
+	public Post getPost() {
+<span class="fc" id="L70">		return post;</span>
+	}
+
+	public void setPost(Post post) {
+<span class="nc" id="L74">		this.post = post;</span>
+<span class="nc" id="L75">	}</span>
+
+	public User getUser() {
+<span class="fc" id="L78">		return user;</span>
+	}
+
+	public void setUser(User user) {
+<span class="nc" id="L82">		this.user = user;</span>
+<span class="nc" id="L83">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L87">		return &quot;Like [likeId=&quot; + likeId + &quot;, post=&quot; + &quot;[a post]&quot; + &quot;, user=&quot; + &quot;[a user]&quot; + &quot;]&quot;;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L93">			return true;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L95">			return false;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L97">			return false;</span>
+		
+<span class="fc" id="L99">		Like other = (Like) obj;</span>
+<span class="pc bpc" id="L100" title="2 of 4 branches missed.">		if (post == null || other.getPost() == null) {</span>
+<span class="nc" id="L101">				return false;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		} else if (post.getId() != other.post.getId())</span>
+<span class="nc" id="L103">			return false;</span>
+		
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		if (user == null || other.getUser() == null)</span>
+<span class="nc" id="L106">			return false;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		else if (user.getId() != other.user.getId())</span>
+<span class="nc" id="L108">			return false;</span>
+		
+<span class="fc" id="L110">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

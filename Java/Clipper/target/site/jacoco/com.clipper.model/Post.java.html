@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Post.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.model</a> &gt; <span class="el_source">Post.java</span></div><h1>Post.java</h1><pre class="source lang-java linenums">package com.clipper.model;
+
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+/**
+ * The Post class holds all content associated with a Clipper post.
+ */
+@Entity(name=&quot;Post&quot;)
+@Table(name=&quot;posts&quot;)
+@SequenceGenerator(name=&quot;user_ids_sequence&quot;, initialValue=1)
+public class Post 
+{
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = &quot;post_ids_sequence&quot;)
+	@Column(name=&quot;post_id&quot;)
+	private int id;
+	
+	@Column(name=&quot;content&quot;)
+	private String textContent;
+	
+	/**
+	 * The parent User
+	 */
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = &quot;user_id&quot;, referencedColumnName = &quot;user_id&quot;, nullable=false)
+	private User user;
+	
+	/**
+	 * All images associated with a post.
+	 */
+	@JsonManagedReference
+	@OneToMany(mappedBy=&quot;id&quot;)
+	private List&lt;PostImage&gt; images;
+	
+	/**
+	 * All likes associated with a post.
+	 */
+	@JsonManagedReference
+	@OneToMany(mappedBy=&quot;likeId&quot;)
+	private Set&lt;Like&gt; likes;
+	
+<span class="fc" id="L58">	public Post() {}</span>
+
+	public Post(int id, String textContent, User user, List&lt;PostImage&gt; images, Set&lt;Like&gt; likes) {
+<span class="fc" id="L61">		super();</span>
+<span class="fc" id="L62">		this.id = id;</span>
+<span class="fc" id="L63">		this.user = user;</span>
+<span class="fc" id="L64">		this.textContent = textContent;</span>
+<span class="fc" id="L65">		this.images = images;</span>
+<span class="fc" id="L66">		this.likes = likes;</span>
+<span class="fc" id="L67">	}</span>
+
+	public int getId() {
+<span class="fc" id="L70">		return id;</span>
+	}
+
+	public void setId(int id) {
+<span class="nc" id="L74">		this.id = id;</span>
+<span class="nc" id="L75">	}</span>
+
+	public User getUser() {
+<span class="nc" id="L78">		return user;</span>
+	}
+
+	public void setUser(User user) {
+<span class="nc" id="L82">		this.user = user;</span>
+<span class="nc" id="L83">	}</span>
+
+	public String getTextContent() {
+<span class="nc" id="L86">		return textContent;</span>
+	}
+
+	public void setTextContent(String textContent) {
+<span class="nc" id="L90">		this.textContent = textContent;</span>
+<span class="nc" id="L91">	}</span>
+
+	public List&lt;PostImage&gt; getImages() {
+<span class="nc" id="L94">		return images;</span>
+	}
+
+	public void setImages(List&lt;PostImage&gt; images) {
+<span class="nc" id="L98">		this.images = images;</span>
+<span class="nc" id="L99">	}</span>
+
+	public Set&lt;Like&gt; getLikes() {
+<span class="nc" id="L102">		return likes;</span>
+	}
+
+	public void setLikes(Set&lt;Like&gt; likes) {
+<span class="nc" id="L106">		this.likes = likes;</span>
+<span class="nc" id="L107">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L111">		return &quot;Post [id=&quot; + id + &quot;, user=&quot; + &quot;[a user]&quot; + &quot;, textContent=&quot; + textContent + &quot;, images=&quot; + &quot;[images]&quot;</span>
+<span class="nc" id="L112">				+ &quot;, likes=&quot; + &quot;[lots of likes]&quot; + &quot;]&quot;;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

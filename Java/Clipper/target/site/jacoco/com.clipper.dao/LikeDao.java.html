@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LikeDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Clipper</a> &gt; <a href="index.source.html" class="el_package">com.clipper.dao</a> &gt; <span class="el_source">LikeDao.java</span></div><h1>LikeDao.java</h1><pre class="source lang-java linenums">package com.clipper.dao;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.clipper.model.Like;
+
+@Repository
+public class LikeDao implements Dao&lt;Like, Integer&gt; {
+
+	private SessionFactory factory;
+	
+	@Autowired
+	public LikeDao(SessionFactory factory) {
+<span class="fc" id="L20">		super();</span>
+<span class="fc" id="L21">		this.factory = factory;</span>
+<span class="fc" id="L22">	}</span>
+<span class="nc" id="L23">	public LikeDao() {}</span>
+	
+	@Override
+	public List&lt;Like&gt; findAll() {
+<span class="fc" id="L27">		List&lt;Like&gt; list = factory.openSession()</span>
+<span class="fc" id="L28">				.createNativeQuery(&quot;select * from likes&quot;, Like.class).list();</span>
+<span class="fc" id="L29">		return list;</span>
+	}
+
+	@Override
+	public Like findById(Integer i) {
+<span class="fc" id="L34">		Session sess = factory.openSession();</span>
+<span class="fc" id="L35">		Like result = sess.createQuery(&quot;from Like where id = &quot; + i, Like.class).list().get(0);</span>
+<span class="fc" id="L36">		sess.close();</span>
+<span class="fc" id="L37">		return result;</span>
+	}
+
+	@Override
+	public Like update(Like t) {
+<span class="fc" id="L42">		SessionFactory sesfact = factory;</span>
+<span class="fc" id="L43">		Session sess = sesfact.openSession();</span>
+<span class="fc" id="L44">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L45">		sess.merge(t);</span>
+<span class="fc" id="L46">		tx.commit();</span>
+<span class="fc" id="L47">		return t;</span>
+	}
+
+	@Override
+	public Like save(Like t) {
+<span class="fc" id="L52">		SessionFactory sesfact = factory;</span>
+<span class="fc" id="L53">		Session sess = sesfact.openSession();</span>
+<span class="fc" id="L54">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L55">		sess.save(t);</span>
+<span class="fc" id="L56">		tx.commit();</span>
+<span class="fc" id="L57">		return t;</span>
+	}
+
+	@Override
+	public Like delete(Integer i) {
+<span class="fc" id="L62">		Like l = findById(i);</span>
+		
+<span class="fc" id="L64">		Session sess = factory.openSession();</span>
+<span class="fc" id="L65">		Transaction tx = sess.beginTransaction();</span>
+<span class="fc" id="L66">		sess.delete(l);</span>
+<span class="fc" id="L67">		tx.commit();</span>
+<span class="fc" id="L68">		return l;</span>
+	}
+	
+	public void deleteAll() {
+<span class="fc" id="L72">		Session sess = factory.openSession();</span>
+<span class="fc" id="L73">		sess.createQuery(&quot;delete from Like&quot;);</span>
+<span class="fc" id="L74">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
