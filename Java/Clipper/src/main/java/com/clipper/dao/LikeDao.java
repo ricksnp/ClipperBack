@@ -73,4 +73,13 @@ public class LikeDao implements Dao<Like, Integer> {
 		sess.createQuery("delete from Like");
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findByUserAndPost(int pId, int uId) {
+		Session sess = factory.openSession();
+		List<Object[]> result = sess.createNativeQuery("select * from likes where post_id = ? and user_id = ?;").setParameter(1, pId).setParameter(2, uId).list();
+		sess.close();
+		return result;
+	}
+
+	
 }

@@ -72,4 +72,5 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		sess.createQuery("delete from PostImage");
 	}
 	
+	
 }

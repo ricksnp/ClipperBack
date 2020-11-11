@@ -3,58 +3,85 @@
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.clipper.dao.PostDao;
-import com.clipper.dao.UserDao;
 import com.clipper.model.Post;
-import com.clipper.model.User;
 import com.clipper.service.PostService;
 
 @Controller
 @CrossOrigin
-@RequestMapping(&quot;/posts.json&quot;)
-<span class="fc" id="L23">public class PostController {</span>
+<span class="fc" id="L20">public class PostController {</span>
 
 	private PostService ps;
 
 	public PostService getPps() {
-<span class="nc" id="L28">		return ps;</span>
+<span class="nc" id="L25">		return ps;</span>
 	}
 
 	@Autowired
 	public void setPps(PostService ps) {
-<span class="fc" id="L33">		this.ps = ps;</span>
-<span class="fc" id="L34">	}</span>
-
-	@GetMapping
-	public @ResponseBody List&lt;User&gt; getAll() {
-<span class="nc" id="L38">		ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;config.xml&quot;);</span>
-
-<span class="nc" id="L40">		UserDao dao = ac.getBean(UserDao.class);</span>
-<span class="nc" id="L41">		PostDao pdao = ac.getBean(PostDao.class);</span>
-		
-		
-<span class="nc" id="L44">		dao.save(new User(0, &quot;nathan1&quot;, &quot;AAA&quot;, &quot;Nathan&quot;, &quot;Ricks&quot;, &quot;ricks@gmail.com&quot;, &quot;lol bio&quot;, &quot;pfp link&quot;, null, null));</span>
-<span class="nc" id="L45">		dao.save(new User(0, &quot;user2&quot;, &quot;password&quot;, &quot;User&quot;, &quot;Name&quot;, &quot;user@nothing.net&quot;, &quot;biography&quot;, &quot;profile pic&quot;, null, null));</span>
-		
-<span class="nc" id="L47">		pdao.save(new Post(0, &quot;Hello World&quot;, dao.findById(2), null, null));</span>
-		
-<span class="nc" id="L49">		System.out.println(dao.delete(1));</span>
-		
-<span class="nc" id="L51">		System.out.println(dao.findAll());</span>
-		
-<span class="nc" id="L53">		System.out.println(pdao.findAll());</span>
-<span class="nc" id="L54">		System.out.println(&quot;Success!&quot;);</span>
-		
-<span class="nc" id="L56">		return dao.findAll();</span>
+<span class="fc" id="L30">		this.ps = ps;</span>
+<span class="fc" id="L31">	}</span>
+	
+	/**
+	 * Retrieve a list of all posts in the system.
+	 * @return The list of all posts
+	 */
+	@GetMapping(&quot;/allPosts.json&quot;)
+	public @ResponseBody List&lt;Post&gt; getAllPosts(){
+<span class="nc" id="L39">		return ps.findAll();</span>
 	}
+	
+	/**
+	 * Retrieve a JSON representation of a single post based on the ID.
+	 * @param id The ID of the post.
+	 * @return The post object
+	 */
+	@GetMapping(&quot;/post/{id}.json&quot;)
+	public @ResponseBody Post getPost(@PathVariable Integer id) {
+<span class="nc" id="L49">		return ps.findById(id);</span>
+	}
+	
+	/**
+	 * Delete a specific post.
+	 * @param id The id of the post to be deleted
+	 * @return The deleted post
+	 */
+	@DeleteMapping(&quot;/post/{id}.json&quot;)
+	public @ResponseBody Post deletePost(@PathVariable Integer id) {
+<span class="nc" id="L59">		return ps.deletePost(id);</span>
+	}
+	
+	/**
+	 * Retrieve a certain user's posts.
+	 * @param id The ID of the user.
+	 * @return The list of posts
+	 */
+	@GetMapping(&quot;/user/{id}/posts.json&quot;)
+	public @ResponseBody List&lt;Post&gt; getPostsByUser(@PathVariable Integer id) {
+<span class="nc" id="L69">		return ps.findAllPostByUserId(id);</span>
+	}
+	
+	/**
+	 * Update a user's specific post.
+	 * @param p The post
+	 * @param id The user's id
+	 * @param pId The post id
+	 * @return The modified post
+	 */
+	@PutMapping(&quot;/user/{id}/posts/{pId}.json&quot;)
+	public @ResponseBody Post updatePost(@RequestBody Post p, @PathVariable Integer id, @PathVariable Integer pId) {
+<span class="nc" id="L81">		return ps.updatePost(p);</span>
+	}
+	
+	
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
