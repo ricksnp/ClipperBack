@@ -49,6 +49,7 @@ public class LikeController {
 		Post p = null;
 		User u = null;
 		try {
+			System.out.println(dto.getPost_id() + " " + dto.getUser_id());
 			p = ps.findById(dto.getPost_id());
 			u = us.getUserById(dto.getUser_id());
 			li = ls.addLike(new Like(0, p, u));
