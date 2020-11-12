@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.clipper.model.User;
+import com.clipper.repo.UserDao;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

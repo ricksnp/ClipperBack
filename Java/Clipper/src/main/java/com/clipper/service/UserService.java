@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.clipper.model.User;
-import com.clipper.dao.UserDao;
+import com.clipper.repo.UserDao;
 
 @Service
 public class UserService {

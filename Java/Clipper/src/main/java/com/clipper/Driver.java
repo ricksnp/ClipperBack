@@ -8,11 +8,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.clipper.dao.LikeDao;
-import com.clipper.dao.PostDao;
-import com.clipper.dao.UserDao;
 import com.clipper.model.Post;
 import com.clipper.model.User;
+import com.clipper.repo.LikeDao;
+import com.clipper.repo.PostDao;
+import com.clipper.repo.UserDao;
 //import com.clipper.model.Post;
 //import com.clipper.model.User;
 public class Driver {

@@ -1,4 +1,4 @@
-package com.clipper.model;
+package com.clipper.dto;
 
 public class UserDTOProfile {
 	private int id;

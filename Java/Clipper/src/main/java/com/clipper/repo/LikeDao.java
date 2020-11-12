@@ -1,4 +1,4 @@
-package com.clipper.dao;
+package com.clipper.repo;
 
 import java.util.List;
 
@@ -8,38 +8,38 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.clipper.model.User;
+import com.clipper.model.Like;
 
 @Repository
-public class UserDao implements Dao<User, Integer> {
+public class LikeDao implements Dao<Like, Integer> {
 
 	private SessionFactory factory;
 	
 	@Autowired
-	public UserDao(SessionFactory factory) {
+	public LikeDao(SessionFactory factory) {
 		super();
 		this.factory = factory;
 	}
-	public UserDao() { }
+	public LikeDao() {}
 	
 	@Override
-	public List<User> findAll() {
+	public List<Like> findAll() {
 		Session sess = factory.openSession();
-		List<User> list =sess.createNativeQuery("select * from users", User.class).list();
+		List<Like> list = sess.createNativeQuery("select * from likes", Like.class).list();
 		sess.close();
 		return list;
 	}
 
 	@Override
-	public User findById(Integer i) {
+	public Like findById(Integer i) {
 		Session sess = factory.openSession();
-		User result = sess.createQuery("from User where id = " + i, User.class).list().get(0);
+		Like result = sess.createQuery("from Like where id = " + i, Like.class).list().get(0);
 		sess.close();
 		return result;
 	}
 
 	@Override
-	public User update(User t) {
+	public Like update(Like t) {
 		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -50,7 +50,7 @@ public class UserDao implements Dao<User, Integer> {
 	}
 
 	@Override
-	public User save(User t) {
+	public Like save(Like t) {
 		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -61,35 +61,30 @@ public class UserDao implements Dao<User, Integer> {
 	}
 
 	@Override
-	public User delete(Integer i) {
-		User u = findById(i);
+	public Like delete(Integer i) {
+		Like l = findById(i);
 		
 		Session sess = factory.openSession();
 		Transaction tx = sess.beginTransaction();
-		sess.delete(u);
+		sess.delete(l);
 		tx.commit();
 		sess.close();
-		return u;
-	}
-	
-	public User findUserByUsername(String username) {
-		Session sess = factory.openSession();
-		User result = sess.createQuery("from User where username = '" + username +"'", User.class).list().get(0);
-		sess.close();
-		return result;
-	}
-	
-	public User findUserByEmail(String email) {
-		Session sess = factory.openSession();
-		User result = sess.createQuery("from User where email = '" + email +"'", User.class).list().get(0);
-		sess.close();
-		return result;
+		return l;
 	}
 	
 	public void deleteAll() {
 		Session sess = factory.openSession();
-		sess.createQuery("delete from User");
+		sess.createQuery("delete from Like");
 		sess.close();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findByUserAndPost(int pId, int uId) {
+		Session sess = factory.openSession();
+		List<Object[]> result = sess.createNativeQuery("select * from likes where post_id = ? and user_id = ?;").setParameter(1, pId).setParameter(2, uId).list();
+		sess.close();
+		return result;
+	}
+
 	
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.clipper.dao.LikeDao;
 import com.clipper.model.Like;
+import com.clipper.repo.LikeDao;
 
 @Service
 public class LikeService {

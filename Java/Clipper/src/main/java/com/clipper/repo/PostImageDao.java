@@ -1,4 +1,4 @@
-package com.clipper.dao;
+package com.clipper.repo;
 
 import java.util.List;
 
@@ -8,42 +8,38 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.clipper.model.Post;
+import com.clipper.model.PostImage;
 
 @Repository
-public class PostDao implements Dao<Post, Integer> {
+public class PostImageDao implements Dao<PostImage, Integer> {
 
-private SessionFactory factory;
+	private SessionFactory factory;
 	
 	@Autowired
-	public PostDao(SessionFactory factory) {
+	public PostImageDao(SessionFactory factory) {
 		super();
 		this.factory = factory;
 	}
-	public PostDao() {}
+	public PostImageDao() {}
 	
-	/**
-	 * Make sure to list all of the posts in descending order, as you would expect to see 
-	 * on a social media platform.
-	 */
 	@Override
-	public List<Post> findAll() {
+	public List<PostImage> findAll() {
 		Session sess = factory.openSession();
-		List<Post> list = sess.createNativeQuery("select * from posts order by post_id desc", Post.class).list();
+		List<PostImage> list = sess.createQuery("from PostImage", PostImage.class).list();
 		sess.close();
 		return list;
 	}
 
 	@Override
-	public Post findById(Integer i) {
+	public PostImage findById(Integer i) {
 		Session sess = factory.openSession();
-		Post result = sess.createQuery("from Post where id = " + i, Post.class).list().get(0);
+		PostImage result = sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
 		sess.close();
 		return result;
 	}
 
 	@Override
-	public Post update(Post t) {
+	public PostImage update(PostImage t) {
 		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -54,7 +50,7 @@ private SessionFactory factory;
 	}
 
 	@Override
-	public Post save(Post t) {
+	public PostImage save(PostImage t) {
 		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -65,28 +61,21 @@ private SessionFactory factory;
 	}
 
 	@Override
-	public Post delete(Integer i) {
-		Post p = findById(i);
+	public PostImage delete(Integer i) {
+		PostImage pi = findById(i);
 		
 		Session sess = factory.openSession();
 		Transaction tx = sess.beginTransaction();
-		sess.delete(p);
+		sess.delete(pi);
 		tx.commit();
 		sess.close();
-		return p;
+		return pi;
 	}
 	public void deleteAll() {
 		Session sess = factory.openSession();
-		sess.createQuery("delete from Post");
+		sess.createQuery("delete from PostImage");
 		sess.close();
 	}
 	
-	public List<Post> findAllByUserId(Integer i) {
-		Session sess = factory.openSession();
-		List<Post> list = sess.createQuery("from Post where user_id = " + i, Post.class).list();
-		sess.close();
-		return list;
-	}
 	
-
 }

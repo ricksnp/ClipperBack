@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.clipper.dto.PostDTO;
 import com.clipper.model.Post;
-import com.clipper.model.PostDTO;
 import com.clipper.model.PostImage;
 import com.clipper.service.PostImageService;
 import com.clipper.service.PostService;
 import com.clipper.service.UserService;
 import com.clipper.util.S3Uploader;
+import com.clipper.util.Utilities;
 
 @Controller
 @CrossOrigin
@@ -83,6 +84,7 @@ public class PostController {
 		Post p = null;
 		try {
 			p = ps.deletePost(id);
+			Utilities.log("Post with the ID of " +  id + " was deleted.");
 			return p;
 		}
 		catch(Exception e) {
@@ -139,7 +141,8 @@ public class PostController {
 		try {
 			p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null , null));
 			pi.addPostImage(new PostImage(0, pd.getLinkOfPic(),p ));
-			Post finalPost = ps.findById(p.getId()); 
+			Post finalPost = ps.findById(p.getId());
+			Utilities.log("Post with an ID of " + p.getId() +  " was created.");
 			return finalPost;
 		}
 		catch(Exception e) {
@@ -151,7 +154,6 @@ public class PostController {
   @RequestMapping(value = "/testImageReceipt.json", method = RequestMethod.POST, headers={"content-type=multipart/form-data"})
   public @ResponseBody String trialGetImageLink(@RequestParam("imageFile") CommonsMultipartFile file) {
       
-      System.out.println("Received request!");
       byte[] bytes = file.getBytes();
       String random = S3Uploader.upload(bytes);
       

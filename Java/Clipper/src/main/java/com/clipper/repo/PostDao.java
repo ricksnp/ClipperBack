@@ -1,4 +1,4 @@
-package com.clipper.dao;
+package com.clipper.repo;
 
 import java.util.List;
 
@@ -8,38 +8,42 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.clipper.model.PostImage;
+import com.clipper.model.Post;
 
 @Repository
-public class PostImageDao implements Dao<PostImage, Integer> {
+public class PostDao implements Dao<Post, Integer> {
 
-	private SessionFactory factory;
+private SessionFactory factory;
 	
 	@Autowired
-	public PostImageDao(SessionFactory factory) {
+	public PostDao(SessionFactory factory) {
 		super();
 		this.factory = factory;
 	}
-	public PostImageDao() {}
+	public PostDao() {}
 	
+	/**
+	 * Make sure to list all of the posts in descending order, as you would expect to see 
+	 * on a social media platform.
+	 */
 	@Override
-	public List<PostImage> findAll() {
+	public List<Post> findAll() {
 		Session sess = factory.openSession();
-		List<PostImage> list = sess.createQuery("from PostImage", PostImage.class).list();
+		List<Post> list = sess.createNativeQuery("select * from posts order by post_id desc", Post.class).list();
 		sess.close();
 		return list;
 	}
 
 	@Override
-	public PostImage findById(Integer i) {
+	public Post findById(Integer i) {
 		Session sess = factory.openSession();
-		PostImage result = sess.createQuery("from PostImage where id = " + i, PostImage.class).list().get(0);
+		Post result = sess.createQuery("from Post where id = " + i, Post.class).list().get(0);
 		sess.close();
 		return result;
 	}
 
 	@Override
-	public PostImage update(PostImage t) {
+	public Post update(Post t) {
 		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -50,7 +54,7 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 	}
 
 	@Override
-	public PostImage save(PostImage t) {
+	public Post save(Post t) {
 		SessionFactory sesfact = factory;
 		Session sess = sesfact.openSession();
 		Transaction tx = sess.beginTransaction();
@@ -61,21 +65,28 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 	}
 
 	@Override
-	public PostImage delete(Integer i) {
-		PostImage pi = findById(i);
+	public Post delete(Integer i) {
+		Post p = findById(i);
 		
 		Session sess = factory.openSession();
 		Transaction tx = sess.beginTransaction();
-		sess.delete(pi);
+		sess.delete(p);
 		tx.commit();
 		sess.close();
-		return pi;
+		return p;
 	}
 	public void deleteAll() {
 		Session sess = factory.openSession();
-		sess.createQuery("delete from PostImage");
+		sess.createQuery("delete from Post");
 		sess.close();
 	}
 	
+	public List<Post> findAllByUserId(Integer i) {
+		Session sess = factory.openSession();
+		List<Post> list = sess.createQuery("from Post where user_id = " + i, Post.class).list();
+		sess.close();
+		return list;
+	}
 	
+
 }
