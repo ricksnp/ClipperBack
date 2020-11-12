@@ -24,8 +24,9 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 	
 	@Override
 	public List<PostImage> findAll() {
-		List<PostImage> list = factory.openSession()
-				.createQuery("from PostImage", PostImage.class).list();
+		Session sess = factory.openSession();
+		List<PostImage> list = sess.createQuery("from PostImage", PostImage.class).list();
+		sess.close();
 		return list;
 	}
 

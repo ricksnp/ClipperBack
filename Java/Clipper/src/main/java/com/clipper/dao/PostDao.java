@@ -28,8 +28,9 @@ private SessionFactory factory;
 	 */
 	@Override
 	public List<Post> findAll() {
-		List<Post> list = factory.openSession()
-				.createNativeQuery("select * from posts order by post_id desc", Post.class).list();
+		Session sess = factory.openSession();
+		List<Post> list = sess.createNativeQuery("select * from posts order by post_id desc", Post.class).list();
+		sess.close();
 		return list;
 	}
 

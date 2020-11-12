@@ -24,8 +24,9 @@ public class LikeDao implements Dao<Like, Integer> {
 	
 	@Override
 	public List<Like> findAll() {
-		List<Like> list = factory.openSession()
-				.createNativeQuery("select * from likes", Like.class).list();
+		Session sess = factory.openSession();
+		List<Like> list = sess.createNativeQuery("select * from likes", Like.class).list();
+		sess.close();
 		return list;
 	}
 
