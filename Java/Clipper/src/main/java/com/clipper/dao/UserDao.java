@@ -24,8 +24,9 @@ public class UserDao implements Dao<User, Integer> {
 	
 	@Override
 	public List<User> findAll() {
-		List<User> list = factory.openSession()
-				.createNativeQuery("select * from users", User.class).list();
+		Session sess = factory.openSession();
+		List<User> list =sess.createNativeQuery("select * from users", User.class).list();
+		sess.close();
 		return list;
 	}
 
@@ -88,7 +89,7 @@ public class UserDao implements Dao<User, Integer> {
 	public void deleteAll() {
 		Session sess = factory.openSession();
 		sess.createQuery("delete from User");
-	
+		sess.close();
 	}
 	
 }
