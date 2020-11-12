@@ -10,11 +10,7 @@ import org.apache.log4j.Logger;
 
 public class Utilities {
 	final static Logger logger = Logger.getLogger("Utilities");
-	
-	
-	
-	
-	
+
 	/**
 	 * Hashes a password by using a basic MD5 algorithm.
 	 * 
@@ -40,6 +36,11 @@ public class Utilities {
 		return result.toString();
 	}
 	
+	
+	/**
+	 * Generate a random string, mainly used for passwords and image file names.
+	 * @return The randomly generated string.
+	 */
 	public static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
@@ -55,7 +56,7 @@ public class Utilities {
 	@SuppressWarnings("unused")
 	public static void sendEmail(String to, String password) {
 		String sendTo = to; //change accordingly  
-	      String from = "rickspnathan@gmail.com";//change accordingly  
+	      String from = "clipperproject2009@gmail.com";//change accordingly  
 	      String host = "smtp.gmail.com";//or IP address  
 	      
 	      // Get system properties
