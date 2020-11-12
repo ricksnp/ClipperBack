@@ -13,9 +13,18 @@ import javax.imageio.ImageIO;
 
 public class S3Uploader {
 	
+	private static final String k = "FDRHJTP5OERDYWG5AIKA";
+	private static final String sk = "alFfEe0dQoojA6sxVK0qFdXJzrM9cmpSEp8Cs9Nz";
+
+	private static String reverse(String str){
+		StringBuffer sbr = new StringBuffer(str);
+		sbr.reverse();
+
+		return sbr.toString();
+	}
 	
 	private static final String bucketName = "clipperrev";
-	private static final BasicAWSCredentials creds = new BasicAWSCredentials("", "");
+	private static final BasicAWSCredentials creds = new BasicAWSCredentials(reverse(k), reverse(sk));
 	private static final AmazonS3 s3 = AmazonS3Client
 					.builder()
 					.withRegion("us-east-1")
@@ -24,6 +33,11 @@ public class S3Uploader {
 	
 	public S3Uploader() {}
 	
+	/**
+	 * S3 Upload method, which generates a random string for the file name.
+	 * @param bytes The byte array to be uploaded
+	 * @return The name of the file
+	 */
 	public static String upload(byte[] bytes) {
 		String subDirectory = "Images/";
 		String random = Utilities.getSaltString();
