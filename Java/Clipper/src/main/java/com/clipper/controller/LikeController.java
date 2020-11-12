@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clipper.dto.LikeDTO;
 import com.clipper.model.Like;
-import com.clipper.model.LikeDTO;
 import com.clipper.model.Post;
 import com.clipper.model.User;
 import com.clipper.service.LikeService;
 import com.clipper.service.PostService;
 import com.clipper.service.UserService;
+import com.clipper.util.Utilities;
 
 @Controller
 @CrossOrigin
@@ -53,6 +54,7 @@ public class LikeController {
 			p = ps.findById(dto.getPost_id());
 			u = us.getUserById(dto.getUser_id());
 			li = ls.addLike(new Like(0, p, u));
+			Utilities.log(u.getUsername() + " liked the post with an ID of " + p.getId());
 			return li;
 		}
 		catch(Exception e) {
@@ -62,6 +64,7 @@ public class LikeController {
 		List<Object[]> result = ls.findByUserAndPost(p.getId(), u.getId());
 		String likeId = null;
 		for(Object[] obj : result){likeId = String.valueOf(obj[0]);}
+		Utilities.log(u.getUsername() + " unliked the post with an ID of " + p.getId());
 		return ls.removeLike(Integer.parseInt(likeId));
 	}
 	

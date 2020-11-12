@@ -13,6 +13,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.clipper.model.Post;
 import com.clipper.model.PostImage;
 import com.clipper.model.User;
+import com.clipper.repo.PostDao;
+import com.clipper.repo.PostImageDao;
+import com.clipper.repo.UserDao;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

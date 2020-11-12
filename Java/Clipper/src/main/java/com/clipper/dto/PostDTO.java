@@ -1,4 +1,4 @@
-package com.clipper.model;
+package com.clipper.dto;
 
 
 public class PostDTO {
@@ -12,6 +12,8 @@ public class PostDTO {
 		this.content = content;
 		this.linkOfPic = linkOfPic;
 	}
+	
+	public PostDTO() {}
 
 	public int getUser_id() {
 		return user_id;

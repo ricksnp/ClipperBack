@@ -1,4 +1,4 @@
-package com.clipper.model;
+package com.clipper.dto;
 
 public class PostImageDTO {
 	private int post_id;

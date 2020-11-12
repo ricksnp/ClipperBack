@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.clipper.dao.PostDao;
 import com.clipper.model.Post;
+import com.clipper.repo.PostDao;
 
 @Service
 public class PostService {

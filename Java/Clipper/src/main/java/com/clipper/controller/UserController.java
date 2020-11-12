@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clipper.dto.UserDTO;
+import com.clipper.dto.UserDTOEmail;
+import com.clipper.dto.UserDTOProfile;
 import com.clipper.model.User;
-import com.clipper.model.UserDTO;
-import com.clipper.model.UserDTOEmail;
-import com.clipper.model.UserDTOProfile;
 import com.clipper.service.UserService;
 import com.clipper.util.Utilities;
 
@@ -46,7 +46,7 @@ public class UserController {
 		u.setPassword(Utilities.hashPassword(u.getPassword()));
 		try {
 			user = us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
-			Utilities.log(u.getUsername() + "registered as a new user.");
+			Utilities.log(u.getUsername() + " registered as a new user.");
 			return user;
 		}
 		catch (Exception e) {
@@ -122,6 +122,7 @@ public class UserController {
 			temp.setPassword(hashed);
 			Utilities.sendEmail(dte.getEmail(), newPass);
 			us.updateUser(temp);
+			Utilities.log(temp.getUsername() + " reset their password.");
 			return temp;
 		}
 		catch(Exception e) {
@@ -150,6 +151,7 @@ public class UserController {
 			temp.setBio(udp.getBio());
 			temp.setPfpLink(udp.getPfpLink());
 			us.updateUser(temp);
+			Utilities.log(temp.getUsername() + " updated their profile section.");
 			return temp;
 		}
 		return null;

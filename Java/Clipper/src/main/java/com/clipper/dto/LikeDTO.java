@@ -1,4 +1,4 @@
-package com.clipper.model;
+package com.clipper.dto;
 
 public class LikeDTO {
 	private int id;

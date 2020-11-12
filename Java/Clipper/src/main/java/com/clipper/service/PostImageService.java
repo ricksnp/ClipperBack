@@ -3,8 +3,8 @@ package com.clipper.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.clipper.dao.PostImageDao;
 import com.clipper.model.PostImage;
+import com.clipper.repo.PostImageDao;
 
 @Service
 public class PostImageService {

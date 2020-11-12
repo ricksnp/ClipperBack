@@ -1,4 +1,4 @@
-package com.clipper.dao;
+package com.clipper.repo;
 
 import java.util.List;
 
