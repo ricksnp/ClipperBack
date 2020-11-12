@@ -6,8 +6,10 @@ import java.util.Random;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+import org.apache.log4j.Logger;
+
 public class Utilities {
-	
+	final static Logger logger = Logger.getLogger("Utilities");
 	
 	
 	
@@ -101,5 +103,9 @@ public class Utilities {
 	        } catch (MessagingException e) {
 	            e.printStackTrace();
 	        } 
+	}
+	
+	public static void log(String message) {
+		logger.warn(message);
 	}
 }

@@ -44,6 +44,7 @@ public class UserDao implements Dao<User, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -54,6 +55,7 @@ public class UserDao implements Dao<User, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -65,6 +67,7 @@ public class UserDao implements Dao<User, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.delete(u);
 		tx.commit();
+		sess.close();
 		return u;
 	}
 	
