@@ -42,7 +42,7 @@ import com.clipper.service.UserService;
 	 */
 	@GetMapping(&quot;/allPosts.json&quot;)
 	public @ResponseBody List&lt;Post&gt; getAllPosts(){
-<span class="nc" id="L45">		return ps.findAll();</span>
+<span class="fc" id="L45">		return ps.findAll();</span>
 	}
 	
 	/**
@@ -52,7 +52,7 @@ import com.clipper.service.UserService;
 	 */
 	@GetMapping(&quot;/post/{id}.json&quot;)
 	public @ResponseBody Post getPost(@PathVariable Integer id) {
-<span class="nc" id="L55">		return ps.findById(id);</span>
+<span class="fc" id="L55">		return ps.findById(id);</span>
 	}
 	
 	/**
@@ -62,7 +62,7 @@ import com.clipper.service.UserService;
 	 */
 	@DeleteMapping(&quot;/post/{id}.json&quot;)
 	public @ResponseBody Post deletePost(@PathVariable Integer id) {
-<span class="nc" id="L65">		return ps.deletePost(id);</span>
+<span class="fc" id="L65">		return ps.deletePost(id);</span>
 	}
 	
 	/**
@@ -72,7 +72,7 @@ import com.clipper.service.UserService;
 	 */
 	@GetMapping(&quot;/user/{id}/posts.json&quot;)
 	public @ResponseBody List&lt;Post&gt; getPostsByUser(@PathVariable Integer id) {
-<span class="nc" id="L75">		return ps.findAllPostByUserId(id);</span>
+<span class="fc" id="L75">		return ps.findAllPostByUserId(id);</span>
 	}
 	
 	/**
@@ -84,7 +84,7 @@ import com.clipper.service.UserService;
 	 */
 	@PutMapping(&quot;/user/{id}/posts/{pId}.json&quot;)
 	public @ResponseBody Post updatePost(@RequestBody Post p, @PathVariable Integer id, @PathVariable Integer pId) {
-<span class="nc" id="L87">		return ps.updatePost(p);</span>
+<span class="fc" id="L87">		return ps.updatePost(p);</span>
 	}
 	
 	

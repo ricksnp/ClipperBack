@@ -37,6 +37,7 @@ public class LikeDaoTest {
 		pd.save(post);
 		User u = ud.findAll().get(0);
 		Post p = pd.findAll().get(0);
+		
 		l = new Like(0, p,u);
 		
 	}

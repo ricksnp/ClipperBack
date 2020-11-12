@@ -20,7 +20,7 @@ private SessionFactory factory;
 <span class="fc" id="L20">		super();</span>
 <span class="fc" id="L21">		this.factory = factory;</span>
 <span class="fc" id="L22">	}</span>
-<span class="nc" id="L23">	public PostDao() {}</span>
+<span class="fc" id="L23">	public PostDao() {}</span>
 	
 	/**
 	 * Make sure to list all of the posts in descending order, as you would expect to see 
@@ -77,10 +77,10 @@ private SessionFactory factory;
 <span class="fc" id="L77">	}</span>
 	
 	public List&lt;Post&gt; findAllByUserId(Integer i) {
-<span class="nc" id="L80">		Session sess = factory.openSession();</span>
-<span class="nc" id="L81">		List&lt;Post&gt; list = sess.createQuery(&quot;from Post where user_id = &quot; + i, Post.class).list();</span>
-<span class="nc" id="L82">		sess.close();</span>
-<span class="nc" id="L83">		return list;</span>
+<span class="fc" id="L80">		Session sess = factory.openSession();</span>
+<span class="fc" id="L81">		List&lt;Post&gt; list = sess.createQuery(&quot;from Post where user_id = &quot; + i, Post.class).list();</span>
+<span class="fc" id="L82">		sess.close();</span>
+<span class="fc" id="L83">		return list;</span>
 	}
 	
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clipper.dao.PostDao;
 import com.clipper.model.Like;
 import com.clipper.model.LikeDTO;
 import com.clipper.model.Post;
@@ -19,24 +20,28 @@ import com.clipper.service.UserService;
 
 @Controller
 @CrossOrigin
-<span class="fc" id="L22">public class LikeController {</span>
+<span class="fc" id="L23">public class LikeController {</span>
 	
 	private LikeService ls;
 	
 	@Autowired
 	private PostService ps;
+	
+	@Autowired
+	private PostDao pd;
+	
 	@Autowired
 	private UserService us;
 	
 
 	public LikeService getPps() {
-<span class="nc" id="L33">		return ls;</span>
+<span class="nc" id="L38">		return ls;</span>
 	}
 	
 	@Autowired
 	public void setPps(LikeService ls) {
-<span class="fc" id="L38">		this.ls = ls;</span>
-<span class="fc" id="L39">	}</span>
+<span class="fc" id="L43">		this.ls = ls;</span>
+<span class="fc" id="L44">	}</span>
 	
 	/**
 	 * Add a like to a post.  If it's already liked, remove it.  Note, use criteria api for complicated queries, not loops.
@@ -45,23 +50,26 @@ import com.clipper.service.UserService;
 	 */
 	@PostMapping(&quot;/addLike.json&quot;)
 	public @ResponseBody Like addLike(@RequestBody LikeDTO dto) {
-<span class="nc" id="L48">		Like li = null;</span>
-<span class="nc" id="L49">		Post p = null;</span>
-<span class="nc" id="L50">		User u = null;</span>
+<span class="fc" id="L53">		Like li = null;</span>
+<span class="fc" id="L54">		Post p = null;</span>
+<span class="fc" id="L55">		User u = null;</span>
+		
 		try {
 			
-<span class="nc" id="L53">			p = ps.findById(dto.getPost_id());</span>
-<span class="nc" id="L54">			u = us.getUserById(dto.getUser_id());</span>
-<span class="nc" id="L55">			li = ls.addLike(new Like(0, p, u));</span>
-<span class="nc" id="L56">			return li;</span>
+<span class="fc" id="L59">			p = ps.findById(dto.getPost_id());</span>
+<span class="fc" id="L60">			u = us.getUserById(dto.getUser_id());</span>
+<span class="fc" id="L61">			li = ls.addLike(new Like(0, p, u));</span>
+			
+<span class="fc" id="L63">			return li;</span>
 		}
-<span class="nc" id="L58">		catch(Exception e) {</span>
-<span class="nc" id="L59">			System.out.println(&quot;No more than one like per person.&quot;);</span>
+<span class="fc" id="L65">		catch(Exception e) {</span>
+			
 		}
-<span class="nc" id="L61">		List&lt;Object[]&gt; result = ls.findByUserAndPost(p.getId(), u.getId());</span>
-<span class="nc" id="L62">		String likeId = null;</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		for(Object[] obj : result){likeId = String.valueOf(obj[0]);}</span>
-<span class="nc" id="L64">		return ls.removeLike(Integer.parseInt(likeId));</span>
+<span class="fc" id="L68">		List&lt;Object[]&gt; result = ls.findByUserAndPost(p.getId(), u.getId());</span>
+<span class="fc" id="L69">		String likeId = null;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for(Object[] obj : result){likeId = String.valueOf(obj[0]);}</span>
+<span class="fc" id="L71">		return ls.removeLike(Integer.parseInt(likeId));</span>
+		
 	}
 	
 }

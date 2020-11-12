@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clipper.dao.PostDao;
 import com.clipper.model.Like;
 import com.clipper.model.LikeDTO;
 import com.clipper.model.Post;
@@ -25,6 +26,10 @@ public class LikeController {
 	
 	@Autowired
 	private PostService ps;
+	
+	@Autowired
+	private PostDao pd;
+	
 	@Autowired
 	private UserService us;
 	
@@ -48,20 +53,23 @@ public class LikeController {
 		Like li = null;
 		Post p = null;
 		User u = null;
+		
 		try {
 			
 			p = ps.findById(dto.getPost_id());
 			u = us.getUserById(dto.getUser_id());
 			li = ls.addLike(new Like(0, p, u));
+			
 			return li;
 		}
 		catch(Exception e) {
-			System.out.println("No more than one like per person.");
+			
 		}
 		List<Object[]> result = ls.findByUserAndPost(p.getId(), u.getId());
 		String likeId = null;
 		for(Object[] obj : result){likeId = String.valueOf(obj[0]);}
 		return ls.removeLike(Integer.parseInt(likeId));
+		
 	}
 	
 }

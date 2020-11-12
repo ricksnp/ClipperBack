@@ -20,7 +20,7 @@ public class UserDao implements Dao&lt;User, Integer&gt; {
 <span class="fc" id="L20">		super();</span>
 <span class="fc" id="L21">		this.factory = factory;</span>
 <span class="fc" id="L22">	}</span>
-<span class="nc" id="L23">	public UserDao() { }</span>
+<span class="fc" id="L23">	public UserDao() { }</span>
 	
 	@Override
 	public List&lt;User&gt; findAll() {
@@ -69,10 +69,10 @@ public class UserDao implements Dao&lt;User, Integer&gt; {
 	}
 	
 	public User findUserByUsername(String username) {
-<span class="nc" id="L72">		Session sess = factory.openSession();</span>
-<span class="nc" id="L73">		User result = sess.createQuery(&quot;from User where username = '&quot; + username +&quot;'&quot;, User.class).list().get(0);</span>
-<span class="nc" id="L74">		sess.close();</span>
-<span class="nc" id="L75">		return result;</span>
+<span class="fc" id="L72">		Session sess = factory.openSession();</span>
+<span class="fc" id="L73">		User result = sess.createQuery(&quot;from User where username = '&quot; + username +&quot;'&quot;, User.class).list().get(0);</span>
+<span class="fc" id="L74">		sess.close();</span>
+<span class="fc" id="L75">		return result;</span>
 	}
 	
 	public User findUserByEmail(String email) {

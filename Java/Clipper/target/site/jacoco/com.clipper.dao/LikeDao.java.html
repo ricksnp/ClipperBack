@@ -20,7 +20,7 @@ public class LikeDao implements Dao&lt;Like, Integer&gt; {
 <span class="fc" id="L20">		super();</span>
 <span class="fc" id="L21">		this.factory = factory;</span>
 <span class="fc" id="L22">	}</span>
-<span class="nc" id="L23">	public LikeDao() {}</span>
+<span class="fc" id="L23">	public LikeDao() {}</span>
 	
 	@Override
 	public List&lt;Like&gt; findAll() {
@@ -75,10 +75,10 @@ public class LikeDao implements Dao&lt;Like, Integer&gt; {
 	
 	@SuppressWarnings(&quot;unchecked&quot;)
 	public List&lt;Object[]&gt; findByUserAndPost(int pId, int uId) {
-<span class="nc" id="L78">		Session sess = factory.openSession();</span>
-<span class="nc" id="L79">		List&lt;Object[]&gt; result = sess.createNativeQuery(&quot;select * from likes where post_id = ? and user_id = ?;&quot;).setParameter(1, pId).setParameter(2, uId).list();</span>
-<span class="nc" id="L80">		sess.close();</span>
-<span class="nc" id="L81">		return result;</span>
+<span class="fc" id="L78">		Session sess = factory.openSession();</span>
+<span class="fc" id="L79">		List&lt;Object[]&gt; result = sess.createNativeQuery(&quot;select * from likes where post_id = ? and user_id = ?;&quot;).setParameter(1, pId).setParameter(2, uId).list();</span>
+<span class="fc" id="L80">		sess.close();</span>
+<span class="fc" id="L81">		return result;</span>
 	}
 
 	
