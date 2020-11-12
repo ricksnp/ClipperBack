@@ -13,8 +13,9 @@ import javax.imageio.ImageIO;
 
 public class S3Uploader {
 	
+	
 	private static final String bucketName = "clipperrev";
-	private static final BasicAWSCredentials creds = new BasicAWSCredentials("AKIA5GWYDREO5PTJHRDF", "zN9sC8pESpmc9MrzJXdFq0KVxs6AjooQd0eEfFla");
+	private static final BasicAWSCredentials creds = new BasicAWSCredentials("", "");
 	private static final AmazonS3 s3 = AmazonS3Client
 					.builder()
 					.withRegion("us-east-1")
@@ -29,7 +30,7 @@ public class S3Uploader {
 		String fileNameWithPath = subDirectory + random;
 		
 		 try {
-		  File f = File.createTempFile("i", ".png"); 
+		  File f = File.createTempFile("image", ".png"); 
 	      BufferedImage img = ImageIO.read(new ByteArrayInputStream(bytes));
 	      ImageIO.write(img, "png", f);
 	
@@ -38,6 +39,6 @@ public class S3Uploader {
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-		return null;
+		return random;
 	}
 }
