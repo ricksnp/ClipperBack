@@ -44,6 +44,7 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -54,6 +55,7 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -65,11 +67,13 @@ public class PostImageDao implements Dao<PostImage, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.delete(pi);
 		tx.commit();
+		sess.close();
 		return pi;
 	}
 	public void deleteAll() {
 		Session sess = factory.openSession();
 		sess.createQuery("delete from PostImage");
+		sess.close();
 	}
 	
 	

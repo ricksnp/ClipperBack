@@ -44,6 +44,7 @@ public class LikeDao implements Dao<Like, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -54,6 +55,7 @@ public class LikeDao implements Dao<Like, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -65,12 +67,14 @@ public class LikeDao implements Dao<Like, Integer> {
 		Transaction tx = sess.beginTransaction();
 		sess.delete(l);
 		tx.commit();
+		sess.close();
 		return l;
 	}
 	
 	public void deleteAll() {
 		Session sess = factory.openSession();
 		sess.createQuery("delete from Like");
+		sess.close();
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -46,6 +46,7 @@ public class UserController {
 		u.setPassword(Utilities.hashPassword(u.getPassword()));
 		try {
 			user = us.registerUser(new User(0, u.getUsername(), u.getPassword(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getBio(), u.getPfpLink(), null, null));
+			Utilities.log(u.getUsername() + "registered as a new user.");
 			return user;
 		}
 		catch (Exception e) {
@@ -68,6 +69,7 @@ public class UserController {
 			u = us.loginUser(username);
 			if (u != null) {
 				if (u.getPassword().equals(password)) {
+					Utilities.log(u.getUsername() + " logged into the system.");
 					return u;
 				}
 			}
@@ -138,7 +140,7 @@ public class UserController {
 		
 		User temp = us.getUserById(udp.getId());
 		if (temp != null) {
-			if (!temp.getPassword().equals(Utilities.hashPassword(udp.getPassword()))) {
+			if (!temp.getPassword().equals(udp.getPassword())) {
 				temp.setPassword(Utilities.hashPassword(udp.getPassword()));
 			}
 			temp.setUsername(udp.getUsername());

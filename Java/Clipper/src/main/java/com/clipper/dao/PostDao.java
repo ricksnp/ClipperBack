@@ -48,6 +48,7 @@ private SessionFactory factory;
 		Transaction tx = sess.beginTransaction();
 		sess.merge(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -58,6 +59,7 @@ private SessionFactory factory;
 		Transaction tx = sess.beginTransaction();
 		sess.save(t);
 		tx.commit();
+		sess.close();
 		return t;
 	}
 
@@ -69,11 +71,13 @@ private SessionFactory factory;
 		Transaction tx = sess.beginTransaction();
 		sess.delete(p);
 		tx.commit();
+		sess.close();
 		return p;
 	}
 	public void deleteAll() {
 		Session sess = factory.openSession();
 		sess.createQuery("delete from Post");
+		sess.close();
 	}
 	
 	public List<Post> findAllByUserId(Integer i) {
