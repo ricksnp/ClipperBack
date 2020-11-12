@@ -7,6 +7,12 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 public class Utilities {
+	
+	
+	
+	
+	
+	
 	/**
 	 * Hashes a password by using a basic MD5 algorithm.
 	 * 
@@ -63,7 +69,7 @@ public class Utilities {
 	        // Get the Session object.// and pass username and password
 	        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 	            protected PasswordAuthentication getPasswordAuthentication() {
-	                return new PasswordAuthentication("w@gmail.com", "w");
+	                return new PasswordAuthentication("clipperproject2009@gmail.com", "Clipperproject123");
 	            }
 	        });
 

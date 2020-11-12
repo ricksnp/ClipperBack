@@ -17,6 +17,7 @@ import com.clipper.model.Post;
 import com.clipper.model.PostDTO;
 import com.clipper.service.PostService;
 import com.clipper.service.UserService;
+import com.clipper.util.S3Uploader;
 
 @Controller
 @CrossOrigin
@@ -127,6 +128,7 @@ public class PostController {
 	public @ResponseBody Post addPost(@RequestBody PostDTO pd){
 		Post p = null;
 		try {
+			S3Uploader.upload(pd.getArr());
 			p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
 			return p;
 		}
