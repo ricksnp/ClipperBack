@@ -27,8 +27,8 @@ public class PostDTO {
 		return content;
 	}
 
-	public void setContent(String linkOfPic) {
-		this.linkOfPic = content;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getLinkOfPic() {
