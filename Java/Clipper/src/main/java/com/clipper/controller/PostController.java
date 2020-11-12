@@ -11,10 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.clipper.model.Post;
 import com.clipper.model.PostDTO;
+import com.clipper.model.PostImage;
+import com.clipper.service.PostImageService;
 import com.clipper.service.PostService;
 import com.clipper.service.UserService;
 import com.clipper.util.S3Uploader;
@@ -27,6 +33,9 @@ public class PostController {
 	
 	@Autowired
 	private UserService us;
+	
+	@Autowired
+	private PostImageService pi;
 
 	public PostService getPs() {
 		return ps;
@@ -128,9 +137,10 @@ public class PostController {
 	public @ResponseBody Post addPost(@RequestBody PostDTO pd){
 		Post p = null;
 		try {
-			S3Uploader.upload(pd.getArr());
-			p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null, null));
-			return p;
+			p = ps.createPost(new Post(0, pd.getContent(), us.getUserById(pd.getUser_id()), null , null));
+			pi.addPostImage(new PostImage(0, pd.getLinkOfPic(),p ));
+			Post finalPost = ps.findById(p.getId()); 
+			return finalPost;
 		}
 		catch(Exception e) {
 			System.out.println("Could not add post.");
@@ -138,6 +148,14 @@ public class PostController {
 		return p;
 	}
 	
-	
+  @RequestMapping(value = "/testImageReceipt.json", method = RequestMethod.POST, headers={"content-type=multipart/form-data"})
+  public @ResponseBody String trialGetImageLink(@RequestParam("imageFile") CommonsMultipartFile file) {
+      
+      System.out.println("Received request!");
+      byte[] bytes = file.getBytes();
+      String random = S3Uploader.upload(bytes);
+      
+      return "https://clipperrev.s3.amazonaws.com/Images/" + random;
+  }
 
 }

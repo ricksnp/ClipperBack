@@ -4,13 +4,13 @@ package com.clipper.model;
 public class PostDTO {
 	private int user_id;
 	private String content;
-	private byte[] arr;
+	private String linkOfPic;
 	
-	public PostDTO(int user_id, String content, byte[] arr) {
+	public PostDTO(int user_id, String content, String linkOfPic) {
 		super();
 		this.user_id = user_id;
 		this.content = content;
-		this.arr = arr;
+		this.linkOfPic = linkOfPic;
 	}
 
 	public int getUser_id() {
@@ -25,16 +25,16 @@ public class PostDTO {
 		return content;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContent(String linkOfPic) {
+		this.linkOfPic = content;
 	}
 
-	public byte[] getArr() {
-		return arr;
+	public String getLinkOfPic() {
+		return linkOfPic;
 	}
 
-	public void setFile(byte[] arr) {
-		this.arr = arr;
+	public void setLinkOfPic(String linkOfPic) {
+		this.linkOfPic = linkOfPic;
 	}
 	
 	
