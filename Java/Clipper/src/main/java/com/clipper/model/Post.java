@@ -54,6 +54,7 @@ public class Post
 	@OneToMany(mappedBy="post", fetch = FetchType.EAGER)
 	private Set<Like> likes;
 	
+	
 	public Post() {}
 
 	public Post(int id, String textContent, User user, Set<PostImage> images, Set<Like> likes) {
@@ -88,6 +89,7 @@ public class Post
 	public void setTextContent(String textContent) {
 		this.textContent = textContent;
 	}
+	
 
 	public Set<PostImage> getImages() {
 		return images;
