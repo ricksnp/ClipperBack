@@ -158,7 +158,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/profile/{username}.json")
-	public @ResponseBody User findUserByUsername(@PathVariable String username){
+	public @ResponseBody User findUserByUsername(@RequestBody String username){
 		return us.loginUser(username);
 	}
 	
