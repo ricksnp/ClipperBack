@@ -39,16 +39,16 @@ In Revature's Social Network everyone is friends with everyone else. Users can r
 
 ## Usage
 1. Login Page:
-<img src="login.jpg" />
+<img src="login.JPG" />
 
 2. Feed:
-<img src="feed.jpg" />
+<img src="feed.JPG" />
 
 3. Post Example:
-<img src="post.jpg" />
+<img src="post.JPG" />
 
 4. Profile Page:
-<img src="profile.jpg" />
+<img src="profile.JPG" />
 
 
 
