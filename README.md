@@ -38,7 +38,7 @@ In Revature's Social Network everyone is friends with everyone else. Users can r
 5. Deploy your application using a Server Runtime. This project originally ran on an Apache Tomcat server. You can find information on Apache Tomcat [here.](http://tomcat.apache.org/)
 
 ## Usage
-1. Login Page:
+1. Login:
 <img src="login.JPG" />
 
 2. Feed:
@@ -47,7 +47,7 @@ In Revature's Social Network everyone is friends with everyone else. Users can r
 3. Post Example:
 <img src="post.JPG" />
 
-4. Profile Page:
+4. Profile:
 <img src="profile.JPG" />
 
 
