@@ -39,22 +39,18 @@ In Revature's Social Network everyone is friends with everyone else. Users can r
 
 ## Usage
 1. Login Page:
-<img src="https://github.com/TyroneV/MailMailMail-React/blob/master/public/images/M3Login.png" />
+<img src="login.jpg" />
 
 2. Feed:
-<img src="https://github.com/TyroneV/MailMailMail-React/blob/master/public/images/M3Home.png" />
+<img src="feed.jpg" />
 
 3. Post Example:
-<img src="https://github.com/TyroneV/MailMailMail-React/blob/master/public/images/M3Post.png" />
+<img src="post.jpg" />
 
 4. Profile Page:
-<img src="https://github.com/TyroneV/MailMailMail-React/blob/master/public/images/M3Profile.png" />
+<img src="profile.jpg" />
 
-5. Edit Profile:
-<img src="https://github.com/TyroneV/MailMailMail-React/blob/master/public/images/M3EditProfile.png">
 
-6. Search Function:
-<img src="https://github.com/TyroneV/MailMailMail-React/blob/master/public/images/M3Search.png" />
 
 ## Contributors
 * Matthew Thomas
